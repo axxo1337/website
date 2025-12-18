@@ -1,0 +1,3 @@
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). I've always wanted a sort of portfolio website,
+but I've never had the time to make one. I plan to make it list most of my work along with additional videos. For example, I'd like to make a page listing all of my YouTube videos, and make it so when 
+you click on one, it redirects you to another page which embeds said video, summarizes it, includes sources and additional resources.
