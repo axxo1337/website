@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "aXXo",
-      // , url: "https://axxo1337.github.io/about-me"
+      // , url: "https://axxowastaken.me/about-me"
     },
   ],
   creator: "aXXo",
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "aXXo's website",
-    url: "https://axxo1337.github.io",
+    url: "https://axxowastaken.me",
     title: "aXXo's website",
     description:
       "Just some дебил with unrestricted access to a computer (No I do not make DVD rips). I mostly teach computer-science stuff, but I also have an interest in mathematics and engineering.",
