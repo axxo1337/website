@@ -103,7 +103,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} antialiased flex flex-col items-center`}
       >
-        <div className="max-w-255 w-full">
+        <div className="px-6 lg:px-0 max-w-255 w-full">
           <Header />
           {children}
         </div>
