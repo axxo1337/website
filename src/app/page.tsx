@@ -2,6 +2,7 @@ import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Social from "@/components/page/Home/Social";
 import Work from "@/components/page/Home/Work";
+import { MoveRight } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -56,6 +57,20 @@ export default function Home() {
             type="tool"
             href="/project/antidebug"
           />
+        </div>
+        <hr className="my-6 border-white/20" />
+        <div className="text-2xl flex items-center justify-between">
+          <span className="flex items-center gap-3">
+            Or see everything <MoveRight />
+          </span>
+          <div className="flex items-center gap-6">
+            <Link href="/videos" className="hover:underline">
+              Videos
+            </Link>
+            <Link href="/projects" className="hover:underline">
+              Projects
+            </Link>
+          </div>
         </div>
       </Section>
       <Section subtitle="How to reach me?" title="My social media">
