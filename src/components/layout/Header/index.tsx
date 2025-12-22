@@ -22,7 +22,7 @@ export const links: TLink[] = [
     href: "/projects",
     content: [
       {
-        title: "AndiDebug",
+        title: "AntiDebug",
         href: "/project/antidebug",
         icon: Bug,
       },
