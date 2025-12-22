@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import Header from "@/components/layout/Header";
 import "./globals.css";
 
 //
@@ -16,7 +17,8 @@ export const metadata: Metadata = {
     template: "%s - aXXo's website",
     default: "aXXo's website",
   },
-  description: "Just some дебил with unrestricted access to a computer (No I do not make DVD rips). I mostly teach computer-science stuff, but I also have an interest in mathematics and engineering.",
+  description:
+    "Just some дебил with unrestricted access to a computer (No I do not make DVD rips). I mostly teach computer-science stuff, but I also have an interest in mathematics and engineering.",
   applicationName: "aXXo's website",
   keywords: [
     "reverse engineering",
@@ -99,9 +101,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} antialiased`}
+        className={`${roboto.variable} antialiased flex flex-col items-center`}
       >
-        {children}
+        <div className="max-w-255 w-full">
+          <Header />
+          {children}
+        </div>
       </body>
     </html>
   );
