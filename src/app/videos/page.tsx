@@ -1,5 +1,6 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
+import Video from "@/components/page/Videos/Video";
 import { Metadata } from "next";
 
 //
@@ -9,6 +10,17 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Videos",
 };
+
+const videos = [
+  {
+    title: "Virtual Memory Explained",
+    description:
+      "What are memory pages? What exactly is an address space? Well that's what you'll learn today!",
+    createdAt: new Date(2025, 4, 19),
+    thumbnailPath: "/images/thumbnails/virtual-memory-explained.png",
+    href: "/video/virtual-memory-explained",
+  },
+];
 
 //
 // [SECTION] Content
@@ -29,8 +41,10 @@ export default function Videos() {
           providing an overview of its contents through some sort of blog post.
         </p>
         <hr className="my-4 md:my-6 border-white/20" />
-        <div className="grid grid-cols-2">
-          <span>Coming soon...</span>
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+          {videos.map((video, videoIndex) => (
+            <Video key={`video-${videoIndex}`} {...video} />
+          ))}
         </div>
       </Section>
     </Main>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Logo from "../../ui/Logo";
 import MobileNavigation from "./HeaderMobileNavigation";
 import DesktopNavigation from "./HeaderDesktopNavigation";
-import { Bug, Diff, LucideIcon } from "lucide-react";
+import { Bug, Diff, LucideIcon, Search } from "lucide-react";
 
 //
 // [SECTION] Defines
@@ -36,6 +36,11 @@ export const links: TLink[] = [
         title: "Paul's Online Notes",
         href: "https://tutorial.math.lamar.edu/",
         icon: Diff,
+      },
+      {
+        title: "Binary Ninja",
+        href: "https://binary.ninja/",
+        icon: Search,
       },
     ],
   },
