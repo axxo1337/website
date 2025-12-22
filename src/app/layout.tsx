@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import Header from "@/components/layout/Header";
 import "./globals.css";
+import Footer from "@/components/layout/Footer";
 
 //
 // [SECTION] Defines
@@ -106,6 +107,7 @@ export default function RootLayout({
         <div className="px-6 lg:px-0 max-w-255 w-full">
           <Header />
           {children}
+          <Footer />
         </div>
       </body>
     </html>
