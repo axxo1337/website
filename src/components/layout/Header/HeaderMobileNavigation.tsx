@@ -53,7 +53,7 @@ function SecondaryNavigation({
             <span className="text-sm">{link.title}</span>
           </div>
           <nav className="pt-2">
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2.5">
               {link.content?.map((element, elementIndex) => (
                 <li key={`element-${elementIndex}`} className="flex">
                   <Link href={element.href} className="w-full">
@@ -61,6 +61,11 @@ function SecondaryNavigation({
                   </Link>
                 </li>
               ))}
+              <li className="flex">
+                <Link href={link.href} className="w-full">
+                  View all
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>
@@ -89,7 +94,7 @@ export default function MobileNavigation() {
       }}
     >
       <SheetTrigger className="md:hidden cursor-pointer">
-        <Menu />
+        <Menu className="size-6.5" />
       </SheetTrigger>
       <SheetContent className="border-0 w-full">
         <SheetHeader className="pt-6 px-6">

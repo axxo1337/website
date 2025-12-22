@@ -34,12 +34,12 @@ export default function DesktopNavigation() {
                   {link.title}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid grid-cols-1 gap-2 w-60">
+                  <ul className="grid grid-cols-1 w-60">
                     {link.content.map((element, elementIndex) => (
                       <li key={`linkElement-${elementIndex}`}>
                         <Link
                           href={element.href}
-                          className="flex gap-2 items-center hover:bg-black/20 transition-all hover:p-1 rounded-md"
+                          className="flex gap-2 items-center p-1 hover:bg-black/20 transition-all rounded-md"
                         >
                           <element.icon className="shrink-0 size-6 p-1 border border-black rounded-sm" />
                           <span>{element.title}</span>
@@ -49,7 +49,7 @@ export default function DesktopNavigation() {
                     <li>
                       <Link
                         href={link.href}
-                        className="flex gap-2 items-center hover:bg-black/20 transition-all hover:p-1 rounded-md"
+                        className="flex gap-2 items-center p-1 hover:bg-black/20 transition-all rounded-md"
                       >
                         <Library className="shrink-0 size-6 p-1 border border-black rounded-sm" />
                         <span>View all</span>
