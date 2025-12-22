@@ -1,4 +1,8 @@
+"use client";
+
 import Main from "@/components/layout/Main";
+import Section from "@/components/layout/Section";
+import YouTubeVideo from "@/components/page/Video/YouTubeVideo";
 
 export default function VirtualMemoryExplained() {
   return (
@@ -7,9 +11,10 @@ export default function VirtualMemoryExplained() {
       createdAt={new Date(2025, 12, 22)}
       updatedAt={new Date(2025, 12, 22)}
     >
-      <div className="my-12">
-        <span className="text-4xl font-semibold">Coming soon...</span>
-      </div>
+      <YouTubeVideo id="ultz9m0n0GE" />
+      <Section subtitle="What's this video about?" title="Overview">
+        <span>Coming soon...</span>
+      </Section>
     </Main>
   );
 }
