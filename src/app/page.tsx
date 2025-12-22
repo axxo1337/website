@@ -1,5 +1,6 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
+import Social from "@/components/page/Home/Social";
 import Link from "next/link";
 
 export default function Home() {
@@ -37,7 +38,35 @@ export default function Home() {
         </p>
       </Section>
       <Section subtitle="What do I make?" title="My best work"></Section>
-      <Section subtitle="How to reach me?" title="My social media"></Section>
+      <Section subtitle="How to reach me?" title="My social media">
+        <ul className="flex flex-wrap gap-6 gap-y-4">
+          <Social
+            href="https://www.youtube.com/@axxo1337"
+            title="YouTube"
+            iconPath="/images/socials/youtube.png"
+          />
+          <Social
+            href="https://www.instagram.com/axxo1337"
+            title="Instagram"
+            iconPath="/images/socials/instagram.png"
+          />
+          <Social
+            href="https://www.reddit.com/r/aXXo/"
+            title="Reddit"
+            iconPath="/images/socials/reddit.png"
+          />
+          <Social
+            href="https://discord.gg/tdEAJU2XwZ"
+            title="Discord (apply to join)"
+            iconPath="/images/socials/discord.png"
+          />
+          <Social
+            href="https://github.com/axxo1337"
+            title="Github"
+            iconPath="/images/socials/github.png"
+          />
+        </ul>
+      </Section>
     </Main>
   );
 }
