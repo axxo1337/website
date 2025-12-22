@@ -13,7 +13,7 @@ export default function Home() {
       updatedAt={new Date(2025, 12, 22)}
     >
       <Section subtitle="Who am I?" title="In my own words">
-        <p className="text-lg">
+        <p className="md:text-lg">
           Hey! I&apos;m Charles.{" "}
           <i>
             Although you may know me as{" "}
@@ -40,7 +40,7 @@ export default function Home() {
         </p>
       </Section>
       <Section subtitle="What do I make?" title="My best work">
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           <Work
             title="Virtual Memory Explained"
             description="What are memory pages? What exactly is an address space? Well that's what you'll learn today!"
@@ -58,8 +58,8 @@ export default function Home() {
             href="/project/antidebug"
           />
         </div>
-        <hr className="my-6 border-white/20" />
-        <div className="text-2xl flex items-center justify-between">
+        <hr className="my-4 md:my-6 border-white/20" />
+        <div className="text-xl md:text-2xl flex items-center justify-between">
           <span className="flex items-center gap-3">
             Or see everything <MoveRight />
           </span>

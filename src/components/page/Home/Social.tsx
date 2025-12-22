@@ -8,8 +8,14 @@ export default function Social({ href, iconPath, title }: Social) {
         href={href}
         className="flex items-center gap-2 border border-white/20 hover:border-white transition-colors rounded-full py-2 px-4"
       >
-        <Image src={iconPath} width={32} height={32} alt={title} />
-        <span className="font-medium text-xl">{title}</span>
+        <Image
+          src={iconPath}
+          className="size-6 md:size-8"
+          width={32}
+          height={32}
+          alt={title}
+        />
+        <span className="font-medium text-lg md:text-xl">{title}</span>
       </Link>
     </li>
   );
