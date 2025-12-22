@@ -1,6 +1,7 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Social from "@/components/page/Home/Social";
+import Work from "@/components/page/Home/Work";
 import Link from "next/link";
 
 export default function Home() {
@@ -37,7 +38,26 @@ export default function Home() {
           making videos about computer...
         </p>
       </Section>
-      <Section subtitle="What do I make?" title="My best work"></Section>
+      <Section subtitle="What do I make?" title="My best work">
+        <div className="grid md:grid-cols-2 gap-8">
+          <Work
+            title="Virtual Memory Explained"
+            description="What are memory pages? What exactly is an address space? Well that's what you'll learn today!"
+            thumbnailPath="/images/thumbnails/virtual-memory-explained.png"
+            createdAt={new Date(2025, 4, 19)}
+            type="video"
+            href="/video/virtual-memory-explained"
+          />
+          <Work
+            title="AntiDebug"
+            description="A simple terminal interface tool to test Windows x86_64 anti-debugging techniques."
+            thumbnailPath="/images/thumbnails/antidebug.png"
+            createdAt={new Date(2025, 7, 10)}
+            type="tool"
+            href="/project/antidebug"
+          />
+        </div>
+      </Section>
       <Section subtitle="How to reach me?" title="My social media">
         <ul className="flex flex-wrap gap-6 gap-y-4">
           <Social
