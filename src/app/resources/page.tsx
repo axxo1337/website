@@ -1,4 +1,9 @@
 import Main from "@/components/layout/Main";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Resources",
+};
 
 export default function Resources() {
   return (
