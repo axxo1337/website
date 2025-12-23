@@ -43,6 +43,21 @@ export function contentExists(contentType: ContentType, slug: string): boolean {
   return fs.existsSync(mdxPath);
 }
 
+export async function getAllContentMetadata(
+  contentType: ContentType
+): Promise<MDXMetadata[]> {
+  const slugs = getContentSlugs(contentType);
+  const metadataPromises = slugs.map(async (slug) => {
+    const contentRelativePath = contentRelativePathsMap.get(contentType);
+    const post = await import(
+      `@/app/${contentRelativePath}/[slug]/${slug}.mdx`
+    );
+    return { ...post.metadata, slug } as MDXMetadata;
+  });
+
+  return Promise.all(metadataPromises);
+}
+
 //
 // [SECTION] Types
 //
@@ -57,6 +72,7 @@ export interface MDXMetadata {
   youtubeId?: string;
   subtitle?: string;
   description?: string;
+  thumbnailPath?: string;
   tags?: string[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
