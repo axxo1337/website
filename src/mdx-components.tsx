@@ -1,9 +1,10 @@
 import type { MDXComponents } from "mdx/types";
+import Image from "next/image";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h3: ({ children }) => (
-      <h3 className="text-2xl md:text-3xl first:mt-0! mt-4 py-0.5 mb-2">
+      <h3 className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 mb-2">
         {children}
       </h3>
     ),
@@ -15,6 +16,46 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <ol className="list-decimal pl-5 flex flex-col gap-2">{children}</ol>
     ),
     li: ({ children }) => <li>{children}</li>,
+    span: ({ className, children, ...props }) => {
+      if (className?.includes("katex-display")) {
+        return (
+          <div className="my-1 py-4 flex items-center justify-center">
+            <span className={`${className} block px-2 py-1 my-0!`} {...props}>
+              {children}
+            </span>
+          </div>
+        );
+      }
+      return (
+        <span className={className} {...props}>
+          {children}
+        </span>
+      );
+    },
+    img: ({ src, alt, ...props }) => {
+      if (src?.startsWith("http")) {
+        return (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={src}
+            alt={alt || ""}
+            className="rounded-lg my-4 w-full h-auto"
+            {...props}
+          />
+        );
+      }
+
+      return (
+        <Image
+          src={src || ""}
+          alt={alt || ""}
+          width={800}
+          height={600}
+          className="rounded-lg my-4 w-full h-auto"
+          {...props}
+        />
+      );
+    },
     ...components,
   };
 }

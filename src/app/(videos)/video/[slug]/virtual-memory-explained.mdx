@@ -40,12 +40,41 @@ because it's composed of only two possible choices.
 <br />
 My point is that when we refer to binary we can mean many things as long as they are directly to the principle of two. For instance, binary is also a number system. You see, we
 were thought to count in a number system called base ten (decimal). It consists of 10 possible distinct digits from which we can derive
-an infinity of numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9. Binary on the other hand is base 2. Its numbers can only consist of 
-the digits 0 and 1.
+an infinity of numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9. Binary on the other hand is base 2. Its numbers can only consist of the digits 0 and 1.
 <br />
-TK
+But that's not the only property we can dicern between number bases. Let's start by taking the number 11 in binary:
+$$
+(1011)_2
+$$
+The parentheses and the suffix 2 is to let us know that the number is specifically in base 2 (binary) and not the decimal number 1011. So how to we convert this back to base 10?
+To do so we'll need to read the number from right to left, convert each digit to their decimal value and sum all of the results together.
+
+![Binary number powers](/images/documents/virtual-memory-explained/binary_powers.png)
+
+In the above illustration I assigned the appropriate index to each digit of the concerned binary number from right to left starting from 0. This is a very important step because
+each one of these indices represent the power of the digit at said position. Since we're working with base two, the power is $2^n$, where n is said index. The digit itself represents
+the product by which we multiply the result of that power. Here's a full depiction below:
+
+![Binary results](/images/documents/virtual-memory-explained/binary_results.png)
+
+The result would be:
+$$
+\begin{align*}
+&\phantom{=} 1 \times 2^0 + 1 \times 2^1 + 0 \times 2^2 + 1 \times 2^3 \\
+&= 1 + 2 + 0 + 8 \\
+&= 11
+\end{align*}
+$$
+
+A single binary digits is called a bit. The number we were working with was of 4 bits. Bits are a unit of measurement used to quantify memory just like you use centimeters to quantify
+length. Also just like traditional measurements we have other names to simplify larger values. In the case of bits we have bytes. One byte is 8 bits. Then for 2 bytes, or 16 bits,
+there is the word (it's literaly called word). Here's a depiction of these measurements:
+
+![Memory scale](/images/documents/virtual-memory-explained/memory_scale.png)
 
 ### Memory paging
+
+To continue...
 
 ### Memory tables
 
