@@ -23,7 +23,7 @@ export default function YouTubeVideo({
 
   return (
     <div className={cn("mt-12 md:mt-14", className)}>
-      <div className="relative w-full overflow-hidden rounded-md border-2 border-white/20" style={{ aspectRatio: '16 / 9' }}>
+      <div className="relative w-full overflow-hidden rounded-md border-2 border-white/20 aspect-video">
         <iframe
           src={embedUrl}
           title={title}
