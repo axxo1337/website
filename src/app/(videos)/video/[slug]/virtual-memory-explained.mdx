@@ -7,19 +7,43 @@ export const metadata = {
     thumbnailPath: "/images/thumbnails/virtual-memory-explained.png"
 };
 
-Nowadays it's not uncommon for computers to be running hundreds of processes at a time. By this fact two major concerns arize: security and resource management. On one hand each application should be mostly isolated one from another. You wouldn't want [Notion](#) to be spying on what your [Chrome](#) browser open tabs are. And on the other you might be running these applications on an old laptop which doesn't have enough RAM to handle all of them at once.
+Nowadays it's not uncommon for computers to be running hundreds of processes at a time. By this fact two major concerns 
+arise: security and resource management. On one hand each application should be mostly isolated one from another. 
+You wouldn't want [Notion](https://notion.so) to be spying on what your [Chrome](https://www.google.com/intl/en_ca/chrome/) browser open tabs are. And on the other you might be 
+running these applications on an old laptop which doesn't have enough RAM to handle all of them at once.
 <br />
-These are the problems virtual memory solves. And that's what this video explains. I recommend you first give it a watch and come back here afterwards to read my written explanation. Although note that I've made some very slight mistakes here and there in said video. Thankfully these were all clarified in a comment I made and pinned in the comments section of said video.
+These are the problems virtual memory solves. And that's what this video explains. I recommend you first give it a watch 
+and come back here afterwards to read my written explanation. Although note that I've made some very slight mistakes here 
+and there in said video. Thankfully these were all clarified in a comment I made and pinned in the comments section of 
+said video.
 <br />
-Just for good measure I'll correct them here as well, but feel free to skip this list and watch the video, or maybe simply get on with the first chapter of this document:
+Just for good measure I'll correct them here as well, but feel free to skip this list and watch the video, or maybe simply 
+get on with the first chapter of this document:
 1. I misspelled the Level 4 Page Map Table as "PLM4" instead of PML4 throughout the video.
-2. At [6:15](https://youtube.com/watch?v=ultz9m0n0GE&t=375s&pp=0gcJCTAAlc8ueATH) I wrote 412 by accident. The number should be 512.
-3. I realized just now that my illustration of page sizes might have been confusing. Regular pages are of 4KB which is 4096 bytes. Not 4096KB (just to be crystal clear)
-4. The table entries contain a bit called the "present" bit (the rightmost bit). It's called that because as long as it is 1 it means the page is in memory. As soon as it is 0 it means the page is on disk, and when it is on disk the bits used for the physical page index are used to locate the page on disk instead.
+2. At [6:15](https://youtube.com/watch?v=ultz9m0n0GE&t=375s&pp=0gcJCTAAlc8ueATH) I wrote 412 by accident. The number 
+should be 512.
+3. I realized just now that my illustration of page sizes might have been confusing. Regular pages are of 4KB which 
+is 4096 bytes. Not 4096KB (just to be crystal clear)
+4. The table entries contain a bit called the "present" bit (the rightmost bit). It's called that because as 
+long as it is 1 it means the page is in memory. As soon as it is 0 it means the page is on disk, and when it is on 
+disk the bits used for the physical page index are used to locate the page on disk instead.
 
 ### What is memory?
 
-Work in progres..
+Memory is not an easy thing to define as it exists in *many* forms. Although all formats of memory share one common property:
+they're all the state of disturbance in matter. For example, hard drives store data on magnetic disks by changing the orientation of
+tiny magnetic fields on the disks' surface. Then it can read the data back by measuring the orientation of these fields.
+<br />
+Electronics only care about two states of disturbance. That's why it's well known that computers operate in binary. Binary 
+comes from the word bini in latin meaning two. I could say that the decision of whether or not I shall go to the park is binary,
+because it's composed of only two possible choices.
+<br />
+My point is that when we refer to binary we can mean many things as long as they are directly to the principle of two. For instance, binary is also a number system. You see, we
+were thought to count in a number system called base ten (decimal). It consists of 10 possible distinct digits from which we can derive
+an infinity of numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9. Binary on the other hand is base 2. Its numbers can only consist of 
+the digits 0 and 1.
+<br />
+TK
 
 ### Memory paging
 
