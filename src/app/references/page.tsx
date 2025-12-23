@@ -2,13 +2,13 @@ import Main from "@/components/layout/Main";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sources",
+  title: "References",
 };
 
-export default function Sources() {
+export default function References() {
   return (
     <Main
-      title="Sources"
+      title="References"
       createdAt={new Date(2025, 12, 22)}
       updatedAt={new Date(2025, 12, 22)}
     >

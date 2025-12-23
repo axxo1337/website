@@ -29,15 +29,8 @@ export const links: TLink[] = [
     ],
   },
   {
-    title: "Sources",
-    href: "/sources",
-    content: [
-      {
-        title: "Paul's Online Notes",
-        href: "https://tutorial.math.lamar.edu/",
-        icon: Diff,
-      },
-    ],
+    title: "References",
+    href: "/references",
   },
 ];
 
