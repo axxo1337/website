@@ -29,18 +29,13 @@ export const links: TLink[] = [
     ],
   },
   {
-    title: "Resources",
-    href: "/resources",
+    title: "Sources",
+    href: "/sources",
     content: [
       {
         title: "Paul's Online Notes",
         href: "https://tutorial.math.lamar.edu/",
         icon: Diff,
-      },
-      {
-        title: "Binary Ninja",
-        href: "https://binary.ninja/",
-        icon: Search,
       },
     ],
   },
