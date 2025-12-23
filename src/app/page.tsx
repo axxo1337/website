@@ -76,7 +76,7 @@ export default function Home() {
             Although you may know me as{" "}
             <Link
               href="https://www.youtube.com/@axxo1337"
-              className="underline text-[#317FFB]"
+              className="inline-anchor"
             >
               aXXo
             </Link>
@@ -85,7 +85,7 @@ export default function Home() {
           province of{" "}
           <Link
             href="https://en.wikipedia.org/wiki/Quebec"
-            className="underline text-[#317FFB]"
+            className="inline-anchor"
           >
             Quebec
           </Link>{" "}
