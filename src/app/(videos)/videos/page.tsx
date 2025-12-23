@@ -17,7 +17,9 @@ export const metadata: Metadata = {
 //
 
 export default async function Videos() {
-  const videos = await getAllContentMetadata("video");
+  const videos = (await getAllContentMetadata("video")).sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
 
   return (
     <Main
