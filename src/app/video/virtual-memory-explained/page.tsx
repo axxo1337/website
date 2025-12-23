@@ -3,7 +3,6 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import YouTubeVideo from "@/components/page/Video/YouTubeVideo";
-import { Heading3 } from "@/mdx-components";
 
 export default function VirtualMemoryExplained() {
   return (
