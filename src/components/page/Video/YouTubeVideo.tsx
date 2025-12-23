@@ -1,35 +1,49 @@
-"use client";
+import { cn } from "@/lib/client/utils";
 
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import YouTube, { YouTubeProps } from "react-youtube";
+export default function YouTubeVideo({
+  id,
+  title = "YouTube video player",
+  autoplay = false,
+  mute = false,
+  controls = true,
+  startTime,
+  className,
+}: YouTubeVideoProps) {
+  const params = new URLSearchParams();
 
-export default function YouTubeVideo({ id }: YouTubeVideo) {
-  const onPlayerReady: YouTubeProps["onReady"] = (event) => {
-    event.target.pauseVideo();
-  };
+  if (autoplay) params.set("autoplay", "1");
+  if (mute) params.set("mute", "1");
+  if (!controls) params.set("controls", "0");
+  if (startTime) params.set("start", startTime.toString());
 
-  const opts: YouTubeProps["opts"] = {
-    playerVars: {
-      autoplay: 1,
-    },
-  };
+  params.set("rel", "0");
+  params.set("modestbranding", "1");
+
+  const embedUrl = `https://www.youtube.com/embed/${id}?${params.toString()}`;
 
   return (
-    <AspectRatio
-      ratio={16 / 9}
-      className="mt-12 md:mt-14 overflow-hidden rounded-md border-2 border-white/20"
-    >
-      <YouTube
-        videoId={id}
-        opts={opts}
-        onReady={onPlayerReady}
-        className="absolute top-0 left-0 w-full h-full"
-        iframeClassName="w-full h-full"
-      />
-    </AspectRatio>
+    <div className={cn("mt-12 md:mt-14", className)}>
+      <div className="relative w-full overflow-hidden rounded-md border-2 border-white/20" style={{ aspectRatio: '16 / 9' }}>
+        <iframe
+          src={embedUrl}
+          title={title}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+          className="absolute inset-0 h-full w-full"
+        />
+      </div>
+    </div>
   );
 }
 
-interface YouTubeVideo {
+interface YouTubeVideoProps {
   id: string;
+  title?: string;
+  autoplay?: boolean;
+  mute?: boolean;
+  controls?: boolean;
+  startTime?: number;
+  className?: string;
 }
