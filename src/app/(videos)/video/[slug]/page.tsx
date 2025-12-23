@@ -23,7 +23,9 @@ export default async function VideoPage({ params }: Props) {
     >
       <YouTubeVideo id="ultz9m0n0GE" />
       <Section subtitle="What's this video about?" title="Overview">
-        <MDXContent />
+        <div>
+          <MDXContent />
+        </div>
       </Section>
     </Main>
   );

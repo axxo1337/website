@@ -9,8 +9,6 @@ export default function YouTubeVideo({ id }: YouTubeVideo) {
   };
 
   const opts: YouTubeProps["opts"] = {
-    height: "100%",
-    width: "100%",
     playerVars: {
       autoplay: 1,
     },
@@ -26,6 +24,7 @@ export default function YouTubeVideo({ id }: YouTubeVideo) {
         opts={opts}
         onReady={onPlayerReady}
         className="absolute top-0 left-0 w-full h-full"
+        iframeClassName="w-full h-full"
       />
     </AspectRatio>
   );
