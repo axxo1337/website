@@ -116,12 +116,99 @@ in a while, say the third page from Minecraft, stored it on the main SSD, and pl
 
 ![Example scenario 1.2](/images/documents/virtual-memory-explained/scenario1-2.png)
 
+When Minecraft will need its page again a page fault will occur. This is essentially the CPU raising its hand to say that it can't find the memory page at the specified address.
+When this happens the operating system steps in, and locates the needed page on disk, finds another rarely-accessed page, and essentially switches the two. During this entire process 
+Minecraft has to wait until its page is loaded into memory. This is still a fairly fast process, but ideally you always have enough memory so that this never has to happen.
+
 ### Memory tables
 
-### Virtual address
+When a program requests memory like when it gets executed, or needs to load resources like an image, the operating system will create those pages we discussed and list them 
+in a series of tables specific to each program. Let's say a program tries to access address 0. Before this happens, the operating system will store the location of that 
+program's page tables in the CR3 register.
+
+<br />
+
+The CPU will now translate said address using the specified these tables using a specialized unit known as the memory management unit, or MMU for short. The tables I keep 
+mentioning are actually a hierarchy of 4-levels of tables working together each with 512 entries:
+1. The level 4 page map table (PML4).
+2. The directory pointer table (PDPT).
+3. The page directory table (PD).
+4. The page table.
+
+<br />
+
+It&apos;s a lot like finding a book in a giant library. You&apos;d pick the floor, then the section, then the shelf, and finally the exact book itself. 
+The addresses the program's access are called virtual addresses. They basically work like a note on which you wrote the exact steps to take to reach the book 
+based on those criteria.
+
+<br />
+
+First, the CPU looks at the CR3 register, which points to the PML4 table of the program. The PML4 is like the floor. We use 9 bits from the virtual address (bits 39-47) 
+as an index to select one of its 512 possible entries. Each entry points to a different Page Directory Pointer Table.
+
+<br />
+
+Once we have the right PDPT (the section), we use the next 9 bits of our virtual address (bits 30-38) to select one of its entries. This entry points us to a specific 
+Page Directory Table.
+
+<br />
+
+Following the same pattern, we use 9 more bits (bits 21-29) to index into the Page Directory Table (the shelf), which directs us to a specific Page Table (the book).
+
+<br />
+
+Finally, we use yet another 9 bits (bits 12-20) to index into the Page Table itself. This entry contains the base physical index of the actual 4KB memory page we're looking 
+for (this would be like the exact page of the book we want to read from our library example). I want to highlight that the entry stores the physical page “index”, and 
+not address. I&apos;ll get back to this detail later.
+
+<br />
+
+The last 12 bits of the virtual address (bits 0-11) represent the "offset" within the 4KB page, specifying the exact byte we want from those 4,096. So to racap a 48-bit 
+virtual address is composed of:
+- 9 bits for PML4 index
+- 9 bits for PDPT index
+- 9 bits for PDT index
+- 9 bits for PT index
+- 12 bits for page offset
+
+<br />
+
+I mentioned that the page table entries store the physical page “index” and not the physical address of the pages themselves, and that&apos;s because there&apos;s no need to. 
+Since all the pages are of 4KB in size, we can simply index over them. For example the page of index 5 would be at physical address 20&apos;480 in decimal 
+(That&apos;s 5 multiplied by 4096. The size of a memory page in bytes).
+
+<br />
+
+This means the table entries don't need to use their full 64 bits just to store pointers. The remaining bits are used for things like specifying access permissions like 
+read-only or read-write, if the pages can be executed as code, or if they're accessible to user-level programs.
+
+<br />
+
+This makes sense for the page table, but what about the other three tables? They don&apos;t point to 4KB memory pages, but to other tables of pointers right? Yet they also only use 
+about 40 bits to store the "pointers". Remember that each table has 512 entries, and each entry is 64 bits (8 bytes). If you do the math: 512 entries $\times$ 8 bytes = 4096 
+bytes, which is exactly 4KB! This means all tables in our hierarchy are themselves exactly one memory page in size, allowing for them to be indexed the same way!
 
 ### Identity mapping
 
+Now you might wonder: how does the CPU know when to treat an address as virtual versus physical? The answer is that after boot, your operating system explicitly enables 
+memory paging by setting specific control registers. Once paging is enabled, the CPU treats almost all addresses as virtual.
+
+<br />
+
+If the OS needs to access physical memory directly, it uses "identity mapping". It creates virtual address mappings that point to the identical physical addresses.
+For example, mapping virtual address 0x1000 to physical address 0x1000. The translation process still occurs, but the end result is the same address you started with.
+
 ### Translation look-aside buffer
 
+The process of translating addresses can become very costly in performance. That's where the Translation Lookaside Buffer (TLB) comes in. The TLB is a specialized cache 
+just for address translations, similar to how the L1, L2, and L3 caches work for instructions and data. It stores recently used virtual-to-physical translations to 
+avoid the cost of walking the page tables repeatedly.
+
 ### Why use all these tables?
+
+At this point you may still be wondering why virtual memory even needs the 4 tables system it uses? Why not just store all the translations in one big ass table? The 
+thing is: with a single table, you&apos;d need an entry for every possible page in the entire address 48-bits address space. Each entry is 8 bytes so that would get massive 
+real fast.
+
+By using a four-level hierarchy, the system only allocates tables for memory regions your program actually uses. It's like writing a grocery list that only includes 
+items you need, instead of also listing all the products you don&apos;t need.

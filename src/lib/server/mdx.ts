@@ -70,7 +70,6 @@ export interface MDXMetadata {
   createdAt: string;
   updatedAt: string;
   youtubeId?: string;
-  subtitle?: string;
   description?: string;
   thumbnailPath?: string;
   tags?: string[];
