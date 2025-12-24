@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
+import { ScrollArea, ScrollBar } from "./components/ui/scroll-area";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -38,6 +39,22 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <span className={className} {...props}>
           {children}
         </span>
+      );
+    },
+    code: ({ className, children, ...props }) => {
+      if (!className) {
+        return <code {...props}>{children}</code>;
+      }
+
+      return (
+        <div className="bg-[#181818] p-4 rounded-md my-1">
+          <ScrollArea>
+            <code className={className} {...props}>
+              {children}
+            </code>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        </div>
       );
     },
     img: ({ src, alt, ...props }) => {
