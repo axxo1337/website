@@ -66,8 +66,8 @@ export default function Home() {
   return (
     <Main
       title="About me"
-      createdAt={new Date(2025, 12, 19)}
-      updatedAt={new Date(2025, 12, 22)}
+      createdAt={new Date(2025, 11, 19)}
+      updatedAt={new Date(2025, 11, 22)}
     >
       <Section subtitle="Who am I?" title="In my own words">
         <p className="md:text-lg">

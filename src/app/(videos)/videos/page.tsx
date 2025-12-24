@@ -21,11 +21,16 @@ export default async function Videos() {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
+  const mostRecentUpdate = videos.reduce((latest, video) => {
+    const videoUpdate = new Date(video.updatedAt);
+    return videoUpdate > latest ? videoUpdate : latest;
+  }, new Date(0));
+
   return (
     <Main
       title="Videos"
-      createdAt={new Date(2025, 12, 22)}
-      updatedAt={new Date(2025, 12, 22)}
+      createdAt={new Date(2025, 11, 22)}
+      updatedAt={mostRecentUpdate}
     >
       <Section title="Library">
         <p className="md:text-lg">
