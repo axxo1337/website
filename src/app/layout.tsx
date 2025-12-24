@@ -3,7 +3,6 @@ import { Roboto } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
-import "katex/dist/katex.min.css";
 
 //
 // [SECTION] Defines
@@ -102,7 +101,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden`}>
+      <body
+        className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden`}
+      >
         <div className="px-5 lg:px-0 max-w-255 w-full">
           <Header />
           {children}

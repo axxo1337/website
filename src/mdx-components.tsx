@@ -41,20 +41,26 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </span>
       );
     },
+    pre: ({ children, ...props }) => (
+      <pre
+        className="bg-[#181818] p-4 rounded-md my-2 border border-white/10"
+        {...props}
+      >
+        {children}
+      </pre>
+    ),
     code: ({ className, children, ...props }) => {
       if (!className) {
         return <code {...props}>{children}</code>;
       }
 
       return (
-        <div className="bg-[#181818] p-4 rounded-md my-1">
-          <ScrollArea>
-            <code className={className} {...props}>
-              {children}
-            </code>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
-        </div>
+        <ScrollArea>
+          <code className={`${className} bg-transparent! p-0!`} {...props}>
+            {children}
+          </code>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       );
     },
     img: ({ src, alt, ...props }) => {
