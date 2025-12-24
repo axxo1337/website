@@ -8,8 +8,8 @@ export const metadata = {
 };
 
 Nowadays it's not uncommon for computers to be running hundreds of processes at a time. By this fact two major concerns 
-arise: security and resource management. On one hand each application should be mostly isolated one from another. 
-You wouldn't want [Notion](https://notion.so) to be spying on what your [Chrome](https://www.google.com/intl/en_ca/chrome/) browser open tabs are. And on the other you might be 
+arises: security and resource management. On one hand each application should be mostly isolated one from another. 
+You wouldn't want [Notion](https://notion.so) to be spying on what tabs are open in your [Chrome](https://www.google.com/intl/en_ca/chrome/) browser. And on the other you might be 
 running these applications on an old laptop which doesn't have enough RAM to handle all of them at once.
 <br />
 These are the problems virtual memory solves. And that's what this video explains. I recommend you first give it a watch 
@@ -31,7 +31,7 @@ disk the bits used for the physical page index are used to locate the page on di
 ### What is memory?
 
 Memory is not an easy thing to define as it exists in *many* forms. Although all formats of memory share one common property:
-they're all the state of disturbance in matter. For example, hard drives store data on magnetic disks by changing the orientation of
+they're all states of disturbance in matter. For example, hard drives store data on magnetic disks by changing the orientation of
 tiny magnetic fields on the disks' surface. Then it can read the data back by measuring the orientation of these fields.
 <br />
 Electronics only care about two states of disturbance. That's why it's well known that computers operate in binary. Binary 
@@ -39,19 +39,19 @@ comes from the word bini in latin meaning two. I could say that the decision of 
 because it's composed of only two possible choices.
 <br />
 My point is that when we refer to binary we can mean many things as long as they are directly to the principle of two. For instance, binary is also a number system. You see, we
-were thought to count in a number system called base ten (decimal). It consists of 10 possible distinct digits from which we can derive
-an infinity of numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9. Binary on the other hand is base 2. Its numbers can only consist of the digits 0 and 1.
+were taught to count in a number system called base ten (decimal). It consists of 10 possible distinct digits from which we can derive
+infinitely many numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9. Binary on the other hand is base 2. Its numbers can only consist of the digits 0 and 1.
 <br />
-But that's not the only property we can dicern between number bases. Let's start by taking the number 11 in binary:
+But that's not the only property we can discern between number bases. Let's start by taking the decimal number 11, but put in binary:
 $$
 (1011)_2
 $$
 The parentheses and the suffix 2 is to let us know that the number is specifically in base 2 (binary) and not the decimal number 1011. So how to we convert this back to base 10?
-To do so we'll need to read the number from right to left, convert each digit to their decimal value and sum all of the results together.
+To do so we'll need to read the number from right to left, convert each digit to its decimal value and sum all of the results together.
 
 ![Binary number powers](/images/documents/virtual-memory-explained/binary_powers.png)
 
-In the above illustration I assigned the appropriate index to each digit of the concerned binary number from right to left starting from 0. This is a very important step because
+In the above illustration ssigned the appropriate index to each digit of the concerned binary number from right to left starting from 0. This is a very important step because
 each one of these indices represent the power of the digit at said position. Since we're working with base two, the power is $2^n$, where n is said index. The digit itself represents
 the product by which we multiply the result of that power. Here's a full depiction below:
 
@@ -66,14 +66,14 @@ $$
 \end{align*}
 $$
 
-A single binary digits is called a bit. The number we were working with was of 4 bits. Bits are a unit of measurement used to quantify memory just like you use centimeters to quantify
+A single binary digit is called a bit. The number we were working with was of 4 bits. Bits are a unit of measurement used to quantify memory just like you use centimeters to quantify
 length. And just like such measurements we have other names to simplify larger values. In the case of bits we have bytes. One byte is 8 bits. Then for 2 bytes, or 16 bits,
-there is the word (it's literaly called word). Here's a depiction of these measurements:
+there is the word (it's literally called word). Here's a depiction of these measurements:
 
 ![Memory scale](/images/documents/virtual-memory-explained/memory_scale.png)
 
-The format of memory we'll mostly care about today is random access memory (RAM). This media is volatile meaning the method it uses to read and write bits is temporary. When you 
-cut the power to your machine all of its contents are lost. It's also the second fastest storage format in computers after in-processor memory, and that's where programs will be
+The format of memory we'll mostly care about today is random access memory (RAM). This medium is volatile meaning the method it uses to read and write bits is temporary. When you 
+cut the power to your machine all of its contents are lost. It's also the second fastest storage format in computers after in-processor memory, and that's where programs are
 stored while executing.
 
 <br />
@@ -83,7 +83,7 @@ memory has its own unique address, like houses on a street. Address 0 would lead
 
 ![Example addressing](/images/documents/virtual-memory-explained/example_addressing.png)
 
-The figure above provides an example of memory addressing. Each row consists of a byte (8 bits) and is indexed as such (row 1 is 0x0, row 2 0x1 and row 3 0x3). You may be 
+The figure above provides an example of memory addressing. Each row consists of a byte (8 bits) and is indexed as such (row 1 is 0x0, row 2 is 0x1 and row 3 is 0x2). You may be 
 wondering why we prefix each address by "0x". That's because these numbers are in a base called hexadecimal. We won't dive into the details, but essentially when working with
 addresses we often express them in terms of hexadecimal numbers rather than decimal as they can get pretty large, and base 16 supporting 16 different digits per power it tends
 to make the numbers look much simpler. "0x" is just a prefix to make it clear the base is 16. Thankfully in this case the numbers translate directly to decimal since they don't
@@ -91,7 +91,7 @@ go above 9 and remain in the first power.
 
 <br />
 
-I said I wouldn't delve into hexadecimal, but I'll at least tell you how it supports this many digits if we only know 9: It uses the alphabet. Here's all these possible digits: 1,
+I said I wouldn't delve into hexadecimal, but I'll at least tell you how it supports this many digits if we only know 9: It uses the alphabet. Here are all these possible digits: 0, 1,
 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E and F, where F equals 15 in decimal.
 
 ### Memory paging
