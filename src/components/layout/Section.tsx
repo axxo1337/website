@@ -1,6 +1,6 @@
 export default function Section({ subtitle, title, children }: Section) {
   return (
-    <section className="mt-12 md:mt-14">
+    <section className="mt-8 md:mt-14">
       <div className="flex flex-col md:gap-1.5 mb-4 md:mb-6">
         {subtitle && (
           <span className="text-xl md:text-2xl text-white/70">{subtitle}</span>

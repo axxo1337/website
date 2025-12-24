@@ -79,7 +79,9 @@ export default async function VideoPage({ params }: Props) {
       createdAt={new Date(metadata.createdAt)}
       updatedAt={new Date(metadata.updatedAt)}
     >
-      <YouTubeVideo id="ultz9m0n0GE" />
+      <div>
+        <YouTubeVideo className="mt-8 md:mt-14" id="ultz9m0n0GE" />
+      </div>
       <Section subtitle="What's this video about?" title="Overview">
         <div>
           <MDXContent />

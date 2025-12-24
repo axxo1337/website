@@ -97,7 +97,7 @@ export default function MobileNavigation() {
         <Menu className="size-6.5" />
       </SheetTrigger>
       <SheetContent className="border-0 w-full">
-        <SheetHeader className="pt-6 px-6">
+        <SheetHeader className="pt-6 px-5">
           <SheetTitle className="text-2xl">Navigation</SheetTitle>
           <SheetDescription hidden={true}>
             Navigate through the various pages of my website
@@ -109,7 +109,7 @@ export default function MobileNavigation() {
               <Link
                 key={`link-${linkIndex}`}
                 href={link.href}
-                className="w-full px-6 py-4 border-t last:border-b border-white/25"
+                className="w-full px-5 py-4 border-t last:border-b border-white/25"
               >
                 <span>{link.title}</span>
               </Link>

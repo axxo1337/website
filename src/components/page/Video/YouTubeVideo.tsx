@@ -22,7 +22,7 @@ export default function YouTubeVideo({
   const embedUrl = `https://www.youtube.com/embed/${id}?${params.toString()}`;
 
   return (
-    <div className={cn("mt-12 md:mt-14", className)}>
+    <div className={className}>
       <div className="relative w-full overflow-hidden rounded-md border-2 border-white/20 aspect-video">
         <iframe
           src={embedUrl}
