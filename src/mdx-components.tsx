@@ -8,6 +8,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </h3>
     ),
+    h4: ({ children }) => (
+      <h4 className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2">
+        {children}
+      </h4>
+    ),
     p: ({ children }) => <p className="py-0.5">{children}</p>,
     a: (props) => (
       <a {...props} className={`${props.className} inline-anchor`}></a>

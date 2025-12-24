@@ -6,4 +6,93 @@ export const metadata = {
     thumbnailPath: "/images/thumbnails/antidebug.png"
 };
 
-Work in progress
+AntiDebug is a TUI-based sandbox to experiment with common anti-debugging techniques (currently user-mode only). I originally made this project back when I was working as the
+CTO of Haxo Games Inc. (a now defunct company). You can find it on my Github [here](https://github.com/axxo1337/AntiDebug).
+
+### Detections
+
+#### `IsDebuggerPresent`
+
+`IsDebuggerPresent` is a Windows API function that simply accesses the `BeingDebugged` boolean from the thread environment block (TEB) of the current process. This value
+is true when the process is being debugged. This can be bypassed by simply setting `BeingDebugged` to 0. Patching `IsDebuggerPresent` may seem idiotic since anyone with a
+minimum of common sense would not invoke it directly, and yet most programs out there do.
+
+#### `BeingDebugged`
+
+This technique directly reads the `BeingDebugged` member of the process environment block (PEB) for the current process. If true, it is being debugged. Can be bypassed by
+simply setting the value to 0.
+
+#### `CheckRemoteDebuggerPresent`
+
+`CheckRemoteDebuggerPresent` is a Windows API function which which calls `NtQueryInformationProcess` for the `ProcessDebugPort` value under the hood. If this value is 0
+no debugger is attached, otherwise it sets the pointer to the boolean it was passed to true. This can be bypassed by hooking `NtQueryInformationProcess` or the function
+itself. `ProcessDebugPort` being in the `EPROCESS` structure it is immune to usermode shenanigans.
+
+#### `NtQueryInformationProcess`
+
+`NtQueryInformationProcess` can be used to get `ProcessDebugPort` which can indicate if a debugger is present. It can also query a few values in an undocumented way such
+as the heap flags (`ProcessDebugFlags`) and the debug object handle (`ProcessDebugHandle`).
+
+#### `FindWindowByTitle`
+
+Searches for debugging tools by enumerating windows and checking their titles. It searches for substrings in window titles such as "Cheat Engine" or "Process Hacker". 
+The substring matching provides flexibility to detect multiple versions of tools even when version numbers are appended to titles. This can be bypassed by hiding debugger 
+windows, changing window titles and hooking `FindWindowExA` functions.
+
+#### `FindWindowByClass`
+
+Searches for debugging tools by enumerating windows and checking their classes. It uses `FindWindowA` from Windows API to detect specific window classes like "OLLYDBG" and "WinDbgFrameClass", 
+This can be bypassed by hiding debugger windows, changing window classes and hooking `FindWindowA`/`FindWindowExA` functions.
+
+#### `GetThreadContext`
+
+`GetThreadContext` is a Windows API function that retrieves the current thread context, including hardware debug registers (Dr0, Dr1, Dr2, Dr3). When hardware breakpoints 
+are set by debuggers, the corresponding debug register contains the breakpoint address. This technique checks if any of these registers contain non-zero values, indicating
+active hardware breakpoints. Hardware breakpoints are preferred by advanced debuggers since they don't modify process memory. This can be bypassed by clearing debug 
+registers before detection, hooking `GetThreadContext` to return clean registers.
+
+#### `NtQuerySystemInformation`
+
+`NtQuerySystemInformation` can be used to get `DebuggerInformation`. It's an undocumented structured made up of three booleans:
+```c++
+typedef struct _SYSTEM_KERNEL_DEBUGGER_INFORMATION_EX 
+{
+	BOOLEAN DebuggerAllowed;
+	BOOLEAN DebuggerEnabled;
+	BOOLEAN DebuggerPresent;
+} SYSTEM_KERNEL_DEBUGGER_INFORMATION_EX, * PSYSTEM_KERNEL_DEBUGGER_INFORMATION_EX;
+```
+`DebuggerAllowed` is true when a kernel debugger is allowed on the system. This will usually become true when the system gets a debugger attached to it. `KernelDebuggerEnabled` will
+be true if the kernel was initialized with debugging enabled. `DebuggerPresent` is true when there currently is a debugger attached to the system.
+
+#### `CloseHandle`
+
+When closing an invalid handle an `EXCEPTION_INVALID_HANDLE (0xC0000008)` will be raised if a debugger is attached. This can then be cought by an `__except` block once the debugger passes
+control back to the procediss. If no debugger is present no exception is thrown. This detection is disabled by default because it causes an exception.
+
+#### `DbgPrint`
+
+This method will raise the exception `DBG_PRINTEXCEPTION_C (0x40010006)`. If it is handled by the program itself then no debugger is attached. Otherwise one obviously is. It is usually is raised
+by functions like `DbgPrint`.
+
+#### `NtGlobalFlag`
+
+`NtGlobalFlag` is a member of the PEB which, when a debugger is attached, has three bit flags set to 1 notably: `0x10: EAP_ENABLE_TAIL_CHECK`, `0x20: HEAP_ENABLE_FREE_CHECK` and `0x40: HEAP_VALIDATE_PARAMETERS`. 
+Bypassing is as simple setting it to any value that does not match any of those flags (0 will work great). Also it seems these flags are only set when a program is launched with a debugger. When it is attached 
+after startup they aren't.
+
+#### `EnumDeviceDrivers`
+
+`EnumDeviceDrivers` just enumerates the different loaded device drivers. Debuggers can be detected by looking for signed debugger-related kernel drivers such as `dbk64.sys` 
+used for DBVM.
+
+#### `CyclesPassed`
+
+`CyclesPassed` uses MSVC intrinsics to check if the CPU cycles delta between function's prologue and epilogue was abnormally huge. If such a thing happend more than or equal 3 
+times then it assumes that there was a breakpoint set inside it.
+
+#### `IsWindowsFunctionBreakpointed`
+
+`IsWindowsFunctionBreakpointed` scans for the first 1 or 2 bytes of WinAPI functions (mostly those used for anti debbuging) for software breakpoint INT3 (0xCC / 0xCD03) 
+and undefined opcode which can be used to throw an exception (0x0F0B).
+
