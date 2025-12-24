@@ -49,8 +49,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <Image
           src={src || ""}
           alt={alt || ""}
-          width={800}
-          height={600}
+          width={0}
+          height={0}
+          sizes="100vw"
           className="rounded-lg my-4 w-full h-auto"
           {...props}
         />
