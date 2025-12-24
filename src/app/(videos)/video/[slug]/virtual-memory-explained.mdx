@@ -96,7 +96,22 @@ I said I wouldn't delve into hexadecimal, but I'll at least tell you how it supp
 
 ### Memory paging
 
-To continue...
+Imagine your computer only had 28 kilobytes of RAM. You decide to open Discord and Minecraft so you can play bedwars with your friends. The thing is, you remember it's 
+the holidays and your friends are all busy. So you close Discord and open Chrome instead.
+
+![Example scenario 1](/images/documents/virtual-memory-explained/scenario1.png)
+
+As illustrated in the above figure there's an issue. Chrome requires too much memory to be placed where Discord was, and it can't possibly fit under Minecraft. So what would happen?
+Well luckily virtual memory is enabled and so memory is divided in equal-sized 4 kilobytes chunks called pages (this scenario is theoretical and ignores the fact that the operating
+system itself would also be taking up memory).
+
+![Example scenario 1.1](/images/documents/virtual-memory-explained/scenario1-1.png)
+
+The system can take the first two pages of Chrome, fit them where Discord was, and take the ramaining page and fit it under Minecraft. That's memory paging. 
+
+<br />
+
+But what if that memory page couldn't fit under Minecraft because say the calculator app was using up said page.
 
 ### Memory tables
 
