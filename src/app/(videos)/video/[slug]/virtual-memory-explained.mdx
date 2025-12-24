@@ -67,10 +67,32 @@ $$
 $$
 
 A single binary digits is called a bit. The number we were working with was of 4 bits. Bits are a unit of measurement used to quantify memory just like you use centimeters to quantify
-length. Also just like traditional measurements we have other names to simplify larger values. In the case of bits we have bytes. One byte is 8 bits. Then for 2 bytes, or 16 bits,
+length. And just like such measurements we have other names to simplify larger values. In the case of bits we have bytes. One byte is 8 bits. Then for 2 bytes, or 16 bits,
 there is the word (it's literaly called word). Here's a depiction of these measurements:
 
 ![Memory scale](/images/documents/virtual-memory-explained/memory_scale.png)
+
+The format of memory we'll mostly care about today is random access memory (RAM). This media is volatile meaning the method it uses to read and write bits is temporary. When you 
+cut the power to your machine all of its contents are lost. It's also the second fastest storage format in computers after in-processor memory, and that's where programs will be
+stored while executing.
+
+<br />
+
+So how is your computer able to tell which parts of RAM it should access when it needs to read or write anything? It uses something known as addressing. Every single byte in 
+memory has its own unique address, like houses on a street. Address 0 would lead to the first byte in memory, and address 1 to the second.
+
+![Example addressing](/images/documents/virtual-memory-explained/example_addressing.png)
+
+The figure above provides an example of memory addressing. Each row consists of a byte (8 bits) and is indexed as such (row 1 is 0x0, row 2 0x1 and row 3 0x3). You may be 
+wondering why we prefix each address by "0x". That's because these numbers are in a base called hexadecimal. We won't dive into the details, but essentially when working with
+addresses we often express them in terms of hexadecimal numbers rather than decimal as they can get pretty large, and base 16 supporting 16 different digits per power it tends
+to make the numbers look much simpler. "0x" is just a prefix to make it clear the base is 16. Thankfully in this case the numbers translate directly to decimal since they don't
+go above 9 and remain in the first power.
+
+<br />
+
+I said I wouldn't delve into hexadecimal, but I'll at least tell you how it supports this many digits if we only know 9: It uses the alphabet. Here's all these possible digits: 1,
+2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E and F, where F equals 15 in decimal.
 
 ### Memory paging
 
