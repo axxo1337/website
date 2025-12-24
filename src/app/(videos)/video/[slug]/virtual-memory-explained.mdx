@@ -210,5 +210,7 @@ At this point you may still be wondering why virtual memory even needs the 4 tab
 thing is: with a single table, you&apos;d need an entry for every possible page in the entire address 48-bits address space. Each entry is 8 bytes so that would get massive 
 real fast.
 
+<br />
+
 By using a four-level hierarchy, the system only allocates tables for memory regions your program actually uses. It's like writing a grocery list that only includes 
 items you need, instead of also listing all the products you don&apos;t need.
