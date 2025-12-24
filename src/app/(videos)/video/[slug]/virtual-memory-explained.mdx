@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 Nowadays it's not uncommon for computers to be running hundreds of processes at a time. By this fact two major concerns 
-arises: security and resource management. On one hand each application should be mostly isolated one from another. 
+arise: security and resource management. On one hand each application should be mostly isolated one from another. 
 You wouldn't want [Notion](https://notion.so) to be spying on what tabs are open in your [Chrome](https://www.google.com/intl/en_ca/chrome/) browser. And on the other you might be 
 running these applications on an old laptop which doesn't have enough RAM to handle all of them at once.
 <br />
@@ -38,35 +38,35 @@ Electronics only care about two states of disturbance. That's why it's well know
 comes from the word bini in latin meaning two. I could say that the decision of whether or not I shall go to the park is binary,
 because it's composed of only two possible choices.
 <br />
-My point is that when we refer to binary we can mean many things as long as they are directly to the principle of two. For instance, binary is also a number system. You see, we
+My point is that when we refer to binary we can mean many things as long as they are directly related to the principle of two. For instance, binary is also a number system. You see, we
 were taught to count in a number system called base ten (decimal). It consists of 10 possible distinct digits from which we can derive
 infinitely many numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9. Binary on the other hand is base 2. Its numbers can only consist of the digits 0 and 1.
 <br />
 But that's not the only property we can discern between number bases. Let's start by taking the decimal number 11, but put in binary:
-$$
+```math
 (1011)_2
-$$
-The parentheses and the suffix 2 is to let us know that the number is specifically in base 2 (binary) and not the decimal number 1011. So how to we convert this back to base 10?
+```
+The parentheses and the suffix 2 is to let us know that the number is specifically in base 2 (binary) and not the decimal number 1011. So how do we convert this back to base 10?
 To do so we'll need to read the number from right to left, convert each digit to its decimal value and sum all of the results together.
 
 ![Binary number powers](/images/documents/virtual-memory-explained/binary_powers.png)
 
-In the above illustration ssigned the appropriate index to each digit of the concerned binary number from right to left starting from 0. This is a very important step because
+In the above illustration I assigned the appropriate index to each digit of the concerned binary number from right to left starting from 0. This is a very important step because
 each one of these indices represent the power of the digit at said position. Since we're working with base two, the power is $2^n$, where n is said index. The digit itself represents
 the product by which we multiply the result of that power. Here's a full depiction below:
 
 ![Binary results](/images/documents/virtual-memory-explained/binary_results.png)
 
 The result would be:
-$$
+```math
 \begin{align*}
 &\phantom{=} 1 \times 2^0 + 1 \times 2^1 + 0 \times 2^2 + 1 \times 2^3 \\
 &= 1 + 2 + 0 + 8 \\
 &= 11
 \end{align*}
-$$
+```
 
-A single binary digit is called a bit. The number we were working with was of 4 bits. Bits are a unit of measurement used to quantify memory just like you use centimeters to quantify
+A single binary digit is called a bit. The number we were working with was 4 bits. Bits are a unit of measurement used to quantify memory just like you use centimeters to quantify
 length. And just like such measurements we have other names to simplify larger values. In the case of bits we have bytes. One byte is 8 bits. Then for 2 bytes, or 16 bits,
 there is the word (it's literally called word). Here's a depiction of these measurements:
 
@@ -91,7 +91,7 @@ go above 9 and remain in the first power.
 
 <br />
 
-I said I wouldn't delve into hexadecimal, but I'll at least tell you how it supports this many digits if we only know 9: It uses the alphabet. Here are all these possible digits: 0, 1,
+How can hexadecimal support this many digits if we only know up to 9? It uses the alphabet. Here are all the possible digits: 0, 1,
 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E and F, where F equals 15 in decimal.
 
 ### Memory paging
@@ -107,7 +107,7 @@ system itself would also be taking up memory).
 
 ![Example scenario 1.1](/images/documents/virtual-memory-explained/scenario1-1.png)
 
-The system can take the first two pages of Chrome, fit them where Discord was, and take the ramaining page and fit it under Minecraft. That's memory paging. 
+The system can take the first two pages of Chrome, fit them where Discord was, and take the remaining page and fit it under Minecraft. That's memory paging. 
 
 <br />
 
