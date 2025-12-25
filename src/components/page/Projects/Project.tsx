@@ -18,7 +18,7 @@ export default function Project({
             src={thumbnailPath}
             fill={true}
             alt="thumnail"
-            className="rounded-sm border-2 border-white/20"
+            className="rounded-sm border-2 border-white/20 object-cover"
           />
         </AspectRatio>
         <div className="my-2">
