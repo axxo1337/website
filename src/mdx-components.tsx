@@ -19,7 +19,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <a {...props} className={`${props.className} inline-anchor`}></a>
     ),
     ol: ({ children }) => (
-      <ol className="list-decimal pl-5 flex flex-col gap-2">{children}</ol>
+      <ol className="list-decimal pl-5 flex flex-col gap-2 my-1">{children}</ol>
     ),
     ul: ({ children }) => (
       <ol className="list-disc pl-5 flex flex-col gap-2">{children}</ol>

@@ -80,7 +80,7 @@ export default async function ProjectPage({ params }: Props) {
         <div>
           <MDXContent />
         </div>
-      </Section>
+      </Section> 
     </Main>
   );
 }
