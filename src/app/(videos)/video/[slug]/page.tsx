@@ -1,6 +1,6 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
-import YouTubeVideo from "@/components/page/Video/YouTubeVideo";
+import YouTubeVideo from "@/components/page/Projects/YouTubeVideo";
 import { contentExists, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
