@@ -22,7 +22,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <ol className="list-decimal pl-5 flex flex-col gap-2 my-1">{children}</ol>
     ),
     ul: ({ children }) => (
-      <ol className="list-disc pl-5 flex flex-col gap-2 my-1">{children}</ol>
+      <ul className="list-disc pl-5 flex flex-col gap-2 my-1">{children}</ul>
     ),
     li: ({ children }) => <li>{children}</li>,
     span: ({ className, children, ...props }) => {
