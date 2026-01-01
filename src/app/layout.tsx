@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   },
   description:
     "Just some дебил with unrestricted access to a computer (No I do not make DVD rips). I mostly teach computer-science stuff, but I also have an interest in mathematics and engineering.",
+  icons: {
+    icon: "/favicon.ico",
+  },
   applicationName: "aXXo's website",
   keywords: [
     "reverse engineering",
@@ -101,9 +104,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden`}
-      >
+      <body className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden`}>
         <div className="px-5 lg:px-0 max-w-255 w-full">
           <Header />
           {children}

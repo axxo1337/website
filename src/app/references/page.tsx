@@ -1,7 +1,6 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "References",
