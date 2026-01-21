@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /__next/
 Disallow: /api/
+Disallow: 31.223.58.217
