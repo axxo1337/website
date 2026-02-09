@@ -2,7 +2,7 @@ import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Social from "@/components/page/Home/Social";
 import Work from "@/components/page/Home/Work";
-import { MoveRight } from "lucide-react";
+import { CornerRightDown, MoveRight } from "lucide-react";
 import Link from "next/link";
 
 //
@@ -103,9 +103,10 @@ export default function Home() {
           ))}
         </div>
         <hr className="my-4 md:my-6 border-white/20" />
-        <div className="text-xl md:text-2xl flex items-center justify-between">
+        <div className="text-xl flex-col sm:flex-row md:text-2xl flex sm:items-center gap-2 justify-between">
           <span className="flex items-center gap-3">
-            Or see everything <MoveRight />
+            Or see everything <MoveRight className="hidden sm:block" />
+            <CornerRightDown className="block sm:hidden" />
           </span>
           <div className="flex items-center gap-6">
             <Link href="/videos" className="hover:underline">
