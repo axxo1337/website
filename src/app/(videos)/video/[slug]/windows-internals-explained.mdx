@@ -6,3 +6,53 @@ export const metadata = {
     youtubeId: null,
     thumbnailPath: "/images/thumbnails/windows-internals-explained.png"
 };
+
+Windows internals is a very important subject that's sadly very poorly documented. In this video I did my best to give you a great guide to trampoline from. You should 
+find all of my sources and collaborators at the end of this document.
+
+### A brief history
+
+In 1975, while Paul Allen was walking through the [Harvard square](https://en.wikipedia.org/wiki/Harvard_Square) a magazine caught his attention.
+It was an issue of the magazine <i>Popular Electronics</i>. The cover stared a computer called the [Altair 8800](https://en.wikipedia.org/wiki/Altair_8800). 
+A personal computer released just the year before by MITS. Allen bought the magazine and headed back to his dorm where he met with Bill Gates. They wanted to 
+land a deal with the company for the development of an implementation of [BASIC](https://en.wikipedia.org/wiki/BASIC) for the system.
+
+<br />
+
+Gates called and organized a meeting to show them this software <u>which they had not even programmed yet</u>. In March they met with the company, and their 
+presentation was successful.
+
+<br />
+
+A month later, Allen and Gates founded Micro-Soft which stood for Micro Computer Software. Over the years they made many more contracts to the point that in 1980, 
+their profits were of [8 million dollars](https://learn.microsoft.com/en-us/shows/history/history-of-microsoft-1980). At this point, a few IBM employees approached 
+them with a deal to code an operating system for their next personal computer.
+
+<br />
+
+To save themselves a lot of time they ended up buying an already existing system called [86-DOS](https://en.wikipedia.org/wiki/86-DOS). They modified and licensed it 
+to IBM as MS-DOS. Microsoft ended up releasing Windows in 1985. It was a graphical interface running on top of DOS. This later evolved into Windows 95, Windows XP and eventually all modern versions of Windows.
+
+### Fundamentals
+
+TO BE CONTINUED
+
+### Sources and credits
+
+- [n4r1b.com](https://n4r1b.com/) → Helped with explaining the system call handler through a [blog post](https://n4r1b.com/posts/2019/03/system-calls-on-windows-x64/).
+- [Vergilius Project](https://www.vergiliusproject.com/) → Helped with reversing some code by providing undocumented structures in a convenient way.
+- [Microsoft Learn](https://learn.microsoft.com/en-us/) → Helped by providing documentation.
+- [osdev](http://wiki.osdev.org/) → Helped by providing much low level information.
+    - [https://wiki.osdev.org/Higher_Half_Kernel](https://wiki.osdev.org/Higher_Half_Kernel)
+    - [https://wiki.osdev.org/Memory_management](https://wiki.osdev.org/Memory_management)
+- [Wikipedia](https://en.wikipedia.org/) → Helped by providing various information.
+    - https://en.wikipedia.org/wiki/Ntoskrnl.exe#Memory_manager
+- [sandpile.org](https://www.sandpile.org/) → Made register mappings nicely documented.
+- Intel SDM → Helped by providing much low level information.
+- Windows Internals, 7th edition, Part 1 → Provided a considerable amount of information.
+- Yeint → Helped by correcting minor mistakes and answered some questions.
+- Evelyn Lark → Provided some of the musical arrangements for the video.
+- n4r1b → Wrote a blog post that was sourced in this video.
+    - [https://n4r1b.com/posts/2019/03/system-calls-on-windows-x64](https://n4r1b.com/posts/2019/03/system-calls-on-windows-x64/)
+- zpfure → Reviewed the script and suggested multiple changes.
+- leepha → Reviewed the script and suggested a lot of improvements.
