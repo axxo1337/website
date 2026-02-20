@@ -29,7 +29,7 @@ export default function Video({
             <span>Created • {format(createdAt, "MM/dd/yyyy")}</span>
           </div>
         </div>
-        <p className="text-white/75">{description}</p>
+        <p className="text-white/75 line-clamp-2">{description}</p>
       </article>
     </Link>
   );
