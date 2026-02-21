@@ -148,10 +148,61 @@ What you're seeing here is a very simplified overview of these units. I'm only s
 
 <br />
 
-The L3 is a large cache shared between all the cores. Each core has both an L2 and L1 cache as well. The lower the cache number the smaller in size it is, but the faster to 
-perform operations upon it also is. L3 being the largest of all and shared among the cores it is also the slowest.
+The L3 is a large cache shared between all the cores. Each core has both an L2 and L1 cache as well. The lower the cache 
+number the smaller in size it is, but the faster to perform operations upon it also is. L3 being the largest of 
+all and shared among the cores it is also the slowest. Caches store frequently used data and instructions. Note 
+that CPUs usually have more than a single L2 and L1 cache, each for a specific purpose.
 
 <br />
+
+Within cores is a control unit (CU). It is responsible for fetching instructions from code and directing them to the 
+appropriate execution unit. In this case, there's only one execution unit, the ALU. It stands for arithmetic logical 
+unit and handles arithmetic operation. Modern CPUs include other execution units, but I want to keep things simple.
+
+<br />
+
+The MMU or memory management unit is the component responsible for handling memory. That includes virtual memory.
+
+<br />
+
+Registers are small storage units used to store data needed within the current execution context. In 64-bit 
+computers their size goes from 64 bits up to 512 bits. They are the fastest way a CPU can handle memory.
+
+<br />
+
+[ADD IMAGE]
+
+<br />
+
+What you see here are only the most commonly used ones. These are the labels we refer to them as. RIP or the instruction 
+pointer points to the instruction that the CPU is currently executing. 
+
+<br />
+
+Other registers such as `RAX` or `RCX` do not have a special use. Machine code can even refer to lower portions of some of 
+said registers when necessary. For instance `EAX` would access only the first 32 bits of the `RAX` register. Although they 
+don't have a mandatory use case, basic conventions exist for how they are used. For instance `RAX` is often utilized to 
+store the return value of a function.
+
+<br />
+
+The CPU uses `RFLAGS` as a bitfield to specify certain conditions and configuration. For instance, the 6th bit in it 
+represents the zero flag. After testing a register, if this bit is set to 1, then the value it stores is zero. Note that 
+only the `EFLAGS` part of the register is accessible in user mode. The remaining bits are reserved for future use.
+
+<br />
+
+Segment registers were introduced in the past to handle segmentation. With the advent of virtual memory this mechanism 
+was rendered obsolete. Operating systems now use them to store useful pointers to process and system-related structures. 
+This is something we'll expand upon later.
+
+<br />
+
+There are many other registers I didn't mention, most of them being used by the system for configuration purposes. For 
+instance the `CR3` register which is used to store the current program's first level of tables for translating virtual 
+addresses.
+
+#### Threads
 
 TO BE CONTINUED
 

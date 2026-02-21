@@ -40,8 +40,7 @@ const socials = [
 const bestCreations: TWork[] = [
   {
     title: "Virtual Memory Explained",
-    description:
-      "What are memory pages? What exactly is an address space? Well that's what you'll learn today!",
+    description: "What are memory pages? What exactly is an address space? Well that's what you'll learn today!",
     thumbnailPath: "/images/thumbnails/virtual-memory-explained.png",
     createdAt: new Date(2025, 4, 19),
     type: "video",
@@ -49,8 +48,7 @@ const bestCreations: TWork[] = [
   },
   {
     title: "AntiDebug",
-    description:
-      "A simple terminal interface tool to test Windows x86_64 anti-debugging techniques.",
+    description: "A simple terminal interface tool to test Windows x86_64 anti-debugging techniques.",
     thumbnailPath: "/images/thumbnails/antidebug.png",
     createdAt: new Date(2025, 7, 10),
     type: "tool",
@@ -64,36 +62,22 @@ const bestCreations: TWork[] = [
 
 export default function Home() {
   return (
-    <Main
-      title="About me"
-      createdAt={new Date(2025, 11, 19)}
-      updatedAt={new Date(2025, 11, 22)}
-    >
+    <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2025, 11, 22)}>
       <Section subtitle="Who am I?" title="In my own words">
         <p className="md:text-lg">
           Hey! I&apos;m Charles.{" "}
           <i>
             Although you may know me as{" "}
-            <Link
-              href="https://www.youtube.com/@axxo1337"
-              className="inline-anchor"
-            >
+            <Link href="https://www.youtube.com/@axxo1337" className="inline-anchor">
               aXXo
             </Link>
           </i>
-          . As of writing this I&apos;m a 19 year old male living in the French
-          province of{" "}
-          <Link
-            href="https://en.wikipedia.org/wiki/Quebec"
-            className="inline-anchor"
-          >
+          . As of writing this I&apos;m a 19 year old male living in the French province of{" "}
+          <Link href="https://en.wikipedia.org/wiki/Quebec" className="inline-anchor">
             Quebec
           </Link>{" "}
-          (Canada). I make videos in my free time purely out of the joy I get
-          from teaching people. This might be why my content is so chaotic lol.
-          I don&apos;t really have a goal with any of this. My current vision is
-          to earn a degree in mechanical engineering, and yet I find myself
-          making videos about computer...
+          (Canada). I make videos in my free time purely out of the joy I get from teaching people. I don&apos;t have a specific
+          goal with any of this. I just enjoy doing it :)
         </p>
       </Section>
       <Section subtitle="What do I make?" title="My best work">
