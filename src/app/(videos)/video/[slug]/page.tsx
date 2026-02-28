@@ -80,7 +80,11 @@ export default async function VideoPage({ params }: Props) {
       updatedAt={new Date(metadata.updatedAt)}
     >
       <div>
-        <YouTubeVideo className="mt-8 md:mt-14" id="ultz9m0n0GE" />
+        <YouTubeVideo
+          className="mt-8 md:mt-14"
+          id={metadata.youtubeId}
+          thumbnailPath={metadata.thumbnailPath}
+        />
       </div>
       <Section subtitle="What's this video about?" title="Overview">
         <div>

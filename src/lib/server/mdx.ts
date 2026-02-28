@@ -19,7 +19,7 @@ function getContentDirectory(contentType: ContentType): string {
     process.cwd(),
     "src/app",
     contentRelativePathsMap.get(contentType) ?? "",
-    "[slug]"
+    "[slug]",
   );
 }
 
@@ -44,7 +44,7 @@ export function contentExists(contentType: ContentType, slug: string): boolean {
 }
 
 export async function getAllContentMetadata(
-  contentType: ContentType
+  contentType: ContentType,
 ): Promise<MDXMetadata[]> {
   const slugs = getContentSlugs(contentType);
   const metadataPromises = slugs.map(async (slug) => {
@@ -69,7 +69,7 @@ export interface MDXMetadata {
   title: string;
   createdAt: string;
   updatedAt: string;
-  youtubeId?: string;
+  youtubeId?: string | null;
   description?: string;
   thumbnailPath?: string;
   tags?: string[];

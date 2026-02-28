@@ -1,4 +1,5 @@
-import { cn } from "@/lib/client/utils";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import Image from "next/image";
 
 export default function YouTubeVideo({
   id,
@@ -7,6 +8,7 @@ export default function YouTubeVideo({
   mute = false,
   controls = true,
   startTime,
+  thumbnailPath,
   className,
 }: YouTubeVideoProps) {
   const params = new URLSearchParams();
@@ -24,22 +26,38 @@ export default function YouTubeVideo({
   return (
     <div className={className}>
       <div className="relative w-full overflow-hidden rounded-md border-2 border-white/20 aspect-video">
-        <iframe
-          src={embedUrl}
-          title={title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-          className="absolute inset-0 h-full w-full"
-        />
+        {id ? (
+          <iframe
+            src={embedUrl}
+            title={title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            className="absolute inset-0 h-full w-full"
+          />
+        ) : (
+          <AspectRatio ratio={16 / 9} className="bg-black relative">
+            <Image
+              fill
+              alt={title}
+              src={thumbnailPath ?? ""}
+              draggable="false"
+              className="blur-sm brightness-50 select-none"
+            />
+            <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-2xl">
+              This video isn&apos;t released yet.
+            </span>
+          </AspectRatio>
+        )}
       </div>
     </div>
   );
 }
 
 interface YouTubeVideoProps {
-  id: string;
+  id?: string | null;
+  thumbnailPath?: string;
   title?: string;
   autoplay?: boolean;
   mute?: boolean;
