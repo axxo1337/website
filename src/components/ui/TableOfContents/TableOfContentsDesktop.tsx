@@ -1,19 +1,24 @@
 "use client";
 
 import { cn } from "@/lib/client/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { extractHeadings, Heading } from ".";
 
-export default function TableOfContentsDesktop() {
+//
+// [SECTION] Content
+//
+
+export default function TableOfContentsDesktop({ exclude }: TableOfContentsDesktop) {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string>("");
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const locked = useRef(false);
 
   useEffect(() => {
-    const items = extractHeadings();
+    const items = extractHeadings(exclude);
     setHeadings(items);
-    if (items.length > 0) setActiveId("overview");
+    if (items.length > 0) setActiveId(items[0].id);
   }, []);
 
   useEffect(() => {
@@ -21,6 +26,7 @@ export default function TableOfContentsDesktop() {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        if (locked.current) return;
         for (const entry of entries) {
           if (entry.isIntersecting) {
             setActiveId(entry.target.id);
@@ -39,15 +45,22 @@ export default function TableOfContentsDesktop() {
   }, [headings]);
 
   useEffect(() => {
-    const section = document.querySelector("section");
-    if (!section) return;
+    const sections = document.querySelectorAll("section");
+    if (sections.length === 0) return;
 
+    const visibleSections = new Set<Element>();
     const observer = new IntersectionObserver(
-      ([entry]) => setVisible(entry.isIntersecting),
-      { rootMargin: "0px 0px 0px 0px", threshold: 0 }
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visibleSections.add(entry.target);
+          else visibleSections.delete(entry.target);
+        }
+        setVisible(visibleSections.size > 0);
+      },
+      { threshold: 0 }
     );
 
-    observer.observe(section);
+    sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
   }, []);
 
@@ -73,7 +86,9 @@ export default function TableOfContentsDesktop() {
             key={heading.id}
             className={cn(
               "rounded-full h-[2px] transition-colors",
-              heading.level === 4 ? "ml-2 w-4" : "w-6",
+              heading.level === 2 && "w-6",
+              heading.level === 3 && "ml-1 w-5",
+              heading.level >= 4 && "ml-2 w-4",
               activeId === heading.id ? "bg-white" : "bg-white/25"
             )}
           />
@@ -94,13 +109,17 @@ export default function TableOfContentsDesktop() {
                 href={`#${heading.id}`}
                 onClick={(e) => {
                   e.preventDefault();
+                  locked.current = true;
+                  setActiveId(heading.id);
                   document.getElementById(heading.id)?.scrollIntoView({
                     behavior: "smooth",
                   });
+                  setTimeout(() => { locked.current = false; }, 850);
                 }}
                 className={cn(
                   "block transition-colors truncate rounded-md px-2.5 py-1.5 hover:bg-white/10",
-                  heading.level === 4 && "pl-6",
+                  heading.level === 3 && "pl-5",
+                  heading.level >= 4 && "pl-8",
                   activeId === heading.id
                     ? "text-white font-medium"
                     : "text-white/50"
@@ -114,4 +133,12 @@ export default function TableOfContentsDesktop() {
       </nav>
     </div>
   );
+}
+
+//
+// [SECTION] Types
+//
+
+interface TableOfContentsDesktop {
+  exclude?: string[];
 }

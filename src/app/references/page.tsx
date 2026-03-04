@@ -1,5 +1,6 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
+import TableOfContents from "@/components/ui/TableOfContents";
 import Socials from "@/components/page/Home/Socials";
 import { Metadata } from "next";
 
@@ -194,6 +195,7 @@ export default function References() {
         </ul>
       </Section>
       <Socials />
+      <TableOfContents />
     </Main>
   );
 }
