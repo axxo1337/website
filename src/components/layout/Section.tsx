@@ -5,7 +5,7 @@ export default function Section({ subtitle, title, children }: Section) {
         {subtitle && (
           <span className="text-xl md:text-2xl text-white/70">{subtitle}</span>
         )}
-        <h2 className="text-3xl md:text-4xl">{title}</h2>
+        <h2 id="overview" className="text-3xl md:text-4xl scroll-mt-24">{title}</h2>
       </div>
       {children}
     </section>

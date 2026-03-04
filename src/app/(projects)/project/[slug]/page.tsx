@@ -1,6 +1,7 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import TableOfContents from "@/components/ui/TableOfContents";
 import { contentExists, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -80,7 +81,8 @@ export default async function ProjectPage({ params }: Props) {
         <div>
           <MDXContent />
         </div>
-      </Section> 
+      </Section>
+      <TableOfContents />
     </Main>
   );
 }
