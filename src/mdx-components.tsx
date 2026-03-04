@@ -20,6 +20,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     h3: ({ children }) => (
       <h3
         id={slugify(extractText(children))}
+        className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24"
       >
         {children}
       </h3>
