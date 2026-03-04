@@ -6,25 +6,26 @@ import TableOfContentsMobile from "./TableOfContentsMobile";
 // [SECTION] Content
 //
 
-export function extractHeadings(): Heading[] {
-  const section = document.querySelector("section");
-  if (!section) return [];
+export function extractHeadings(exclude?: string[]): Heading[] {
+  const sections = document.querySelectorAll("section");
+  if (sections.length === 0) return [];
 
-  const elements = section.querySelectorAll("h3[id], h4[id]");
-  return [
-    { id: "overview", text: "Overview", level: 3 },
-    ...Array.from(elements).map((el) => ({
-      id: el.id,
-      text: el.textContent || "",
-      level: el.tagName === "H3" ? 3 : 4,
-    })),
-  ];
+  const excluded = new Set(exclude);
+  return Array.from(sections).flatMap((section) =>
+    Array.from(section.querySelectorAll("h2[id], h3[id], h4[id], h5[id], h6[id]"))
+      .filter((el) => !excluded.has(el.id))
+      .map((el) => ({
+        id: el.id,
+        text: el.textContent || "",
+        level: parseInt(el.tagName[1]),
+      }))
+  );
 }
 
-export default function TableOfContents() {
+export default function TableOfContents({ exclude }: TableOfContents) {
   return (
     <Fragment>
-      <TableOfContentsDesktop />
+      <TableOfContentsDesktop exclude={exclude} />
       <TableOfContentsMobile />
     </Fragment>
   );
@@ -33,6 +34,10 @@ export default function TableOfContents() {
 //
 // [SECTION] Types
 //
+
+interface TableOfContents {
+  exclude?: string[];
+}
 
 export type Heading = {
   id: string;
