@@ -33,15 +33,15 @@ export default function DesktopNavigation() {
                 <NavigationMenuTrigger className="text-lg p-0 h-auto! bg-transparent! data-[state=open]:after:w-full! data-[state=open]:text-white/80! hover:text-white/80! text-white! [&>svg]:size-5 hover-underline">
                   {link.title}
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
+                <NavigationMenuContent className="bg-background! border border-white/10">
                   <ul className="grid grid-cols-1 w-60">
                     {link.content.map((element, elementIndex) => (
                       <li key={`linkElement-${elementIndex}`}>
                         <Link
                           href={element.href}
-                          className="flex gap-2 items-center p-1 hover:bg-black/20 transition-all rounded-md"
+                          className="flex gap-2 items-center p-1 hover:bg-white/10 transition-all rounded-md text-white"
                         >
-                          <element.icon className="shrink-0 size-6 p-1 border border-black rounded-sm" />
+                          <element.icon className="shrink-0 size-6 p-1 border border-white rounded-sm" />
                           <span>{element.title}</span>
                         </Link>
                       </li>
@@ -49,9 +49,9 @@ export default function DesktopNavigation() {
                     <li>
                       <Link
                         href={link.href}
-                        className="flex gap-2 items-center p-1 hover:bg-black/20 transition-all rounded-md"
+                        className="flex gap-2 items-center p-1 hover:bg-white/10 transition-all text-white rounded-md"
                       >
-                        <Library className="shrink-0 size-6 p-1 border border-black rounded-sm" />
+                        <Library className="shrink-0 size-6 p-1 border border-white rounded-sm" />
                         <span>View all</span>
                       </Link>
                     </li>

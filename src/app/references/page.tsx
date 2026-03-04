@@ -1,5 +1,6 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
+import Socials from "@/components/page/Home/Socials";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -27,7 +28,7 @@ export default function References() {
         </p>
       </Section>
       <Section subtitle="Some advice and links" title="Material">
-        <h3 className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 mb-2">
+        <h3 id="game-hacking" className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24">
           Game Hacking
         </h3>
         <p>
@@ -36,7 +37,7 @@ export default function References() {
           Internals and Reverse Engineering. Below I will list resources for
           each of these sections.
         </p>
-        <h4 className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2">
+        <h4 id="c" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24">
           C++
         </h4>
         <p>
@@ -71,7 +72,7 @@ export default function References() {
           </li>
         </ul>
 
-        <h4 className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2">
+        <h4 id="data-structures" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24">
           Data Structures
         </h4>
         <p>
@@ -115,7 +116,7 @@ export default function References() {
           </li>
         </ul>
 
-        <h4 className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2">
+        <h4 id="windows-internals" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24">
           Windows Internals
         </h4>
         <p>
@@ -155,7 +156,7 @@ export default function References() {
           </li>
         </ul>
 
-        <h4 className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2">
+        <h4 id="reverse-engineering" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24">
           Reverse Engineering
         </h4>
         <p>
@@ -192,6 +193,7 @@ export default function References() {
           </li>
         </ul>
       </Section>
+      <Socials />
     </Main>
   );
 }

@@ -1,6 +1,7 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import YouTubeVideo from "@/components/page/Projects/YouTubeVideo";
+import TableOfContents from "@/components/ui/TableOfContents";
 import { contentExists, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -91,6 +92,7 @@ export default async function VideoPage({ params }: Props) {
           <MDXContent />
         </div>
       </Section>
+      <TableOfContents />
     </Main>
   );
 }

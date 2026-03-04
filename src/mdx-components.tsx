@@ -1,16 +1,35 @@
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
+import { ReactNode } from "react";
 import { ScrollArea, ScrollBar } from "./components/ui/scroll-area";
+import { slugify } from "./lib/client/utils";
+
+function extractText(node: ReactNode): string {
+  if (typeof node === "string") return node;
+  if (typeof node === "number") return String(node);
+  if (!node) return "";
+  if (Array.isArray(node)) return node.map(extractText).join("");
+  if (typeof node === "object" && "props" in node) {
+    return extractText((node as { props: { children?: ReactNode } }).props.children);
+  }
+  return "";
+}
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h3: ({ children }) => (
-      <h3 className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 mb-2">
+      <h3
+        id={slugify(extractText(children))}
+        className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24"
+      >
         {children}
       </h3>
     ),
     h4: ({ children }) => (
-      <h4 className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2">
+      <h4
+        id={slugify(extractText(children))}
+        className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24"
+      >
         {children}
       </h4>
     ),
@@ -24,7 +43,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ul: ({ children }) => (
       <ul className="list-disc pl-5 flex flex-col gap-2 my-1">{children}</ul>
     ),
-    li: ({ children }) => <li>{children}</li>,
+    li: ({ children }) => <li className="break-words">{children}</li>,
     span: ({ className, children, ...props }) => {
       if (className?.includes("katex-display")) {
         return (
