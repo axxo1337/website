@@ -1,31 +1,32 @@
 export const metadata = {
-    title: "Windows Internals Explained",
-    description: "Windows internals is a very important subject that's sadly very poorly documented. In this video I'll do my best to give you a great guide to trampoline from.",
-    createdAt: "2026-02-20",
-    updatedAt: "2026-02-20",
-    youtubeId: null,
-    thumbnailPath: "/images/thumbnails/windows-internals-explained.png"
+  title: "Windows Internals Explained",
+  description:
+    "Windows internals is a very important subject that's sadly very poorly documented. In this video I'll do my best to give you a great guide to trampoline from.",
+  createdAt: "2026-02-20",
+  updatedAt: "2026-02-20",
+  youtubeId: null,
+  thumbnailPath: "/images/thumbnails/windows-internals-explained.png",
 };
 
-Windows internals is a very important subject that's sadly very poorly documented. In this video I did my best to give you a great guide to trampoline from. You should 
+Windows internals is a very important subject that's sadly very poorly documented. In this video I did my best to give you a great guide to trampoline from. You should
 find all of my sources and collaborators at the end of this document.
 
 ### A brief history
 
 In 1975, while Paul Allen was walking through the [Harvard square](https://en.wikipedia.org/wiki/Harvard_Square) a magazine caught his attention.
-It was an issue of the magazine <i>Popular Electronics</i>. The cover stared a computer called the [Altair 8800](https://en.wikipedia.org/wiki/Altair_8800). 
-A personal computer released just the year before by MITS. Allen bought the magazine and headed back to his dorm where he met with Bill Gates. They wanted to 
+It was an issue of the magazine <i>Popular Electronics</i>. The cover stared a computer called the [Altair 8800](https://en.wikipedia.org/wiki/Altair_8800).
+A personal computer released just the year before by MITS. Allen bought the magazine and headed back to his dorm where he met with Bill Gates. They wanted to
 land a deal with the company for the development of an implementation of [BASIC](https://en.wikipedia.org/wiki/BASIC) for the system.
 
-Gates called and organized a meeting to show them this software <u>which they had not even programmed yet</u>. In March they met with the company, and their 
+Gates called and organized a meeting to show them this software <u>which they had not even programmed yet</u>. In March they met with the company, and their
 presentation was successful.
 
-A month later, Allen and Gates founded Micro-Soft which stood for Micro Computer Software. Over the years they made many more contracts to the point that in 1980, 
-their profits were of [8 million dollars](https://learn.microsoft.com/en-us/shows/history/history-of-microsoft-1980). At this point, a few IBM employees approached 
+A month later, Allen and Gates founded Micro-Soft which stood for Micro Computer Software. Over the years they made many more contracts to the point that in 1980,
+their profits were of [8 million dollars](https://learn.microsoft.com/en-us/shows/history/history-of-microsoft-1980). At this point, a few IBM employees approached
 them with a deal to code an operating system for their next personal computer.
 
-To save themselves a lot of time they ended up buying an already existing system called [86-DOS](https://en.wikipedia.org/wiki/86-DOS). They modified and licensed it 
-to IBM as MS-DOS. Microsoft ended up releasing Windows in 1985. It was a graphical interface running on top of DOS. This later evolved into Windows 95, Windows XP and 
+To save themselves a lot of time they ended up buying an already existing system called [86-DOS](https://en.wikipedia.org/wiki/86-DOS). They modified and licensed it
+to IBM as MS-DOS. Microsoft ended up releasing Windows in 1985. It was a graphical interface running on top of DOS. This later evolved into Windows 95, Windows XP and
 eventually all modern versions of Windows.
 
 ### Fundamentals
@@ -39,71 +40,73 @@ I'll assume that you at least understand number systems such as binary and hexad
 
 ![Basic digital data sizes](/images/documents/windows-internals-explained/data_basic_sizes.png)
 
-When dealing with larger chunks of data we have other measurements. The more common unit we use is the byte. It represents 8 bits. A less common, but popular measure in 
-Microsoft's content is the word. It represents 16 bits. Other variants of it are the double and quadruple word, these being two and four times the size of a word respectively. 
+When dealing with larger chunks of data we have other measurements. The more common unit we use is the byte. It represents 8 bits. A less common, but popular measure in
+Microsoft's content is the word. It represents 16 bits. Other variants of it are the double and quadruple word, these being two and four times the size of a word respectively.
 
 Running programs like Notepad and Chrome are called processes. Processes are how the system isolates the resources of each running application.
 
-The most important example of such an isolation is the address space. Fundamentally physical memory is accessed byte by byte. There are many problems with letting 
-programs freely access physical memory. For one it would be a logistic nightmare to manage. For two it would be unsafe. Any program could read and write anything. 
+The most important example of such an isolation is the address space. Fundamentally physical memory is accessed byte by byte. There are many problems with letting
+programs freely access physical memory. For one it would be a logistic nightmare to manage. For two it would be unsafe. Any program could read and write anything.
 These two reasons are mostly why we use virtual memory.
 
-Virtual memory constricts each process into its own address space. Addresses act as indexes into tables describing the chunks of memory associated to each application. 
-We call these chunks pages. Usually 4 levels of tables are used. Each table contains 512 entries each pointing to a table in the lower level. The only exception to this 
+Virtual memory constricts each process into its own address space. Addresses act as indexes into tables describing the chunks of memory associated to each application.
+We call these chunks pages. Usually 4 levels of tables are used. Each table contains 512 entries each pointing to a table in the lower level. The only exception to this
 are the tables in the final level which instead store the index to the exact physical memory page.
 
-8 bits of a virtual address is used to index the first level of tables. The next 8 indexes the second level, and so on, until the last 12 bits. These bits offset into the 
+8 bits of a virtual address is used to index the first level of tables. The next 8 indexes the second level, and so on, until the last 12 bits. These bits offset into the
 specific page.
 
-Memory pages are usually of 4 kilobytes, aligned to a power of two in size. I say usually because it is possible for the system to index them as huge and giant pages of 
-2 megabytes and 1 gigabyte respectively. Although this is beyond the scope of this lesson. Assuming they are always of 4096 bytes, the use of the 12 final bits in virtual 
+Memory pages are usually of 4 kilobytes, aligned to a power of two in size. I say usually because it is possible for the system to index them as huge and giant pages of
+2 megabytes and 1 gigabyte respectively. Although this is beyond the scope of this lesson. Assuming they are always of 4096 bytes, the use of the 12 final bits in virtual
 addresses to index into pages makes sense since 2 to the power of 12 is 4096.
 
 The number of entries in the memory tables is not random. Each entry is of 64 bits. This means that every table is of exactly 4096 bytes in size:
+
 $$
 \begin{align*}
 512 * 64 &= 32768\text{ bits} \\[1em]
  \frac{32768}{8} &= 4096\text{ bytes}
 \end{align*}
 $$
+
 That's the size of a memory page.
 
-The table entries don't use their full 64 bits to point to the next tables or pages. This allows their remaining bits to be used to specify additional information such 
-as whether or not the described pages should be executable and or writable. While virtual memory isolates programs into their own address space, it's still possible for 
-their page tables to point to the same physical pages if they need to share memory. In fact, the system uses this to share dynamic libraries between programs and save on 
+The table entries don't use their full 64 bits to point to the next tables or pages. This allows their remaining bits to be used to specify additional information such
+as whether or not the described pages should be executable and or writable. While virtual memory isolates programs into their own address space, it's still possible for
+their page tables to point to the same physical pages if they need to share memory. In fact, the system uses this to share dynamic libraries between programs and save on
 physical memory (in reality it uses something called prototype page table entries, but the concept is the same).
 
-To ensure that one program may not modify the code of a shared library, a bit in page table entries is set to specify that the concerned pages use the copy on write 
-mechanism. When a program writes to such a page, the system will copy its contents into a fresh physical page and change the page table entry of the writing program 
+To ensure that one program may not modify the code of a shared library, a bit in page table entries is set to specify that the concerned pages use the copy on write
+mechanism. When a program writes to such a page, the system will copy its contents into a fresh physical page and change the page table entry of the writing program
 to point to it.
 
-Now the writer process has its own copy of the code it modified and won't affect the execution of other programs depending on the same library. We'll expand upon libraries 
-later in this video. Windows even maps most of its system code into the upper portion of every application's virtual memory. Although the mapped pages have the kernel 
+Now the writer process has its own copy of the code it modified and won't affect the execution of other programs depending on the same library. We'll expand upon libraries
+later in this video. Windows even maps most of its system code into the upper portion of every application's virtual memory. Although the mapped pages have the kernel
 bit set, making them only accessible when the CPU is in privileged mode.
 
 ![Protection rings](/images/documents/windows-internals-explained/protection_rings.png)
 
-The idea is that the system runs in permission levels. The lower the level, the more permissions the running code will have. This is often illustrated as protection rings 
+The idea is that the system runs in permission levels. The lower the level, the more permissions the running code will have. This is often illustrated as protection rings
 like above. In modern systems rings 1 and 2 are not used. The main property of protection rings is that they lock sensitive instructions and data behind the appropriate levels.
 They also separate the user address spaces and the kernel address space.
 
-In the case of the beforementioned “system code” that's mapped in every application, the pages will cause an exception to occur if they are accessed while the CPU is running 
+In the case of the beforementioned “system code” that's mapped in every application, the pages will cause an exception to occur if they are accessed while the CPU is running
 in ring 3. This will essentially crash the program.
 
-Traditionally we call ring 3 the user mode and ring 0 the kernel mode. User mode code often needs to switch to kernel mode to accomplish certain privileged operations like 
-creating a process. The procedure that Windows provides to do so leverages system calls. The user mode code sets up arguments describing the operation that the system should 
+Traditionally we call ring 3 the user mode and ring 0 the kernel mode. User mode code often needs to switch to kernel mode to accomplish certain privileged operations like
+creating a process. The procedure that Windows provides to do so leverages system calls. The user mode code sets up arguments describing the operation that the system should
 run and invokes the [`syscall`](https://www.felixcloutier.com/x86/syscall) instruction.
 
-Basically before invoking this instruction, the code will specify what operation it wants the system to complete using a service number. It's essentially an index the system 
+Basically before invoking this instruction, the code will specify what operation it wants the system to complete using a service number. It's essentially an index the system
 will use to get the specific function to handle the operation from a table called the system service dispatch table or SSDT.
 
-The code that will handle this is part of the system code I mentioned that is mapped into the upper part of every application's memory. We call it the system call handler. 
+The code that will handle this is part of the system code I mentioned that is mapped into the upper part of every application's memory. We call it the system call handler.
 The syscall instruction will put the CPU in kernel mode and jump to this handler.
 
 #### CPU
 
-With memory out of the way, let's briefly cover CPUs. These can come in many architectures. Unless you're watching this from a laptop or a phone, your computer's architecture 
-is likely x86_64. Otherwise it's probably ARM64. I won't get into all the differences between architectures, but know that throughout this video anytime I refer to 
+With memory out of the way, let's briefly cover CPUs. These can come in many architectures. Unless you're watching this from a laptop or a phone, your computer's architecture
+is likely x86_64. Otherwise it's probably ARM64. I won't get into all the differences between architectures, but know that throughout this video anytime I refer to
 processor-related features I only consider the x86_64 architecture.
 
 At a high level you can understand a CPU as one big component composed of many units.
@@ -112,40 +115,40 @@ At a high level you can understand a CPU as one big component composed of many u
 
 What you're seeing here is a very simplified overview of these units. I'm only showing the most relevant parts.
 
-The L3 is a large cache shared between all the cores. Each core has both an L2 and L1 cache as well. The lower the cache 
-number the smaller in size it is, but the faster to perform operations upon it also is. L3 being the largest of 
-all and shared among the cores it is also the slowest. Caches store frequently used data and instructions. Note 
+The L3 is a large cache shared between all the cores. Each core has both an L2 and L1 cache as well. The lower the cache
+number the smaller in size it is, but the faster to perform operations upon it also is. L3 being the largest of
+all and shared among the cores it is also the slowest. Caches store frequently used data and instructions. Note
 that CPUs usually have more than a single L2 and L1 cache, each for a specific purpose.
 
-Within cores is a control unit (CU). It is responsible for fetching instructions from code and directing them to the 
-appropriate execution unit. In this case, there's only one execution unit, the ALU. It stands for arithmetic logical 
+Within cores is a control unit (CU). It is responsible for fetching instructions from code and directing them to the
+appropriate execution unit. In this case, there's only one execution unit, the ALU. It stands for arithmetic logical
 unit and handles arithmetic operation. Modern CPUs include other execution units, but I want to keep things simple.
 
 The MMU or memory management unit is the component responsible for handling memory. That includes virtual memory.
 
-Registers are small storage units used to store data needed within the current execution context. In 64-bit 
+Registers are small storage units used to store data needed within the current execution context. In 64-bit
 computers their size goes from 64 bits up to 512 bits. They are the fastest way a CPU can handle memory.
 
 [ADD IMAGE]
 
-What you see here are only the most commonly used ones. These are the labels we refer to them as. RIP or the instruction 
-pointer points to the instruction that the CPU is currently executing. 
+What you see here are only the most commonly used ones. These are the labels we refer to them as. RIP or the instruction
+pointer points to the instruction that the CPU is currently executing.
 
-Other registers such as `RAX` or `RCX` do not have a special use. Machine code can even refer to lower portions of some of 
-said registers when necessary. For instance `EAX` would access only the first 32 bits of the `RAX` register. Although they 
-don't have a mandatory use case, basic conventions exist for how they are used. For instance `RAX` is often utilized to 
+Other registers such as `RAX` or `RCX` do not have a special use. Machine code can even refer to lower portions of some of
+said registers when necessary. For instance `EAX` would access only the first 32 bits of the `RAX` register. Although they
+don't have a mandatory use case, basic conventions exist for how they are used. For instance `RAX` is often utilized to
 store the return value of a function.
 
-The CPU uses `RFLAGS` as a bitfield to specify certain conditions and configuration. For instance, the 6th bit in it 
-represents the zero flag. After testing a register, if this bit is set to 1, then the value it stores is zero. Note that 
+The CPU uses `RFLAGS` as a bitfield to specify certain conditions and configuration. For instance, the 6th bit in it
+represents the zero flag. After testing a register, if this bit is set to 1, then the value it stores is zero. Note that
 only the `EFLAGS` part of the register is accessible in user mode. The remaining bits are reserved for future use.
 
-Segment registers were introduced in the past to handle segmentation. With the advent of virtual memory this mechanism 
-was rendered obsolete. Operating systems now use them to store useful pointers to process and system-related structures. 
+Segment registers were introduced in the past to handle segmentation. With the advent of virtual memory this mechanism
+was rendered obsolete. Operating systems now use them to store useful pointers to process and system-related structures.
 This is something we'll expand upon later.
 
-There are many other registers I didn't mention, most of them being used by the system for configuration purposes. For 
-instance the `CR3` register which is used to store the current program's first level of tables for translating virtual 
+There are many other registers I didn't mention, most of them being used by the system for configuration purposes. For
+instance the `CR3` register which is used to store the current program's first level of tables for translating virtual
 addresses.
 
 #### Threads
@@ -221,6 +224,8 @@ The three most important DLLs associated to the Windows API are `kernel32.dll`, 
 
 Before we dive deeper in `CreateProcess`, I think we should get a small overview of Windows. Threads are scheduled by Windows, meaning the system makes decisions for when and for how long each should run. The thing that handles this scheduling is intuitively called the scheduler. It's part of a bigger group of Windows components called the kernel.
 
+![Windows architecture simplified](/images/documents/windows-internals-explained/win_arch_simple.png)
+
 What you see here is an illustration of the Windows architecture. This red bar divides the user and kernel mode parts of Windows. In user mode you find user processes which depend on subsystem DLLs. These are libraries like `kernel32` and `kernelbase`. We call them subsystems because they each expose some subset of the Windows API. For instance, the subsystem DLL `user32` provides functions to manage graphical interfaces and user inputs.
 
 Down the line almost all these functions end up invoking some function in NTDLL. NTDLL holds three variants of functions each having a specific prefix:
@@ -247,11 +252,21 @@ That's the system call which will hand control to the system so it can create th
 
 ### System call handler
 
-You can find in it a function with the same name as the one invoked from NTDLL, which the dispatcher will invoke. As a matter of fact you can even find said dispatcher under the name `KiSystemCall64`. The shadow in this one's name is to differentiate it from the original version. It mitigates the [Meltdown](https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability)) hardware vulnerability, but that's a subject for another video.
+You can find in it a function with the same name as the one invoked from NTDLL, which the dispatcher will invoke. 
+
+![Binary Ninja symbols NtCreateUserProcess](/images/documents/windows-internals-explained/create_user_proc_symbols.png)
+
+As a matter of fact you can even find said dispatcher under the name `KiSystemCall64`. The shadow in this one's name is to differentiate it from the original version. It mitigates the [Meltdown](<https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability)>) hardware vulnerability, but that's a subject for another video.
+
+![Binary Ninja symbols KiSystemCall64](/images/documents/windows-internals-explained/ki_syscall64.png)
+
+![Binary Ninja decompilation KiSystemCall64](/images/documents/windows-internals-explained/ki_syscall64_decomp.png)
 
 `KiSystemCall64`'s code first executes the [`swapgs`](https://www.felixcloutier.com/x86/swapgs) assembly instruction. This swaps the current value of the `GS` segment register with the value of the `IA32_KERNEL_GS_BASE` MSR. This points to a per-processor kernel structure known as the processor control region or `KPCR`. Per-processor means that each core inside of your CPU has one associated to it. It contains important core-specific data which we'll explore later, and contains another structure known as the processor control block or `KPRCB`.
 
 Next up the code backs up the old stack pointer and makes it point to the kernel stack associated to the current processor. Indeed, to isolate kernel mode from user mode, even a special kernel stack is used. Afterwards it also store the original value of the base pointer and makes it point into the stack.
+
+![Binary Ninja decompilation KiSystemServiceStart](/images/documents/windows-internals-explained/ki_systemservice_start_decomp.png)
 
 Down the line the handler falls into another function called `KiSystemServiceStart`. This is the part that will actually invoke the appropriate system call. It first accesses the service descriptor table, a structure containing information regarding the system service dispatch table, or SSDT.
 
@@ -267,11 +282,15 @@ Back to the syscall `NtCreateUserProcess`, simplifying its code is not as straig
 
 In my case I hooked the system call handler so it would break only when a system call with the service number of `NtCreateUserProcess` is triggered, and the process owning the thread is `explorer.exe`.
 
+![Binary Ninja decompilation KiSystemCall64_Hook](/images/documents/windows-internals-explained/ki_syscall64_hook_decomp.png)
+
 Then I simply opened the file explorer and executed `notepad.exe` so I could trace what the system call does. It begins by opening the executable file by calling `IoCreateFileEx`. Then it creates a section object to map the file into memory by calling `MmCreateSpecialImageSection`.
 
 ### Object manager
 
 Before I explain what a section object is, I need to explain what even are Windows objects. They are a representation of resources currently in use that the system needs to keep track of such as processes, files, threads etc. Different types of objects contain different information specific to the kind of resource they represent, but they all are prefixed by an object header.
+
+![Vergilius _OBJECT_HEADER](/images/documents/windows-internals-explained/vergolius_object_header.png)
 
 Essentially there's an executive component known as the object manager. It's responsible for managing the lifetime of Windows objects. Object headers contains details such as the reference count and handle count. When such counts reach 0 the object manager will get rid of concerned object, unless it's specified as permanent through the flags member.
 
@@ -281,12 +300,22 @@ All the handles a process has open are stored in a table associated to it. Every
 
 When working from kernel mode although, since objects are directly accessible handles are not necessary. As an alternative to still be able to specify that an object is needed, the reference count is used. Kernel mode code will invoke the function `ObReferenceObject` to increase the object's reference count, and `ObDereferenceObject` to decrease it.
 
+![Vergilius _SECURITY_DESCRIPTOR](/images/documents/windows-internals-explained/vergilius_security_descriptor.png)
+
 Windows objects have a security descriptor associated to them. This is a structure that describes security information such as the owner of said object. It also points to two access control lists, or ACLs. These are structures followed by zero or more access control entries, or ACEs for short. Both of these ACLs have a different purpose. The system access control list, or SACL describes what operations and by who should generate audit logs. On the other hand, the discretionary access control list, or DACL describes who has what permissions over the object.
+
+The structure for ACEs looks something like this:
+
+![_ACE](/images/documents/windows-internals-explained/ace.png)
+
+I write “something like” because I couldn't actually find a basic definition anywhere. I had to base myself of WinDbg outputs.
 
 The type of an ACE can range between many different values. The more interesting types are:
 
 - Access allowed, which grants access to a user.
 - Access denied, which denies access to a user.
+
+![_ACE mask](/images/documents/windows-internals-explained/ace_mask.png)
 
 The [mask](https://learn.microsoft.com/en-us/windows/win32/secauthz/access-mask) is what specifies the permissions the ACE grants or denies. Each bit within the mask specifies a different permission. The first 16 bits are object-specific permissions, the next 8 bits are for [standard access rights](https://learn.microsoft.com/en-us/windows/win32/secauthz/standard-access-rights) (delete, modify access descriptors, change owner etc), the 4 bits after that we can ignore, and the final 4 bits are for [generic rights](https://learn.microsoft.com/en-us/windows/win32/secauthz/generic-access-rights) (read, write, execute or all).
 
@@ -343,11 +372,21 @@ What I want to specifically highlight is that both check for a different value. 
 
 This is just one of the inconsistencies in the Windows API, and it's why you should always carefully read the documentation for such functions. You can find it through simple google searches and specifically on [Microsoft's learn website](https://learn.microsoft.com/en-us/).
 
+![Microsoft Learn CreateFileA](/images/documents/windows-internals-explained/learn_createfilea.png)
+
 The second thing I want to mention is the reason for the suffix `A` at the end of some functions. Every time a Windows API routine takes in a string as an argument, Microsoft makes available at least two variants of said function: one with an `A` as a suffix and one with a `W`. The difference has to do with character encoding. The `W` variants use wide strings which is actually now the standard in Windows. But for simplicity and backwards compatibility reasons they maintain the `A` variant for regular string.
+
+![Microsoft Learn CreateFileW](/images/documents/windows-internals-explained/learn_createfilew.png)
 
 These `A` variants usually convert the strings you input into wide-string before working with them or issuing a system call. They also make sure to convert the outputs as well if they contain strings.
 
-With this out of the way, the `CreateFile` can be used to open or create files and get a handle to them. In this case the code is intended to open an existing file called "example.txt" with read and write permissions. After making sure the returned handle is valid it gets the size of said file and creates the file-backed section object using `CreateFileMapping`. Don't be deceived by its name or description, under the hood it calls `NtCreateSection` and returns its handle.
+With this out of the way, the `CreateFile` can be used to open or create files and get a handle to them. In this case the code is intended to open an existing file called "example.txt" with read and write permissions. 
+
+![Microsoft Learn CreateFileMappingA](/images/documents/windows-internals-explained/learn_createfilemappinga.png)
+
+After making sure the returned handle is valid it gets the size of said file and creates the file-backed section object using `CreateFileMapping`. Don't be deceived by its name or description, under the hood it calls `NtCreateSection` and returns its handle.
+
+![Binary Ninja CreateFileMappingW decompilation](/images/documents/windows-internals-explained/createfilemappingw_decomp.png)
 
 After a check that the section object was successfully created, the code calls `MapViewOfFile`. This will tell the system to map the pages of memory representing the file into the process's address space. It can now directly interact with it.
 
@@ -415,16 +454,16 @@ The second code opens a handle to the existing section by specifying its name, m
 - [Vergilius Project](https://www.vergiliusproject.com/) → Helped with reversing some code by providing undocumented structures in a convenient way.
 - [Microsoft Learn](https://learn.microsoft.com/en-us/) → Helped by providing documentation.
 - [osdev](http://wiki.osdev.org/) → Helped by providing much low level information.
-    - [https://wiki.osdev.org/Higher_Half_Kernel](https://wiki.osdev.org/Higher_Half_Kernel)
-    - [https://wiki.osdev.org/Memory_management](https://wiki.osdev.org/Memory_management)
+  - [https://wiki.osdev.org/Higher_Half_Kernel](https://wiki.osdev.org/Higher_Half_Kernel)
+  - [https://wiki.osdev.org/Memory_management](https://wiki.osdev.org/Memory_management)
 - [Wikipedia](https://en.wikipedia.org/) → Helped by providing various information.
-    - [https://en.wikipedia.org/wiki/Ntoskrnl.exe#Memory_manager](https://en.wikipedia.org/wiki/Ntoskrnl.exe#Memory_manager)
+  - [https://en.wikipedia.org/wiki/Ntoskrnl.exe#Memory_manager](https://en.wikipedia.org/wiki/Ntoskrnl.exe#Memory_manager)
 - [sandpile.org](https://www.sandpile.org/) → Made register mappings nicely documented.
 - Intel SDM → Helped by providing much low level information.
 - Windows Internals, 7th edition, Part 1 → Provided a considerable amount of information.
 - Yeint → Helped by correcting minor mistakes and answered some questions.
 - [Evelyn Lark](https://www.youtube.com/@TheNobleDemon) → Provided some of the musical arrangements for the video.
 - n4r1b → Wrote a blog post that was sourced in this video.
-    - [https://n4r1b.com/posts/2019/03/system-calls-on-windows-x64](https://n4r1b.com/posts/2019/03/system-calls-on-windows-x64/)
+  - [https://n4r1b.com/posts/2019/03/system-calls-on-windows-x64](https://n4r1b.com/posts/2019/03/system-calls-on-windows-x64/)
 - zpfure → Reviewed the script and suggested multiple changes.
 - leepha → Reviewed the script and suggested a lot of improvements.
