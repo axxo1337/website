@@ -11,12 +11,12 @@ Nowadays it's not uncommon for computers to be running hundreds of processes at 
 arise: security and resource management. On one hand each application should be mostly isolated one from another. 
 You wouldn't want [Notion](https://notion.so) to be spying on what tabs are open in your [Chrome](https://www.google.com/intl/en_ca/chrome/) browser. And on the other you might be 
 running these applications on an old laptop which doesn't have enough RAM to handle all of them at once.
-<br />
+
 These are the problems virtual memory solves. And that's what this video explains. I recommend you first give it a watch 
 and come back here afterwards to read my written explanation. Although note that I've made some very slight mistakes here 
 and there in said video. Thankfully these were all clarified in a comment I made and pinned in the comments section of 
 said video.
-<br />
+
 Just for good measure I'll correct them here as well, but feel free to skip this list and watch the video, or maybe simply 
 get on with the first chapter of this document:
 1. I misspelled the Level 4 Page Map Table as "PLM4" instead of PML4 throughout the video.
@@ -33,15 +33,13 @@ disk the bits used for the physical page index are used to locate the page on di
 Memory is not an easy thing to define as it exists in *many* forms. Although all formats of memory share one common property:
 they're all states of disturbance in matter. For example, hard drives store data on magnetic disks by changing the orientation of
 tiny magnetic fields on the disks' surface. Then it can read the data back by measuring the orientation of these fields.
-<br />
 Electronics only care about two states of disturbance. That's why it's well known that computers operate in binary. Binary 
 comes from the word bini in latin meaning two. I could say that the decision of whether or not I shall go to the park is binary,
 because it's composed of only two possible choices.
-<br />
+
 My point is that when we refer to binary we can mean many things as long as they are directly related to the principle of two. For instance, binary is also a number system. You see, we
 were taught to count in a number system called base ten (decimal). It consists of 10 possible distinct digits from which we can derive
 infinitely many numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9. Binary on the other hand is base 2. Its numbers can only consist of the digits 0 and 1.
-<br />
 But that's not the only property we can discern between number bases. Let's start by taking the decimal number 11, but put in binary:
 ```math
 (1011)_2
@@ -76,7 +74,6 @@ The format of memory we'll mostly care about today is random access memory (RAM)
 cut the power to your machine all of its contents are lost. It's also the second fastest storage format in computers after in-processor memory, and that's where programs are
 stored while executing.
 
-<br />
 
 So how is your computer able to tell which parts of RAM it should access when it needs to read or write anything? It uses something known as addressing. Every single byte in 
 memory has its own unique address, like houses on a street. Address 0 would lead to the first byte in memory, and address 1 to the second.
@@ -89,7 +86,6 @@ addresses we often express them in terms of hexadecimal numbers rather than deci
 to make the numbers look much simpler. "0x" is just a prefix to make it clear the base is 16. Thankfully in this case the numbers translate directly to decimal since they don't
 go above 9 and remain in the first power.
 
-<br />
 
 How can hexadecimal support this many digits if we only know up to 9? It uses the alphabet. Here are all the possible digits: 0, 1,
 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E and F, where F equals 15 in decimal.
@@ -109,7 +105,6 @@ system itself would also be taking up memory).
 
 The system can take the first two pages of Chrome, fit them where Discord was, and take the remaining page and fit it under Minecraft. That's memory paging. 
 
-<br />
 
 But what if that memory page couldn't fit under Minecraft because say the calculator app was using up that last page. Well the system could take a memory page that hasn't been used
 in a while, say the third page from Minecraft, stored it on the main SSD, and place Chrome's page in the now empty space.
@@ -126,7 +121,6 @@ When a program requests memory like when it gets executed, or needs to load reso
 in a series of tables specific to each program. Let's say a program tries to access address 0. Before this happens, the operating system will store the location of that 
 program's page tables in the CR3 register.
 
-<br />
 
 The CPU will now translate said address using the specified these tables using a specialized unit known as the memory management unit, or MMU for short. The tables I keep 
 mentioning are actually a hierarchy of 4-levels of tables working together each with 512 entries:
@@ -135,33 +129,27 @@ mentioning are actually a hierarchy of 4-levels of tables working together each 
 3. The page directory table (PD).
 4. The page table.
 
-<br />
 
 It&apos;s a lot like finding a book in a giant library. You&apos;d pick the floor, then the section, then the shelf, and finally the exact book itself. 
 The addresses the program's access are called virtual addresses. They basically work like a note on which you wrote the exact steps to take to reach the book 
 based on those criteria.
 
-<br />
 
 First, the CPU looks at the CR3 register, which points to the PML4 table of the program. The PML4 is like the floor. We use 9 bits from the virtual address (bits 39-47) 
 as an index to select one of its 512 possible entries. Each entry points to a different Page Directory Pointer Table.
 
-<br />
 
 Once we have the right PDPT (the section), we use the next 9 bits of our virtual address (bits 30-38) to select one of its entries. This entry points us to a specific 
 Page Directory Table.
 
-<br />
 
 Following the same pattern, we use 9 more bits (bits 21-29) to index into the Page Directory Table (the shelf), which directs us to a specific Page Table (the book).
 
-<br />
 
 Finally, we use yet another 9 bits (bits 12-20) to index into the Page Table itself. This entry contains the base physical index of the actual 4KB memory page we're looking 
 for (this would be like the exact page of the book we want to read from our library example). I want to highlight that the entry stores the physical page “index”, and 
 not address. I&apos;ll get back to this detail later.
 
-<br />
 
 The last 12 bits of the virtual address (bits 0-11) represent the "offset" within the 4KB page, specifying the exact byte we want from those 4,096. So to racap a 48-bit 
 virtual address is composed of:
@@ -171,18 +159,15 @@ virtual address is composed of:
 - 9 bits for PT index
 - 12 bits for page offset
 
-<br />
 
 I mentioned that the page table entries store the physical page “index” and not the physical address of the pages themselves, and that&apos;s because there&apos;s no need to. 
 Since all the pages are of 4KB in size, we can simply index over them. For example the page of index 5 would be at physical address 20&apos;480 in decimal 
 (That&apos;s 5 multiplied by 4096. The size of a memory page in bytes).
 
-<br />
 
 This means the table entries don't need to use their full 64 bits just to store pointers. The remaining bits are used for things like specifying access permissions like 
 read-only or read-write, if the pages can be executed as code, or if they're accessible to user-level programs.
 
-<br />
 
 This makes sense for the page table, but what about the other three tables? They don&apos;t point to 4KB memory pages, but to other tables of pointers right? Yet they also only use 
 about 40 bits to store the "pointers". Remember that each table has 512 entries, and each entry is 64 bits (8 bytes). If you do the math: 512 entries $\times$ 8 bytes = 4096 
@@ -193,7 +178,6 @@ bytes, which is exactly 4KB! This means all tables in our hierarchy are themselv
 Now you might wonder: how does the CPU know when to treat an address as virtual versus physical? The answer is that after boot, your operating system explicitly enables 
 memory paging by setting specific control registers. Once paging is enabled, the CPU treats almost all addresses as virtual.
 
-<br />
 
 If the OS needs to access physical memory directly, it uses "identity mapping". It creates virtual address mappings that point to the identical physical addresses.
 For example, mapping virtual address 0x1000 to physical address 0x1000. The translation process still occurs, but the end result is the same address you started with.
@@ -210,7 +194,6 @@ At this point you may still be wondering why virtual memory even needs the 4 tab
 thing is: with a single table, you&apos;d need an entry for every possible page in the entire address 48-bits address space. Each entry is 8 bytes so that would get massive 
 real fast.
 
-<br />
 
 By using a four-level hierarchy, the system only allocates tables for memory regions your program actually uses. It's like writing a grocery list that only includes 
 items you need, instead of also listing all the products you don&apos;t need.
