@@ -1,8 +1,8 @@
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import { ReactNode } from "react";
-import { ScrollArea, ScrollBar } from "./components/ui/scroll-area";
 import { slugify } from "./lib/client/utils";
+import CodeBlock from "./components/ui/CodeBlock";
 
 function extractText(node: ReactNode): string {
   if (typeof node === "string") return node;
@@ -18,32 +18,23 @@ function extractText(node: ReactNode): string {
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h3: ({ children }) => (
-      <h3
-        id={slugify(extractText(children))}
-        className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24"
-      >
+      <h3 id={slugify(extractText(children))} className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 scroll-mt-24">
         {children}
       </h3>
     ),
     h4: ({ children }) => (
-      <h4
-        id={slugify(extractText(children))}
-        className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24"
-      >
+      <h4 id={slugify(extractText(children))} className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 scroll-mt-24">
         {children}
       </h4>
     ),
-    p: ({ children }) => <p className="py-0.5">{children}</p>,
-    a: (props) => (
-      <a {...props} className={`${props.className} inline-anchor`}></a>
+    p: ({ children }) => <p className="mt-3">{children}</p>,
+    a: (props) => <a {...props} className={`${props.className} inline-anchor`}></a>,
+    ol: ({ children }) => <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">{children}</ol>,
+    ul: ({ children }) => <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">{children}</ul>,
+    li: ({ children }) => <li className="wrap-break-words">{children}</li>,
+    blockquote: ({ children }) => (
+      <blockquote className="border-l-2 border-white/30 pl-4 my-2 italic text-white/70">{children}</blockquote>
     ),
-    ol: ({ children }) => (
-      <ol className="list-decimal pl-5 flex flex-col gap-2 my-1">{children}</ol>
-    ),
-    ul: ({ children }) => (
-      <ul className="list-disc pl-5 flex flex-col gap-2 my-1">{children}</ul>
-    ),
-    li: ({ children }) => <li className="break-words">{children}</li>,
     span: ({ className, children, ...props }) => {
       if (className?.includes("katex-display")) {
         return (
@@ -61,37 +52,16 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
     pre: ({ children, ...props }) => (
-      <pre
-        className="bg-[#181818] p-4 rounded-md my-2 border border-white/10"
-        {...props}
-      >
+      <pre className="bg-[#181818] p-4 pb-5 rounded-md my-2 border border-white/10 text-[0.9rem] relative group" {...props}>
         {children}
       </pre>
     ),
-    code: ({ className, children, ...props }) => {
-      if (!className) {
-        return <code {...props}>{children}</code>;
-      }
-
-      return (
-        <ScrollArea>
-          <code className={`${className} bg-transparent! p-0!`} {...props}>
-            {children}
-          </code>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      );
-    },
+    code: CodeBlock,
     img: ({ src, alt, ...props }) => {
       if (src?.startsWith("http")) {
         return (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={src}
-            alt={alt || ""}
-            className="rounded-lg my-4 w-full h-auto"
-            {...props}
-          />
+          <img src={src} alt={alt || ""} className="rounded-lg my-4 w-full h-auto" {...props} />
         );
       }
 
