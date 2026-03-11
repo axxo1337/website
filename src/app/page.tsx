@@ -49,7 +49,7 @@ export default function Home() {
             Quebec
           </Link>{" "}
           (Canada). I make videos in my free time purely out of the joy I get from teaching people. I don&apos;t have a specific
-          goal with any of this. I just enjoy doing it :)
+          goal with any of this. It&apos;s just a pass time I love working on.
         </p>
       </Section>
       <Section subtitle="What do I make?" title="My best work">
