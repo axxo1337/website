@@ -254,11 +254,11 @@ That's the system call which will hand control to the system so it can create th
 
 You can find in it a function with the same name as the one invoked from NTDLL, which the dispatcher will invoke. 
 
-![Binary Ninja symbols NtCreateUserProcess](/images/documents/windows-internals-explained/create_user_proc_symbols.png)
+![Binary Ninja symbols NtCreateUserProcess|416px|center](/images/documents/windows-internals-explained/create_user_proc_symbols.png)
 
 As a matter of fact you can even find said dispatcher under the name `KiSystemCall64`. The shadow in this one's name is to differentiate it from the original version. It mitigates the [Meltdown](<https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability)>) hardware vulnerability, but that's a subject for another video.
 
-![Binary Ninja symbols KiSystemCall64](/images/documents/windows-internals-explained/ki_syscall64.png)
+![Binary Ninja symbols KiSystemCall64|416px|center](/images/documents/windows-internals-explained/ki_syscall64.png)
 
 ![Binary Ninja decompilation KiSystemCall64](/images/documents/windows-internals-explained/ki_syscall64_decomp.png)
 
