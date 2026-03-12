@@ -1,8 +1,10 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
+import SubscribeCTA from "@/components/page/Videos/SubscribeCTA";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import ContentNavigation from "@/components/ui/ContentNavigation";
 import TableOfContents from "@/components/ui/TableOfContents";
-import { contentExists, MDXMetadata } from "@/lib/server/mdx";
+import { contentExists, getAdjacentContent, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -64,17 +66,11 @@ export default async function ProjectPage({ params }: Props) {
   const post = await import(`@/app/(projects)/project/[slug]/${slug}.mdx`);
   const MDXContent = post.default;
   const metadata: MDXMetadata = post.metadata;
+  const { prev, next } = await getAdjacentContent("project", slug);
 
   return (
-    <Main
-      title={metadata.title}
-      createdAt={new Date(metadata.createdAt)}
-      updatedAt={new Date(metadata.updatedAt)}
-    >
-      <AspectRatio
-        className="mt-8 md:mt-14 overflow-hidden rounded-md border-2 border-white/20"
-        ratio={16 / 9}
-      >
+    <Main title={metadata.title} createdAt={new Date(metadata.createdAt)} updatedAt={new Date(metadata.updatedAt)}>
+      <AspectRatio className="mt-8 md:mt-14 overflow-hidden rounded-md border-2 border-white/20" ratio={16 / 9}>
         <Image alt="thumbnail" className="object-cover" src={metadata.thumbnailPath as string} fill />
       </AspectRatio>
       <Section subtitle="What's this project about?" title="Overview">
@@ -83,6 +79,9 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </Section>
       <TableOfContents />
+      <ContentNavigation contentType="project" prev={prev} next={next} />
+      <hr className="mb-4 mt-10 w-full border-white/20" />
+      <SubscribeCTA />
     </Main>
   );
 }

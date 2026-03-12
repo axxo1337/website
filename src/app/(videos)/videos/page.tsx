@@ -33,7 +33,7 @@ export default async function Videos() {
       updatedAt={mostRecentUpdate}
     >
       <Section title="Library">
-        <p className="md:text-lg">
+        <p>
           This page doesn&apos;t list ALL of my videos, but you can find some of
           my most recent here. Clicking any of them will direct you to another
           page dedicated to directing you to the actual video, but also to

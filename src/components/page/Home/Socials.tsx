@@ -5,7 +5,7 @@ import Social from "./Social";
 // [SECTION] Defines
 //
 
-const socials = [
+export const socials = [
   {
     href: "https://www.youtube.com/@axxo1337",
     title: "YouTube",

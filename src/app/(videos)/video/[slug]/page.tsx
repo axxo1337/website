@@ -1,8 +1,10 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import YouTubeVideo from "@/components/page/Projects/YouTubeVideo";
+import SubscribeCTA from "@/components/page/Videos/SubscribeCTA";
+import ContentNavigation from "@/components/ui/ContentNavigation";
 import TableOfContents from "@/components/ui/TableOfContents";
-import { contentExists, MDXMetadata } from "@/lib/server/mdx";
+import { contentExists, getAdjacentContent, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -73,19 +75,12 @@ export default async function VideoPage({ params }: Props) {
   const post = await import(`@/app/(videos)/video/[slug]/${slug}.mdx`);
   const MDXContent = post.default;
   const metadata: MDXMetadata = post.metadata;
+  const { prev, next } = await getAdjacentContent("video", slug);
 
   return (
-    <Main
-      title={metadata.title}
-      createdAt={new Date(metadata.createdAt)}
-      updatedAt={new Date(metadata.updatedAt)}
-    >
+    <Main title={metadata.title} createdAt={new Date(metadata.createdAt)} updatedAt={new Date(metadata.updatedAt)}>
       <div>
-        <YouTubeVideo
-          className="mt-8 md:mt-14"
-          id={metadata.youtubeId}
-          thumbnailPath={metadata.thumbnailPath}
-        />
+        <YouTubeVideo className="mt-8 md:mt-14" id={metadata.youtubeId} thumbnailPath={metadata.thumbnailPath} />
       </div>
       <Section subtitle="What's this video about?" title="Overview">
         <div>
@@ -93,6 +88,9 @@ export default async function VideoPage({ params }: Props) {
         </div>
       </Section>
       <TableOfContents />
+      <ContentNavigation contentType="video" prev={prev} next={next} />
+      <hr className="mb-4 mt-10 w-full border-white/20" />
+      <SubscribeCTA />
     </Main>
   );
 }

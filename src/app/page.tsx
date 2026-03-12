@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2025, 11, 22)}>
       <Section subtitle="Who am I?" title="In my own words">
-        <p className="md:text-lg">
+        <p>
           Hey! I&apos;m Charles.{" "}
           <i>
             Although you may know me as{" "}
@@ -49,7 +49,7 @@ export default function Home() {
             Quebec
           </Link>{" "}
           (Canada). I make videos in my free time purely out of the joy I get from teaching people. I don&apos;t have a specific
-          goal with any of this. I just enjoy doing it :)
+          goal with any of this. It&apos;s just a pass time I love working on.
         </p>
       </Section>
       <Section subtitle="What do I make?" title="My best work">
