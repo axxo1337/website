@@ -25,7 +25,7 @@ export default async function Projects() {
       updatedAt={mostRecentUpdate}
     >
       <Section title="Library">
-        <p className="md:text-lg">
+        <p>
           This page doesn&apos;t list ALL of my project, but you can find some
           of my most recent here. Clicking any of them will direct you to
           another page dedicated to describing said project.
