@@ -16,6 +16,23 @@ function extractText(node: ReactNode): string {
   return "";
 }
 
+function parseImageAlt(alt: string): { text: string; align: string; width: string } {
+  const parts = alt.split("|").map((s) => s.trim());
+  const text = parts[0];
+  let align = "center";
+  let width = "";
+
+  for (const part of parts.slice(1)) {
+    if (["left", "center", "right"].includes(part)) {
+      align = part;
+    } else if (part) {
+      width = part;
+    }
+  }
+
+  return { text, align, width };
+}
+
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h3: ({ children }) => (
@@ -59,25 +76,38 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     code: CodeBlock,
     img: ({ src, alt, ...props }) => {
+      const { text, align, width } = parseImageAlt(alt || "");
+
+      const wrapperAlignClass =
+        align === "left" ? "justify-start" :
+        align === "right" ? "justify-end" :
+        "justify-center";
+
+      const sizeClass = width ? "" : "w-full";
+      const imgClassName = `rounded-lg h-auto ${sizeClass}`;
+
       const image = src?.startsWith("http") ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={alt || ""} className="rounded-lg my-4 w-full h-auto" {...props} />
+        <img src={src} alt={text} className={imgClassName} style={width ? { width } : undefined} {...props} />
       ) : (
         <Image
           src={src || ""}
-          alt={alt || ""}
+          alt={text}
           width={0}
           height={0}
-          sizes="100vw"
-          className="rounded-lg my-4 w-full h-auto"
+          sizes={width || "100vw"}
+          className={imgClassName}
+          style={width ? { width } : undefined}
           {...props}
         />
       );
 
       return (
-        <ImageViewer src={src || ""} alt={alt || ""}>
-          {image}
-        </ImageViewer>
+        <span className={`flex my-4 ${wrapperAlignClass}`}>
+          <ImageViewer src={src || ""} alt={text}>
+            {image}
+          </ImageViewer>
+        </span>
       );
     },
     ...components,

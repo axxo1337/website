@@ -62,12 +62,12 @@ addresses to index into pages makes sense since 2 to the power of 12 is 4096.
 
 The number of entries in the memory tables is not random. Each entry is of 64 bits. This means that every table is of exactly 4096 bytes in size:
 
-$$
+```math
 \begin{align*}
 512 * 64 &= 32768\text{ bits} \\[1em]
  \frac{32768}{8} &= 4096\text{ bytes}
 \end{align*}
-$$
+```
 
 That's the size of a memory page.
 
