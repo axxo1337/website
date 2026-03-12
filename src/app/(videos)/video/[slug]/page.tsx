@@ -1,6 +1,7 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import YouTubeVideo from "@/components/page/Projects/YouTubeVideo";
+import SubscribeCTA from "@/components/page/Videos/SubscribeCTA";
 import ContentNavigation from "@/components/ui/ContentNavigation";
 import TableOfContents from "@/components/ui/TableOfContents";
 import { contentExists, getAdjacentContent, MDXMetadata } from "@/lib/server/mdx";
@@ -89,6 +90,7 @@ export default async function VideoPage({ params }: Props) {
       <TableOfContents />
       <ContentNavigation contentType="video" prev={prev} next={next} />
       <hr className="mb-4 mt-10 w-full border-white/20" />
+      <SubscribeCTA />
     </Main>
   );
 }
