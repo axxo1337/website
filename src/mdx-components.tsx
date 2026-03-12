@@ -83,21 +83,26 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         align === "right" ? "justify-end" :
         "justify-center";
 
+      const isAuto = width === "auto";
+      const hasExplicitWidth = width && !isAuto;
       const sizeClass = width ? "" : "w-full";
       const imgClassName = `rounded-lg h-auto ${sizeClass}`;
 
-      const image = src?.startsWith("http") ? (
+      // eslint-disable-next-line @next/next/no-img-element
+      const image = isAuto ? (
+        <img src={src} alt={text} className="rounded-lg h-auto" {...props} />
+      ) : src?.startsWith("http") ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={text} className={imgClassName} style={width ? { width } : undefined} {...props} />
+        <img src={src} alt={text} className={imgClassName} style={hasExplicitWidth ? { width } : undefined} {...props} />
       ) : (
         <Image
           src={src || ""}
           alt={text}
           width={0}
           height={0}
-          sizes={width || "100vw"}
+          sizes={hasExplicitWidth ? width : "100vw"}
           className={imgClassName}
-          style={width ? { width } : undefined}
+          style={hasExplicitWidth ? { width } : undefined}
           {...props}
         />
       );
