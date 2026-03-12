@@ -24,24 +24,26 @@ export default function TableOfContentsDesktop({ exclude }: TableOfContentsDeskt
   useEffect(() => {
     if (headings.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (locked.current) return;
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        }
-      },
-      { rootMargin: "0px 0px -80% 0px" }
-    );
+    function updateActiveHeading() {
+      if (locked.current) return;
 
-    for (const { id } of headings) {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
+      const scrollY = window.scrollY;
+      let current = headings[0]?.id ?? "";
+
+      for (const { id } of headings) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop - 100 <= scrollY) {
+          current = id;
+        }
+      }
+
+      setActiveId(current);
     }
 
-    return () => observer.disconnect();
+    window.addEventListener("scroll", updateActiveHeading, { passive: true });
+    updateActiveHeading();
+
+    return () => window.removeEventListener("scroll", updateActiveHeading);
   }, [headings]);
 
   useEffect(() => {

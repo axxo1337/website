@@ -58,6 +58,23 @@ export async function getAllContentMetadata(
   return Promise.all(metadataPromises);
 }
 
+export async function getAdjacentContent(
+  contentType: ContentType,
+  currentSlug: string,
+): Promise<{ prev: MDXMetadata | null; next: MDXMetadata | null }> {
+  const all = await getAllContentMetadata(contentType);
+  const sorted = all.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
+
+  const currentIndex = sorted.findIndex((item) => item.slug === currentSlug);
+
+  return {
+    prev: currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null,
+    next: currentIndex > 0 ? sorted[currentIndex - 1] : null,
+  };
+}
+
 //
 // [SECTION] Types
 //

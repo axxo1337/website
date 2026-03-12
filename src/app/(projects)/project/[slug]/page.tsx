@@ -1,8 +1,9 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import ContentNavigation from "@/components/ui/ContentNavigation";
 import TableOfContents from "@/components/ui/TableOfContents";
-import { contentExists, MDXMetadata } from "@/lib/server/mdx";
+import { contentExists, getAdjacentContent, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -64,6 +65,7 @@ export default async function ProjectPage({ params }: Props) {
   const post = await import(`@/app/(projects)/project/[slug]/${slug}.mdx`);
   const MDXContent = post.default;
   const metadata: MDXMetadata = post.metadata;
+  const { prev, next } = await getAdjacentContent("project", slug);
 
   return (
     <Main
@@ -83,6 +85,7 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </Section>
       <TableOfContents />
+      <ContentNavigation contentType="project" prev={prev} next={next} />
     </Main>
   );
 }

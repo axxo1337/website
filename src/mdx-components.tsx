@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ReactNode } from "react";
 import { slugify } from "./lib/client/utils";
 import CodeBlock from "./components/ui/CodeBlock";
+import ImageViewer from "./components/ui/ImageViewer";
 
 function extractText(node: ReactNode): string {
   if (typeof node === "string") return node;
@@ -28,7 +29,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </h4>
     ),
     p: ({ children }) => <p className="mt-3">{children}</p>,
-    a: (props) => <a {...props} className={`${props.className} inline-anchor`}></a>,
+    a: (props) => <a {...props} className={`${props.className} inline-anchor break-words`}></a>,
     ol: ({ children }) => <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">{children}</ol>,
     ul: ({ children }) => <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">{children}</ul>,
     li: ({ children }) => <li className="wrap-break-words">{children}</li>,
@@ -58,14 +59,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     code: CodeBlock,
     img: ({ src, alt, ...props }) => {
-      if (src?.startsWith("http")) {
-        return (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={src} alt={alt || ""} className="rounded-lg my-4 w-full h-auto" {...props} />
-        );
-      }
-
-      return (
+      const image = src?.startsWith("http") ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={src} alt={alt || ""} className="rounded-lg my-4 w-full h-auto" {...props} />
+      ) : (
         <Image
           src={src || ""}
           alt={alt || ""}
@@ -75,6 +72,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
           className="rounded-lg my-4 w-full h-auto"
           {...props}
         />
+      );
+
+      return (
+        <ImageViewer src={src || ""} alt={alt || ""}>
+          {image}
+        </ImageViewer>
       );
     },
     ...components,
