@@ -12,22 +12,22 @@ export default function Footer() {
         <nav>
           <ul className="flex items-center gap-6 md:text-base text-sm">
             <li>
-              <Link href="/" className="text-white/80 font-medium hover:text-white transition-colors">
+              <Link href="/" className="text-white/80 font-medium hover:text-white transition-colors hover-underline">
                 About me
               </Link>
             </li>
             <li>
-              <Link href="/videos" className="text-white/80 font-medium hover:text-white transition-colors">
+              <Link href="/videos" className="text-white/80 font-medium hover:text-white transition-colors hover-underline">
                 Videos
               </Link>
             </li>
             <li>
-              <Link href="/projects" className="text-white/80 font-medium hover:text-white transition-colors">
+              <Link href="/projects" className="text-white/80 font-medium hover:text-white transition-colors hover-underline">
                 Projects
               </Link>
             </li>
             <li>
-              <Link href="/references" className="text-white/80 font-medium hover:text-white transition-colors">
+              <Link href="/references" className="text-white/80 font-medium hover:text-white transition-colors hover-underline">
                 References
               </Link>
             </li>
