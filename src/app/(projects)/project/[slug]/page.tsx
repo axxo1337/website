@@ -70,9 +70,11 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <Main title={metadata.title} createdAt={new Date(metadata.createdAt)} updatedAt={new Date(metadata.updatedAt)}>
-      <AspectRatio className="mt-8 md:mt-14 overflow-hidden rounded-md border-2 border-white/20" ratio={16 / 9}>
-        <Image alt="thumbnail" className="object-cover" src={metadata.thumbnailPath as string} fill />
-      </AspectRatio>
+      <div className="mt-8 md:mt-14 overflow-hidden rounded-md border-2 border-white/20">
+        <AspectRatio ratio={16 / 9}>
+          <Image alt="thumbnail" className="object-cover" src={metadata.thumbnailPath as string} fill />
+        </AspectRatio>
+      </div>
       <Section subtitle="What's this project about?" title="Overview">
         <div>
           <MDXContent />
