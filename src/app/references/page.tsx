@@ -16,7 +16,7 @@ export default function References() {
       updatedAt={new Date(2026, 0, 1)}
     >
       <Section subtitle="What's this about?" title="Overview">
-        <p className="md:text-lg">
+        <p className="mt-3 md:text-lg">
           This page was originally named &quot;resources&quot;, but as{" "}
           <a href="https://github.com/grimy86" className="inline-anchor">
             grimy86
@@ -29,19 +29,19 @@ export default function References() {
         </p>
       </Section>
       <Section subtitle="Some advice and links" title="Material">
-        <h3 id="game-hacking" className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24">
+        <h3 id="game-hacking" className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 scroll-mt-24">
           Game Hacking
         </h3>
-        <p>
+        <p className="mt-3">
           Game Hacking is a polymath field. If you intend to learn it then you
           should already be comfortable with C++, data structures, Windows
           Internals and Reverse Engineering. Below I will list resources for
           each of these sections.
         </p>
-        <h4 id="c" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24">
+        <h4 id="c" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 scroll-mt-24">
           C++
         </h4>
-        <p>
+        <p className="mt-3">
           To learn C++ nowadays you&apos;re very well covered. Like many people,
           I cannot emphasize enough how good{" "}
           <a href="https://learncpp.com" className="inline-anchor">
@@ -51,7 +51,7 @@ export default function References() {
           learning always very appealing, here&apos;s a couple of good YouTube
           content you should check out:
         </p>
-        <ul className="list-disc pl-5 flex flex-col gap-2 my-1">
+        <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">
           <li>
             <a
               href="https://www.youtube.com/watch?v=18c3MTX0PK0&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb"
@@ -73,15 +73,15 @@ export default function References() {
           </li>
         </ul>
 
-        <h4 id="data-structures" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24">
+        <h4 id="data-structures" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 scroll-mt-24">
           Data Structures
         </h4>
-        <p>
+        <p className="mt-3">
           I&apos;m not saying you should be a crazy competitive coder, but just
           at least having some basic knowledge of algorithms and data structures
           is important. Data structures even more:
         </p>
-        <ul className="list-disc pl-5 flex flex-col gap-2 my-1">
+        <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">
           <li>
             <a
               href="https://www.youtube.com/playlist?list=PLUl4u3cNGP63EdVPNLG3ToM6LaEUuStEY"
@@ -117,15 +117,15 @@ export default function References() {
           </li>
         </ul>
 
-        <h4 id="windows-internals" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24">
+        <h4 id="windows-internals" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 scroll-mt-24">
           Windows Internals
         </h4>
-        <p>
+        <p className="mt-3">
           Windows internals consists of learning, well, how Windows works. As of
           writing this I&apos;m working on my very own introduction to this
           subject, but until then resources are scarce:
         </p>
-        <ul className="list-disc pl-5 flex flex-col gap-2 my-1">
+        <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">
           <li>
             <a
               href="https://learn.microsoft.com/en-us/sysinternals/resources/windows-internals"
@@ -157,10 +157,10 @@ export default function References() {
           </li>
         </ul>
 
-        <h4 id="reverse-engineering" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 mb-2 scroll-mt-24">
+        <h4 id="reverse-engineering" className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 scroll-mt-24">
           Reverse Engineering
         </h4>
-        <p>
+        <p className="mt-3">
           Reverse engineering is at the essence of game hacking. Firstly, you
           need all the beforementioned prerequisites. Then, you also want to be
           familiar with some assembly language. My recommendation is x86_64
@@ -170,7 +170,7 @@ export default function References() {
           recommend resources for it as learning it is mostly done through
           practice. Here are some resources:
         </p>
-        <ul className="list-disc pl-5 flex flex-col gap-2 my-1">
+        <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">
           <li>
             <a
               href="https://www.tutorialspoint.com/assembly_programming/index.htm"
