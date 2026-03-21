@@ -82,7 +82,7 @@ export default async function ProjectPage({ params }: Props) {
       </Section>
       <TableOfContents />
       <ContentNavigation contentType="project" prev={prev} next={next} />
-      <hr className="mb-4 mt-10 w-full border-white/20" />
+      <hr className="mb-4 mt-8 sm:mt-10 w-full border-white/20" />
       <SubscribeCTA />
     </Main>
   );

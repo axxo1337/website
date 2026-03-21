@@ -26,7 +26,7 @@ export default function TableOfContents({ exclude }: TableOfContents) {
   return (
     <Fragment>
       <TableOfContentsDesktop exclude={exclude} />
-      <TableOfContentsMobile />
+      <TableOfContentsMobile exclude={exclude} />
     </Fragment>
   );
 }

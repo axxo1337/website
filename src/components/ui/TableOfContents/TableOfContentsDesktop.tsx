@@ -1,70 +1,16 @@
 "use client";
 
 import { cn } from "@/lib/client/utils";
-import { useEffect, useRef, useState } from "react";
-import { extractHeadings, Heading } from ".";
+import { useState } from "react";
+import useTableOfContents from "@/lib/client/hooks/useTableOfContents";
 
 //
 // [SECTION] Content
 //
 
 export default function TableOfContentsDesktop({ exclude }: TableOfContentsDesktop) {
-  const [headings, setHeadings] = useState<Heading[]>([]);
-  const [activeId, setActiveId] = useState<string>("");
-  const [visible, setVisible] = useState(false);
+  const { headings, activeId, visible, scrollTo } = useTableOfContents(exclude);
   const [hovered, setHovered] = useState(false);
-  const locked = useRef(false);
-
-  useEffect(() => {
-    const items = extractHeadings(exclude);
-    setHeadings(items);
-    if (items.length > 0) setActiveId(items[0].id);
-  }, []);
-
-  useEffect(() => {
-    if (headings.length === 0) return;
-
-    function updateActiveHeading() {
-      if (locked.current) return;
-
-      const scrollY = window.scrollY;
-      let current = headings[0]?.id ?? "";
-
-      for (const { id } of headings) {
-        const el = document.getElementById(id);
-        if (el && el.offsetTop - 100 <= scrollY) {
-          current = id;
-        }
-      }
-
-      setActiveId(current);
-    }
-
-    window.addEventListener("scroll", updateActiveHeading, { passive: true });
-    updateActiveHeading();
-
-    return () => window.removeEventListener("scroll", updateActiveHeading);
-  }, [headings]);
-
-  useEffect(() => {
-    const sections = document.querySelectorAll("section");
-    if (sections.length === 0) return;
-
-    const visibleSections = new Set<Element>();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) visibleSections.add(entry.target);
-          else visibleSections.delete(entry.target);
-        }
-        setVisible(visibleSections.size > 0);
-      },
-      { threshold: 0 }
-    );
-
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
 
   if (headings.length === 0) return null;
 
@@ -87,7 +33,7 @@ export default function TableOfContentsDesktop({ exclude }: TableOfContentsDeskt
           <div
             key={heading.id}
             className={cn(
-              "rounded-full h-[2px] transition-colors",
+              "rounded-full h-0.5 transition-colors",
               heading.level === 2 && "w-6",
               heading.level === 3 && "ml-1 w-5",
               heading.level >= 4 && "ml-2 w-4",
@@ -111,12 +57,7 @@ export default function TableOfContentsDesktop({ exclude }: TableOfContentsDeskt
                 href={`#${heading.id}`}
                 onClick={(e) => {
                   e.preventDefault();
-                  locked.current = true;
-                  setActiveId(heading.id);
-                  document.getElementById(heading.id)?.scrollIntoView({
-                    behavior: "smooth",
-                  });
-                  setTimeout(() => { locked.current = false; }, 850);
+                  scrollTo(heading.id);
                 }}
                 className={cn(
                   "block transition-colors truncate rounded-md px-2.5 py-1.5 hover:bg-white/10",

@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "aXXo",
-      // , url: "https://axxowastaken.me/about-me"
+      url: "https://axxowastaken.me/"
     },
   ],
   creator: "aXXo",
@@ -105,7 +105,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden`}>
-        <div className="px-5 lg:px-0 max-w-255 w-full">
+        <div className="px-2.5 md:px-5 lg:px-0 max-w-255 w-full">
           <Header />
           {children}
           <Footer />

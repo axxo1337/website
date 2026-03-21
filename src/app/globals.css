@@ -99,3 +99,14 @@
 .inline-anchor {
   @apply underline text-[#317FFB];
 }
+
+::view-transition-group(image-viewer) {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+::view-transition-old(image-viewer),
+::view-transition-new(image-viewer) {
+  animation: none;
+  mix-blend-mode: normal;
+}
