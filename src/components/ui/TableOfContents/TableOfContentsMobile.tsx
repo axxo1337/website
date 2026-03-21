@@ -22,16 +22,18 @@ export default function TableOfContentsMobile({ exclude }: TableOfContentsMobile
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (!open || !navRef.current) return;
-    const active = navRef.current.querySelector("[data-active]");
-    if (active) active.scrollIntoView({ block: "center" });
+    if (!open) return;
+    requestAnimationFrame(() => {
+      const active = navRef.current?.querySelector("[data-active]");
+      if (active) active.scrollIntoView({ block: "center" });
+    });
   }, [open]);
 
   if (headings.length === 0) return null;
 
   return (
     <div className={cn(
-      "xl:hidden fixed bottom-6 right-6 z-50 transition-opacity duration-300",
+      "xl:hidden fixed bottom-4 right-6 z-50 transition-opacity duration-300",
       visible ? "opacity-100" : "opacity-0 pointer-events-none"
     )}>
       <Drawer open={open} onOpenChange={setOpen}>
