@@ -10,7 +10,7 @@ This is my personal portfolio website. I've always wanted a sort of portfolio we
 
 - [Next.js](https://nextjs.org/) (React framework)
 - [Tailwind CSS](https://tailwindcss.com/) (Styling)
-- [Radix UI](https://www.radix-ui.com/) (Accessible UI primitives)
+- [Radix UI](https://www.radix-ui.com/) (UI primitives used by Shadcn)
 - [MDX](https://mdxjs.com/) (Content authoring)
 - [KaTeX](https://katex.org/) (Math rendering)
 - [Bun](https://bun.sh/) (Package manager)

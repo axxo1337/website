@@ -93,7 +93,11 @@
 }
 
 .hover-underline {
-  @apply relative after:content-[''] after:transition-[width] after:w-0 hover:after:w-full after:h-0.5 after:bg-white after:absolute after:-bottom-1 after:left-0;
+  @apply relative after:content-[''] after:transition-[width] after:w-0 hover:after:w-full after:h-0.5 after:bg-white after:absolute after:-bottom-0.5 after:left-0;
+}
+
+.group-hover-underline {
+  @apply relative after:content-[''] after:transition-[width] after:w-0 group-hover:after:w-full after:h-0.5 after:bg-white after:absolute after:-bottom-0.5 after:left-0;
 }
 
 .inline-anchor {

@@ -38,7 +38,7 @@ See it as a refresher. If you struggle too much with these contents I would advi
 
 I'll assume that you at least understand number systems such as binary and hexadecimal and that traditional computers deal with data as bits (binary).
 
-![Basic digital data sizes](/images/documents/windows-internals-explained/data_basic_sizes.png)
+![Basic digital data sizes|center|800px](/images/documents/windows-internals-explained/data_basic_sizes.png)
 
 When dealing with larger chunks of data we have other measurements. The more common unit we use is the byte. It represents 8 bits. A less common, but popular measure in
 Microsoft's content is the word. It represents 16 bits. Other variants of it are the double and quadruple word, these being two and four times the size of a word respectively.
@@ -84,7 +84,7 @@ Now the writer process has its own copy of the code it modified and won't affect
 later in this video. Windows even maps most of its system code into the upper portion of every application's virtual memory. Although the mapped pages have the kernel
 bit set, making them only accessible when the CPU is in privileged mode.
 
-![Protection rings](/images/documents/windows-internals-explained/protection_rings.png)
+![Protection rings|center|400px](/images/documents/windows-internals-explained/protection_rings.png)
 
 The idea is that the system runs in permission levels. The lower the level, the more permissions the running code will have. This is often illustrated as protection rings
 like above. In modern systems rings 1 and 2 are not used. The main property of protection rings is that they lock sensitive instructions and data behind the appropriate levels.
@@ -111,7 +111,7 @@ processor-related features I only consider the x86_64 architecture.
 
 At a high level you can understand a CPU as one big component composed of many units.
 
-![Overview of a CPU architecture](/images/documents/windows-internals-explained/cpu_overview.png)
+![Overview of a CPU architecture|center|1920px](/images/documents/windows-internals-explained/cpu_overview.png)
 
 What you're seeing here is a very simplified overview of these units. I'm only showing the most relevant parts.
 
@@ -224,7 +224,7 @@ The three most important DLLs associated to the Windows API are `kernel32.dll`, 
 
 Before we dive deeper in `CreateProcess`, I think we should get a small overview of Windows. Threads are scheduled by Windows, meaning the system makes decisions for when and for how long each should run. The thing that handles this scheduling is intuitively called the scheduler. It's part of a bigger group of Windows components called the kernel.
 
-![Windows architecture simplified](/images/documents/windows-internals-explained/win_arch_simple.png)
+![Windows architecture simplified|center|800px](/images/documents/windows-internals-explained/win_arch_simple.png)
 
 What you see here is an illustration of the Windows architecture. This red bar divides the user and kernel mode parts of Windows. In user mode you find user processes which depend on subsystem DLLs. These are libraries like `kernel32` and `kernelbase`. We call them subsystems because they each expose some subset of the Windows API. For instance, the subsystem DLL `user32` provides functions to manage graphical interfaces and user inputs.
 
@@ -260,13 +260,13 @@ As a matter of fact you can even find said dispatcher under the name `KiSystemCa
 
 ![Binary Ninja symbols KiSystemCall64|416px|center](/images/documents/windows-internals-explained/ki_syscall64.png)
 
-![Binary Ninja decompilation KiSystemCall64](/images/documents/windows-internals-explained/ki_syscall64_decomp.png)
+![Binary Ninja decompilation KiSystemCall64|center|800px](/images/documents/windows-internals-explained/ki_syscall64_decomp.png)
 
 `KiSystemCall64`'s code first executes the [`swapgs`](https://www.felixcloutier.com/x86/swapgs) assembly instruction. This swaps the current value of the `GS` segment register with the value of the `IA32_KERNEL_GS_BASE` MSR. This points to a per-processor kernel structure known as the processor control region or `KPCR`. Per-processor means that each core inside of your CPU has one associated to it. It contains important core-specific data which we'll explore later, and contains another structure known as the processor control block or `KPRCB`.
 
 Next up the code backs up the old stack pointer and makes it point to the kernel stack associated to the current processor. Indeed, to isolate kernel mode from user mode, even a special kernel stack is used. Afterwards it also store the original value of the base pointer and makes it point into the stack.
 
-![Binary Ninja decompilation KiSystemServiceStart](/images/documents/windows-internals-explained/ki_systemservice_start_decomp.png)
+![Binary Ninja decompilation KiSystemServiceStart|center|800px](/images/documents/windows-internals-explained/ki_systemservice_start_decomp.png)
 
 Down the line the handler falls into another function called `KiSystemServiceStart`. This is the part that will actually invoke the appropriate system call. It first accesses the service descriptor table, a structure containing information regarding the system service dispatch table, or SSDT.
 
@@ -282,7 +282,7 @@ Back to the syscall `NtCreateUserProcess`, simplifying its code is not as straig
 
 In my case I hooked the system call handler so it would break only when a system call with the service number of `NtCreateUserProcess` is triggered, and the process owning the thread is `explorer.exe`.
 
-![Binary Ninja decompilation KiSystemCall64_Hook](/images/documents/windows-internals-explained/ki_syscall64_hook_decomp.png)
+![Binary Ninja decompilation KiSystemCall64_Hook|center|800px](/images/documents/windows-internals-explained/ki_syscall64_hook_decomp.png)
 
 Then I simply opened the file explorer and executed `notepad.exe` so I could trace what the system call does. It begins by opening the executable file by calling `IoCreateFileEx`. Then it creates a section object to map the file into memory by calling `MmCreateSpecialImageSection`.
 
@@ -290,7 +290,7 @@ Then I simply opened the file explorer and executed `notepad.exe` so I could tra
 
 Before I explain what a section object is, I need to explain what even are Windows objects. They are a representation of resources currently in use that the system needs to keep track of such as processes, files, threads etc. Different types of objects contain different information specific to the kind of resource they represent, but they all are prefixed by an object header.
 
-![Vergilius _OBJECT_HEADER](/images/documents/windows-internals-explained/vergolius_object_header.png)
+![Vergilius _OBJECT_HEADER|center|700px](/images/documents/windows-internals-explained/vergolius_object_header.png)
 
 Essentially there's an executive component known as the object manager. It's responsible for managing the lifetime of Windows objects. Object headers contains details such as the reference count and handle count. When such counts reach 0 the object manager will get rid of concerned object, unless it's specified as permanent through the flags member.
 
@@ -300,13 +300,13 @@ All the handles a process has open are stored in a table associated to it. Every
 
 When working from kernel mode although, since objects are directly accessible handles are not necessary. As an alternative to still be able to specify that an object is needed, the reference count is used. Kernel mode code will invoke the function `ObReferenceObject` to increase the object's reference count, and `ObDereferenceObject` to decrease it.
 
-![Vergilius _SECURITY_DESCRIPTOR](/images/documents/windows-internals-explained/vergilius_security_descriptor.png)
+![Vergilius _SECURITY_DESCRIPTOR|center|475px](/images/documents/windows-internals-explained/vergilius_security_descriptor.png)
 
 Windows objects have a security descriptor associated to them. This is a structure that describes security information such as the owner of said object. It also points to two access control lists, or ACLs. These are structures followed by zero or more access control entries, or ACEs for short. Both of these ACLs have a different purpose. The system access control list, or SACL describes what operations and by who should generate audit logs. On the other hand, the discretionary access control list, or DACL describes who has what permissions over the object.
 
 The structure for ACEs looks something like this:
 
-![_ACE](/images/documents/windows-internals-explained/ace.png)
+![_ACE|center|390px](/images/documents/windows-internals-explained/ace.png)
 
 I write “something like” because I couldn't actually find a basic definition anywhere. I had to base myself of WinDbg outputs.
 
@@ -315,7 +315,7 @@ The type of an ACE can range between many different values. The more interesting
 - Access allowed, which grants access to a user.
 - Access denied, which denies access to a user.
 
-![_ACE mask](/images/documents/windows-internals-explained/ace_mask.png)
+![_ACE mask|center|800px](/images/documents/windows-internals-explained/ace_mask.png)
 
 The [mask](https://learn.microsoft.com/en-us/windows/win32/secauthz/access-mask) is what specifies the permissions the ACE grants or denies. Each bit within the mask specifies a different permission. The first 16 bits are object-specific permissions, the next 8 bits are for [standard access rights](https://learn.microsoft.com/en-us/windows/win32/secauthz/standard-access-rights) (delete, modify access descriptors, change owner etc), the 4 bits after that we can ignore, and the final 4 bits are for [generic rights](https://learn.microsoft.com/en-us/windows/win32/secauthz/generic-access-rights) (read, write, execute or all).
 
@@ -372,21 +372,21 @@ What I want to specifically highlight is that both check for a different value. 
 
 This is just one of the inconsistencies in the Windows API, and it's why you should always carefully read the documentation for such functions. You can find it through simple google searches and specifically on [Microsoft's learn website](https://learn.microsoft.com/en-us/).
 
-![Microsoft Learn CreateFileA](/images/documents/windows-internals-explained/learn_createfilea.png)
+![Microsoft Learn CreateFileA|center|637px](/images/documents/windows-internals-explained/learn_createfilea.png)
 
 The second thing I want to mention is the reason for the suffix `A` at the end of some functions. Every time a Windows API routine takes in a string as an argument, Microsoft makes available at least two variants of said function: one with an `A` as a suffix and one with a `W`. The difference has to do with character encoding. The `W` variants use wide strings which is actually now the standard in Windows. But for simplicity and backwards compatibility reasons they maintain the `A` variant for regular string.
 
-![Microsoft Learn CreateFileW](/images/documents/windows-internals-explained/learn_createfilew.png)
+![Microsoft Learn CreateFileW|center|637px](/images/documents/windows-internals-explained/learn_createfilew.png)
 
 These `A` variants usually convert the strings you input into wide-string before working with them or issuing a system call. They also make sure to convert the outputs as well if they contain strings.
 
 With this out of the way, the `CreateFile` can be used to open or create files and get a handle to them. In this case the code is intended to open an existing file called "example.txt" with read and write permissions. 
 
-![Microsoft Learn CreateFileMappingA](/images/documents/windows-internals-explained/learn_createfilemappinga.png)
+![Microsoft Learn CreateFileMappingA|center|661px](/images/documents/windows-internals-explained/learn_createfilemappinga.png)
 
 After making sure the returned handle is valid it gets the size of said file and creates the file-backed section object using `CreateFileMapping`. Don't be deceived by its name or description, under the hood it calls `NtCreateSection` and returns its handle.
 
-![Binary Ninja CreateFileMappingW decompilation](/images/documents/windows-internals-explained/createfilemappingw_decomp.png)
+![Binary Ninja CreateFileMappingW decompilation|center|800px](/images/documents/windows-internals-explained/createfilemappingw_decomp.png)
 
 After a check that the section object was successfully created, the code calls `MapViewOfFile`. This will tell the system to map the pages of memory representing the file into the process's address space. It can now directly interact with it.
 

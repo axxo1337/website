@@ -2,7 +2,7 @@ import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Socials from "@/components/page/Home/Socials";
 import Work from "@/components/page/Home/Work";
-import { CornerRightDown, MoveRight } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import Link from "next/link";
 
 //
@@ -34,7 +34,7 @@ const bestCreations: TWork[] = [
 
 export default function Home() {
   return (
-    <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2025, 11, 22)}>
+    <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2026, 2, 21)}>
       <Section subtitle="Who am I?" title="In my own words">
         <p>
           Hey! I&apos;m Charles.{" "}
@@ -59,16 +59,25 @@ export default function Home() {
           ))}
         </div>
         <hr className="my-4 md:my-6 border-white/20" />
-        <div className="text-xl flex-col sm:flex-row md:text-2xl flex sm:items-center gap-2 justify-between">
+        <p className="text-xl sm:hidden">
+          Or see all{" "}
+          <Link href="/videos" className="inline-anchor">
+            Videos
+          </Link>{" "}
+          and{" "}
+          <Link href="/projects" className="inline-anchor">
+            Projects
+          </Link>
+        </p>
+        <div className="hidden sm:flex text-xl md:text-2xl items-center justify-between">
           <span className="flex items-center gap-3">
-            Or see everything <MoveRight className="hidden sm:block" />
-            <CornerRightDown className="block sm:hidden" />
+            Or see everything <MoveRight />
           </span>
           <div className="flex items-center gap-6">
-            <Link href="/videos" className="hover:underline">
+            <Link href="/videos" className="hover-underline">
               Videos
             </Link>
-            <Link href="/projects" className="hover:underline">
+            <Link href="/projects" className="hover-underline">
               Projects
             </Link>
           </div>
