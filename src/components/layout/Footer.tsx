@@ -3,7 +3,7 @@ import Logo from "../ui/Logo";
 
 export default function Footer() {
   return (
-    <footer className="mt-16 pb-16">
+    <footer className="mt-12 sm:mt-16 pb-16">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <Link href="/" className="flex items-center gap-2.5">
           <Logo className="size-6" />
