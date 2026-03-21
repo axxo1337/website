@@ -75,8 +75,16 @@ export default function useTableOfContents(exclude?: string[], pauseScroll?: boo
     locked.current = true;
     setActiveId(id);
     setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-      setTimeout(() => { locked.current = false; }, 850);
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "instant" });
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: "instant" });
+          locked.current = false;
+        }, 500);
+      } else {
+        locked.current = false;
+      }
     }, delay);
   }, []);
 
