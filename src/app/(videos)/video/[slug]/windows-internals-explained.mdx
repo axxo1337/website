@@ -290,7 +290,31 @@ Then I simply opened the file explorer and executed `notepad.exe` so I could tra
 
 Before I explain what a section object is, I need to explain what even are Windows objects. They are a representation of resources currently in use that the system needs to keep track of such as processes, files, threads etc. Different types of objects contain different information specific to the kind of resource they represent, but they all are prefixed by an object header.
 
-![Vergilius _OBJECT_HEADER|center|700px](/images/documents/windows-internals-explained/vergolius_object_header.png)
+<UndocumentedStruct title="_OBJECT_HEADER" source="https://www.vergiliusproject.com/kernels/x64/windows-11/25h2/_OBJECT_HEADER">
+{`struct _OBJECT_HEADER
+{
+    LONGLONG PointerCount;                                   //0x0
+    union
+    {
+        LONGLONG HandleCount;                                //0x8
+        VOID* NextToFree;                                    //0x8
+    };
+    struct _EX_PUSH_LOCK Lock;                               //0x10
+    UCHAR TypeIndex;                                         //0x18
+    UCHAR TraceFlags;                                        //0x19
+    UCHAR InfoMask;                                          //0x1a
+    UCHAR Flags;                                             //0x1b
+    ULONG Reserved;                                          //0x1c
+    union
+    {
+        struct _OBJECT_CREATE_INFORMATION* ObjectCreateInfo; //0x20
+        VOID* QuotaBlockCharged;                             //0x20
+    };
+    VOID* SecurityDescriptor;                                //0x28
+    struct _QUAD Body;                                       //0x30
+};
+`}
+</UndocumentedStruct>
 
 Essentially there's an executive component known as the object manager. It's responsible for managing the lifetime of Windows objects. Object headers contains details such as the reference count and handle count. When such counts reach 0 the object manager will get rid of concerned object, unless it's specified as permanent through the flags member.
 
@@ -300,13 +324,35 @@ All the handles a process has open are stored in a table associated to it. Every
 
 When working from kernel mode although, since objects are directly accessible handles are not necessary. As an alternative to still be able to specify that an object is needed, the reference count is used. Kernel mode code will invoke the function `ObReferenceObject` to increase the object's reference count, and `ObDereferenceObject` to decrease it.
 
-![Vergilius _SECURITY_DESCRIPTOR|center|475px](/images/documents/windows-internals-explained/vergilius_security_descriptor.png)
+<UndocumentedStruct title="_SECURITY_DESCRIPTOR" source="https://www.vergiliusproject.com/kernels/x64/windows-11/25h2/_SECURITY_DESCRIPTOR">
+{`struct _SECURITY_DESCRIPTOR
+{
+    UCHAR Revision;                                         //0x0
+    UCHAR Sbz1;                                             //0x1
+    USHORT Control;                                         //0x2
+    VOID* Owner;                                            //0x8
+    VOID* Group;                                            //0x10
+    struct _ACL* Sacl;                                      //0x18
+    struct _ACL* Dacl;                                      //0x20
+};
+`}
+</UndocumentedStruct>
 
 Windows objects have a security descriptor associated to them. This is a structure that describes security information such as the owner of said object. It also points to two access control lists, or ACLs. These are structures followed by zero or more access control entries, or ACEs for short. Both of these ACLs have a different purpose. The system access control list, or SACL describes what operations and by who should generate audit logs. On the other hand, the discretionary access control list, or DACL describes who has what permissions over the object.
 
 The structure for ACEs looks something like this:
 
-![_ACE|center|390px](/images/documents/windows-internals-explained/ace.png)
+<UndocumentedStruct title="_ACE" theme="axxo">
+{`struct _ACE
+{
+    BYTE Type;
+    BYTE Flags;
+    WORD Size;
+    DWORD Mask;
+    DWORD SidStart;
+};
+`}
+</UndocumentedStruct>
 
 I write “something like” because I couldn't actually find a basic definition anywhere. I had to base myself of WinDbg outputs.
 
@@ -372,17 +418,49 @@ What I want to specifically highlight is that both check for a different value. 
 
 This is just one of the inconsistencies in the Windows API, and it's why you should always carefully read the documentation for such functions. You can find it through simple google searches and specifically on [Microsoft's learn website](https://learn.microsoft.com/en-us/).
 
-![Microsoft Learn CreateFileA|center|637px](/images/documents/windows-internals-explained/learn_createfilea.png)
+<MicrosoftLearnQuote title="CreateFileA" description="Creates or opens a file or I/O device. The function returns a handle that can be used to access the file or device for various types of I/O depending on the file or device and the flags and attributes specified." source="https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea">
+{`HMODULE CreateFileA(
+    [in]           LPCSTR                 lpFileName,
+    [in]           DWORD                  dwDesiredAccess,
+    [in]           DWORD                  dwShareMode,
+    [in, optional] LPSECURITY_ATTRIBUTES  lpSecurityAttributes,
+    [in]           DWORD                  dwCreationDisposition,
+    [in]           DWORD                  dwFlagsAndAttributes,
+    [in, optional] HANDLE                 hTemplateFile
+);
+`}
+</MicrosoftLearnQuote>
 
 The second thing I want to mention is the reason for the suffix `A` at the end of some functions. Every time a Windows API routine takes in a string as an argument, Microsoft makes available at least two variants of said function: one with an `A` as a suffix and one with a `W`. The difference has to do with character encoding. The `W` variants use wide strings which is actually now the standard in Windows. But for simplicity and backwards compatibility reasons they maintain the `A` variant for regular string.
 
-![Microsoft Learn CreateFileW|center|637px](/images/documents/windows-internals-explained/learn_createfilew.png)
+<MicrosoftLearnQuote title="CreateFileW" description="Creates or opens a file or I/O device. The function returns a handle that can be used to access the file or device for various types of I/O depending on the file or device and the flags and attributes specified." source="https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew">
+{`HMODULE CreateFileW(
+    [in]           LPCWSTR                lpFileName,
+    [in]           DWORD                  dwDesiredAccess,
+    [in]           DWORD                  dwShareMode,
+    [in, optional] LPSECURITY_ATTRIBUTES  lpSecurityAttributes,
+    [in]           DWORD                  dwCreationDisposition,
+    [in]           DWORD                  dwFlagsAndAttributes,
+    [in, optional] HANDLE                 hTemplateFile
+);
+`}
+</MicrosoftLearnQuote>
 
 These `A` variants usually convert the strings you input into wide-string before working with them or issuing a system call. They also make sure to convert the outputs as well if they contain strings.
 
 With this out of the way, the `CreateFile` can be used to open or create files and get a handle to them. In this case the code is intended to open an existing file called "example.txt" with read and write permissions. 
 
-![Microsoft Learn CreateFileMappingA|center|661px](/images/documents/windows-internals-explained/learn_createfilemappinga.png)
+<MicrosoftLearnQuote title="CreateFileMappingA" description="Creates or opens a named or unnamed file mapping object for a specified file." source="https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createfilemappinga">
+{`HMODULE CreateFileMappingA(
+    [in]           HANDLE                 hFile,
+    [in, optional] LPSECURITY_ATTRIBUTES  lpFileMappingAttributes,
+    [in]           DWORD                  flProtect,
+    [in]           DWORD                  dwMaximumSizeHigh,
+    [in]           DWORD                  dwMaximumSizeLow,
+    [in, optional] LPCSTR                 lpName
+);
+`}
+</MicrosoftLearnQuote>
 
 After making sure the returned handle is valid it gets the size of said file and creates the file-backed section object using `CreateFileMapping`. Don't be deceived by its name or description, under the hood it calls `NtCreateSection` and returns its handle.
 
