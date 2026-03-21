@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Dialog, DialogClose, DialogContent, DialogTitle } from "./dialog";
+import { cn } from "@/lib/client/utils";
 
 //
 // [SECTION] Content
@@ -53,11 +54,15 @@ export default function ImageViewer({ src, alt, children }: ImageViewerProps) {
 
   return (
     <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
-      <span ref={thumbRef} className="cursor-zoom-in" onClick={handleOpen}>
+      <span
+        ref={thumbRef}
+        className={cn("cursor-zoom-in", open && "opacity-0")}
+        onClick={handleOpen}
+      >
         {children}
       </span>
       <DialogContent
-        className="!max-w-[90vw] max-h-[90vh] !w-fit !border-none !bg-transparent !p-0 !shadow-none !gap-0 !animate-none"
+        className="max-w-[90vw]! max-h-[90vh] w-fit! border-none! bg-transparent! p-0! shadow-none! gap-0! animate-none!"
         showCloseButton={false}
       >
         <DialogTitle className="sr-only">{alt}</DialogTitle>
