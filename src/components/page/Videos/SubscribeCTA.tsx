@@ -1,4 +1,3 @@
-import { Check } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,7 +7,7 @@ import Link from "next/link";
 
 export default function SubscribeCTA() {
   return (
-    <div className="relative isolate mt-12 flex flex-col items-center gap-5 overflow-hidden rounded-2xl border border-white/10 px-3 py-7 text-center sm:gap-6 sm:px-7">
+    <div className="relative isolate mt-12 flex flex-col items-center gap-5 overflow-hidden rounded-2xl border border-white/10 px-3 py-7 text-center sm:gap-6 sm:py-10 sm:px-7">
       <span className="text-2xl md:text-4xl font-semibold">Enjoying my work?</span>
       <p className="text-white/70 md:text-lg md:w-[70%]">
         Subscribe to my YouTube for high-quality videos and to support me!
