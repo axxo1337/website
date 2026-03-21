@@ -22,9 +22,11 @@ export default function TableOfContentsMobile({ exclude }: TableOfContentsMobile
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (!open || !navRef.current) return;
-    const active = navRef.current.querySelector("[data-active]");
-    if (active) active.scrollIntoView({ block: "center" });
+    if (!open) return;
+    requestAnimationFrame(() => {
+      const active = navRef.current?.querySelector("[data-active]");
+      if (active) active.scrollIntoView({ block: "center" });
+    });
   }, [open]);
 
   if (headings.length === 0) return null;
