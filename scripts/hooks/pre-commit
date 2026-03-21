@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+const { execSync } = require("child_process");
+const fs = require("fs");
+
+const now = new Date();
+const year = now.getFullYear();
+const month = String(now.getMonth() + 1).padStart(2, "0");
+const day = String(now.getDate()).padStart(2, "0");
+
+const mdxDate = `${year}-${month}-${day}`;
+const tsxDate = `${year}, ${now.getMonth()}, ${now.getDate()}`;
+
+const staged = execSync("git diff --cached --name-only --diff-filter=ACM", {
+  encoding: "utf-8",
+})
+  .trim()
+  .split("\n")
+  .filter(Boolean);
+
+for (const file of staged) {
+  if (file.endsWith(".mdx")) {
+    let content = fs.readFileSync(file, "utf-8");
+    const updated = content.replace(
+      /updatedAt: "\d{4}-\d{2}-\d{2}"/,
+      `updatedAt: "${mdxDate}"`
+    );
+    if (updated !== content) {
+      fs.writeFileSync(file, updated);
+      execSync(`git add "${file}"`);
+    }
+  } else if (file.endsWith(".tsx")) {
+    let content = fs.readFileSync(file, "utf-8");
+    const updated = content.replace(
+      /updatedAt=\{new Date\(\d+, \d+, \d+\)\}/,
+      `updatedAt={new Date(${tsxDate})}`
+    );
+    if (updated !== content) {
+      fs.writeFileSync(file, updated);
+      execSync(`git add "${file}"`);
+    }
+  }
+}
