@@ -12,6 +12,7 @@ import { cn } from "@/lib/client/utils";
 export default function ImageViewer({ src, alt, children }: ImageViewerProps) {
   const [open, setOpen] = useState(false);
   const thumbRef = useRef<HTMLSpanElement>(null);
+  const dialogImgRef = useRef<HTMLImageElement>(null);
 
   const getThumbImg = () =>
     thumbRef.current?.querySelector("img") as HTMLElement | null;
@@ -26,11 +27,18 @@ export default function ImageViewer({ src, alt, children }: ImageViewerProps) {
 
     thumb.style.viewTransitionName = "image-viewer";
 
-    document.startViewTransition(() => {
+    document.startViewTransition(async () => {
       flushSync(() => {
         thumb.style.viewTransitionName = "";
         setOpen(true);
       });
+      const img = dialogImgRef.current;
+      if (img && !img.complete) {
+        await new Promise<void>((resolve) => {
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
+        });
+      }
     });
   }, []);
 
@@ -69,6 +77,7 @@ export default function ImageViewer({ src, alt, children }: ImageViewerProps) {
         <DialogClose asChild>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            ref={dialogImgRef}
             src={src}
             alt={alt}
             draggable={false}
