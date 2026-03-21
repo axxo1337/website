@@ -3,28 +3,20 @@ import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Project({
-  title,
-  description,
-  createdAt,
-  thumbnailPath,
-  href,
-}: ProjectProps) {
+export default function Project({ title, description, createdAt, thumbnailPath, href }: ProjectProps) {
   return (
     <Link href={href} className="group">
       <article>
-        <AspectRatio ratio={16 / 9}>
+        <AspectRatio ratio={16 / 9} className="relative overflow-hidden rounded-sm border-2 border-white/20">
           <Image
             src={thumbnailPath}
             fill={true}
             alt="thumnail"
-            className="rounded-sm border-2 border-white/20 object-cover"
+            className="group-hover:scale-[102%] transition-transform duration-200 ease-in-out absolute"
           />
         </AspectRatio>
         <div className="my-2">
-          <span className="text-2xl font-medium group-hover:underline">
-            {title}
-          </span>
+          <span className="text-2xl font-medium group-hover-underline">{title}</span>
           <div className="flex flex-wrap gap-4 items-center text-sm font-medium text-white/75 mt-0.5">
             <span>Created • {format(createdAt, "MM/dd/yyyy")}</span>
           </div>

@@ -50,19 +50,19 @@ export default function Work({
 
   return (
     <Link href={href} className="group">
-      <AspectRatio ratio={16 / 9}>
+      <AspectRatio ratio={16 / 9} className="relative overflow-hidden rounded-sm border-2 border-white/20">
         <Image
           src={thumbnailPath}
           fill={true}
           alt="thumnail"
-          className="rounded-sm border-2 border-white/20"
+          className="group-hover:scale-[102%] transition-transform duration-200 ease-in-out absolute"
         />
       </AspectRatio>
       <div className="my-2">
-        <span className="text-2xl font-medium group-hover:underline">
+        <span className="text-2xl font-medium group-hover-underline">
           {title}
         </span>
-        <div className="flex flex-wrap gap-4 items-center text-sm font-medium text-white/75 mt-0.5">
+        <div className="flex flex-wrap gap-4 items-center text-sm font-medium text-white/75 mt-1">
           <span className="flex items-center gap-1.5">
             <workTypesEntry.icon className="size-5" />
             {workTypesEntry.title}
