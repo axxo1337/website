@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu, Plus } from "lucide-react";
 import Link from "next/link";
 import { links, TLink } from ".";
 import { useEffect, useState } from "react";
@@ -29,7 +29,7 @@ function SecondaryNavigation({
   return (
     <div className="w-full border-t last:border-b border-white/25">
       <div
-        className="px-6 py-4 flex items-center justify-between cursor-pointer"
+        className="px-2.5 py-4 flex items-center justify-between cursor-pointer"
         onClick={() => setOpenSecondaryNav(link.title)}
       >
         <span>{link.title}</span>
@@ -42,13 +42,13 @@ function SecondaryNavigation({
         )}
       >
         <div
-          className="px-6 py-4 flex items-center cursor-pointer border-b gap-1 border-white/25"
+          className="px-2.5 py-4 flex items-center cursor-pointer border-b gap-1 border-white/25"
           onClick={() => setOpenSecondaryNav(null)}
         >
           <ChevronLeft />
           <span>Back</span>
         </div>
-        <div className="pt-6 px-6">
+        <div className="pt-5 px-2.5">
           <div className="border-b border-white/25 pb-2">
             <span className="text-sm">{link.title}</span>
           </div>
@@ -62,8 +62,8 @@ function SecondaryNavigation({
                 </li>
               ))}
               <li className="flex">
-                <Link href={link.href} className="w-full">
-                  View all
+                <Link href={link.href} className="w-full flex items-center gap-1">
+                  Or view all of them{" "}<Plus className="size-5" />
                 </Link>
               </li>
             </ul>
@@ -97,7 +97,7 @@ export default function MobileNavigation() {
         <Menu className="size-6.5" />
       </SheetTrigger>
       <SheetContent className="border-0 w-full">
-        <SheetHeader className="pt-6 px-5">
+        <SheetHeader className="pt-6 px-2.5">
           <SheetTitle className="text-2xl">Navigation</SheetTitle>
           <SheetDescription hidden={true}>
             Navigate through the various pages of my website
@@ -109,7 +109,7 @@ export default function MobileNavigation() {
               <Link
                 key={`link-${linkIndex}`}
                 href={link.href}
-                className="w-full px-5 py-4 border-t last:border-b border-white/25"
+                className="w-full px-2.5 py-4 border-t last:border-b border-white/25"
               >
                 <span>{link.title}</span>
               </Link>
