@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/client/utils";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { List } from "lucide-react";
 import {
   Drawer,
@@ -19,6 +19,13 @@ import useTableOfContents from "@/lib/client/hooks/useTableOfContents";
 export default function TableOfContentsMobile({ exclude }: TableOfContentsMobile) {
   const [open, setOpen] = useState(false);
   const { headings, activeId, visible, scrollToDelayed } = useTableOfContents(exclude, open);
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!open || !navRef.current) return;
+    const active = navRef.current.querySelector("[data-active]");
+    if (active) active.scrollIntoView({ block: "center" });
+  }, [open]);
 
   if (headings.length === 0) return null;
 
@@ -40,12 +47,13 @@ export default function TableOfContentsMobile({ exclude }: TableOfContentsMobile
           <DrawerHeader>
             <DrawerTitle>Table of Contents</DrawerTitle>
           </DrawerHeader>
-          <nav className="px-4 pb-6 overflow-y-auto">
+          <nav ref={navRef} className="px-4 pb-6 overflow-y-auto">
             <ul className="flex flex-col text-sm">
               {headings.map((heading) => (
                 <li key={heading.id}>
                     <a
                       href={`#${heading.id}`}
+                      data-active={activeId === heading.id || undefined}
                       onClick={(e) => {
                         e.preventDefault();
                         setOpen(false);
