@@ -70,7 +70,8 @@ export default function ImageViewer({ src, alt, children }: ImageViewerProps) {
         {children}
       </span>
       <DialogContent
-        className="max-w-[90vw]! max-h-[90vh] w-fit! border-none! bg-transparent! p-0! shadow-none! gap-0! animate-none!"
+        className="max-w-[90vw]! max-h-[90vh] w-fit! border-none! bg-transparent! p-0! shadow-none! gap-0! animate-none! duration-0!"
+        overlayClassName="animate-none! duration-0!"
         showCloseButton={false}
       >
         <DialogTitle className="sr-only">{alt}</DialogTitle>
