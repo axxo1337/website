@@ -5,11 +5,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useCopyToClipboard } from "@/lib/client/hooks/useCopyToClipboard";
 import { Check, Copy } from "lucide-react";
 
-export default function CodeBlock({
-  className,
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<"code">) {
+export default function CodeBlock({ className, children, ...props }: React.ComponentPropsWithoutRef<"code">) {
   const { isCopied, copyToClipboard } = useCopyToClipboard();
   const ref = useRef<HTMLDivElement>(null);
 

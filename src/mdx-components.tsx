@@ -4,6 +4,8 @@ import { ReactNode } from "react";
 import { slugify } from "./lib/client/utils";
 import CodeBlock from "./components/ui/CodeBlock";
 import ImageViewer from "./components/ui/ImageViewer";
+import MicrosoftLearnQuote from "./components/ui/MicrosoftLearnQuote";
+import UndocumentedStruct from "./components/ui/UndocumentedStruct";
 
 function extractText(node: ReactNode): string {
   if (typeof node === "string") return node;
@@ -78,10 +80,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     img: ({ src, alt, ...props }) => {
       const { text, align, width } = parseImageAlt(alt || "");
 
-      const wrapperAlignClass =
-        align === "left" ? "justify-start" :
-        align === "right" ? "justify-end" :
-        "justify-center";
+      const wrapperAlignClass = align === "left" ? "justify-start" : align === "right" ? "justify-end" : "justify-center";
 
       const isAuto = width === "auto";
       const hasExplicitWidth = width && !isAuto;
@@ -115,6 +114,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </span>
       );
     },
+    MicrosoftLearnQuote,
+    UndocumentedStruct,
     ...components,
   };
 }
