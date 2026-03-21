@@ -31,7 +31,7 @@ export default function TableOfContentsMobile({ exclude }: TableOfContentsMobile
 
   return (
     <div className={cn(
-      "xl:hidden fixed bottom-6 right-6 z-50 transition-opacity duration-300",
+      "xl:hidden fixed bottom-4 right-6 z-50 transition-opacity duration-300",
       visible ? "opacity-100" : "opacity-0 pointer-events-none"
     )}>
       <Drawer open={open} onOpenChange={setOpen}>
