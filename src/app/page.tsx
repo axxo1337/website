@@ -34,7 +34,7 @@ const bestCreations: TWork[] = [
 
 export default function Home() {
   return (
-    <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2026, 2, 21)}>
+    <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2026, 2, 26)}>
       <Section subtitle="Who am I?" title="In my own words">
         <p>
           Hey! I&apos;m Charles.{" "}
@@ -74,10 +74,10 @@ export default function Home() {
             Or see everything <MoveRight />
           </span>
           <div className="flex items-center gap-6">
-            <Link href="/videos" className="hover-underline">
+            <Link href="/videos" className="hover-underline hover:text-white/80 transition-colors">
               Videos
             </Link>
-            <Link href="/projects" className="hover-underline">
+            <Link href="/projects" className="hover-underline hover:text-white/80 transition-colors">
               Projects
             </Link>
           </div>
