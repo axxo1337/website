@@ -24,7 +24,7 @@ export default function MicrosoftLearnQuote({ title, description, children, sour
   };
 
   return (
-    <div className="my-4 rounded-lg overflow-hidden p-5 border bg-[#0C0C0C]">
+    <div className="my-4 rounded-lg overflow-hidden p-3 md:p-5 border bg-[#0C0C0C]">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <svg className="size-8" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,15 +41,15 @@ export default function MicrosoftLearnQuote({ title, description, children, sour
           </a>
         )}
       </div>
-      <div className="mt-5 flex flex-col gap-6">
-        <div className="flex flex-col gap-3.5">
+      <div className="mt-3.5 md:mt-5 flex flex-col gap-4 md:gap-6">
+        <div className="flex flex-col gap-2 md:gap-3.5">
           <span className="text-2xl font-bold">{title}</span>
           {description && <p>{description}</p>}
         </div>
-        <div className="flex flex-col gap-3.5">
+        <div className="flex flex-col gap-2 md:gap-3.5">
           <span className="text-2xl font-bold">Syntax</span>
           <div className="w-full rounded-sm overflow-hidden bg-[#2F2F2F] border group relative">
-            <div className="flex items-center justify-between py-1 px-3">
+            <div className="flex items-center justify-between py-1 px-2 md:px-3">
               <span className="font-medium">C++</span>
               <div
                 onClick={handleCopy}
@@ -58,7 +58,7 @@ export default function MicrosoftLearnQuote({ title, description, children, sour
                 {isCopied ? <Check size={12} /> : <Copy size={12} />}
               </div>
             </div>
-            <div className="p-3 bg-[#1F1F1F]">
+            <div className="p-2 md:p-3 bg-[#1F1F1F]">
               <ScrollArea>
                 <pre className="m-0!">
                   <code
