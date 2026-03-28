@@ -18,21 +18,24 @@ function extractText(node: ReactNode): string {
   return "";
 }
 
-function parseImageAlt(alt: string): { text: string; align: string; width: string } {
+function parseImageAlt(alt: string): { text: string; align: string; width: string; caption: string } {
   const parts = alt.split("|").map((s) => s.trim());
   const text = parts[0];
   let align = "center";
   let width = "";
+  let caption = "";
 
   for (const part of parts.slice(1)) {
     if (["left", "center", "right"].includes(part)) {
       align = part;
-    } else if (part) {
+    } else if (/^\d/.test(part)) {
       width = part;
+    } else if (part) {
+      caption = part;
     }
   }
 
-  return { text, align, width };
+  return { text, align, width, caption };
 }
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -78,7 +81,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     code: CodeBlock,
     img: ({ src, alt, ...props }) => {
-      const { text, align, width } = parseImageAlt(alt || "");
+      const { text, align, width, caption } = parseImageAlt(alt || "");
 
       const wrapperAlignClass = align === "left" ? "justify-start" : align === "right" ? "justify-end" : "justify-center";
 
@@ -108,9 +111,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
       return (
         <span className={`flex my-4 ${wrapperAlignClass}`}>
-          <ImageViewer src={src || ""} alt={text}>
-            {image}
-          </ImageViewer>
+          <span className="inline-flex flex-col items-center">
+            <ImageViewer src={src || ""} alt={text}>
+              {image}
+            </ImageViewer>
+            {caption && (
+              <span className="text-sm text-white/50 mt-1.5 italic">{caption}</span>
+            )}
+          </span>
         </span>
       );
     },

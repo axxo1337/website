@@ -54,7 +54,7 @@ export default function UndocumentedStruct({ title, children, source, theme = "v
   };
 
   return (
-    <div className="my-4 rounded-lg overflow-hidden p-5 border" style={{ backgroundColor: t.bgCard }}>
+    <div className="my-4 rounded-lg overflow-hidden p-3 md:p-5 border" style={{ backgroundColor: t.bgCard }}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3.5">
           {t.logo}
@@ -66,10 +66,10 @@ export default function UndocumentedStruct({ title, children, source, theme = "v
           </a>
         )}
       </div>
-      <div className="mt-5.5 flex flex-col gap-3">
+      <div className="mt-3.5 md:mt-5.5 flex flex-col gap-3">
         <span className="text-2xl font-bold">{title}</span>
         <div className="w-full rounded-sm overflow-hidden group relative" style={{ backgroundColor: t.bgCodeHeader }}>
-          <div className="flex items-center justify-between py-1 px-3">
+          <div className="flex items-center justify-between py-1 px-2 md:px-3">
             <span className="font-medium">C</span>
             <div
               onClick={handleCopy}
@@ -78,7 +78,7 @@ export default function UndocumentedStruct({ title, children, source, theme = "v
               {isCopied ? <Check size={12} /> : <Copy size={12} />}
             </div>
           </div>
-          <div className="p-3" style={{ backgroundColor: t.bgCodeBody }}>
+          <div className="p-2 md:p-3" style={{ backgroundColor: t.bgCodeBody }}>
             <ScrollArea>
               <pre className="m-0!">
                 <code className="bg-transparent! p-0! language-c" ref={ref} dangerouslySetInnerHTML={{ __html: highlighted }} />
