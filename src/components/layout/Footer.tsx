@@ -36,7 +36,7 @@ export default function Footer() {
       </div>
       <div className="mt-6 md:mt-8">
         <span className="text-white/50 text-sm md:text-base">
-          © {new Date().getFullYear()} aXXo. All rights reserved.{" "}
+          © {new Date().getFullYear()} aXXo.{" "}
           <Link href="/license" className="hover:text-white/80 font-medium transition-colors hover-underline">
             CC BY-NC-SA 4.0
           </Link>
