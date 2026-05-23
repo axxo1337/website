@@ -1,6 +1,6 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
-import YouTubeVideo from "@/components/page/Projects/YouTubeVideo";
+import YouTubeVideo from "@/components/page/Video/YouTubeVideo";
 import SubscribeCTA from "@/components/page/Videos/SubscribeCTA";
 import ContentNavigation from "@/components/ui/ContentNavigation";
 import TableOfContents from "@/components/ui/TableOfContents";

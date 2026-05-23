@@ -6,6 +6,7 @@ import CodeBlock from "./components/ui/CodeBlock";
 import ImageViewer from "./components/ui/ImageViewer";
 import MicrosoftLearnQuote from "./components/ui/MicrosoftLearnQuote";
 import UndocumentedStruct from "./components/ui/UndocumentedStruct";
+import YouTubeVideo from "./components/page/Video/YouTubeVideo";
 
 function extractText(node: ReactNode): string {
   if (typeof node === "string") return node;
@@ -115,15 +116,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             <ImageViewer src={src || ""} alt={text}>
               {image}
             </ImageViewer>
-            {caption && (
-              <span className="text-sm text-white/50 mt-1.5 italic">{caption}</span>
-            )}
+            {caption && <span className="text-sm text-white/50 mt-1.5 italic">{caption}</span>}
           </span>
         </span>
       );
     },
     MicrosoftLearnQuote,
     UndocumentedStruct,
+    YouTubeVideo: (props) => <YouTubeVideo className="[&>div]:border [&>div]:border-white/10 mt-3" {...props} />,
     ...components,
   };
 }

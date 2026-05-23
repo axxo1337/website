@@ -38,13 +38,7 @@ export default function YouTubeVideo({
           />
         ) : (
           <AspectRatio ratio={16 / 9} className="bg-black relative">
-            <Image
-              fill
-              alt={title}
-              src={thumbnailPath ?? ""}
-              draggable="false"
-              className="blur-sm brightness-50 select-none"
-            />
+            <Image fill alt={title} src={thumbnailPath ?? ""} draggable="false" className="blur-sm brightness-50 select-none" />
             <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-2xl text-center">
               This video isn&apos;t released yet.
             </span>

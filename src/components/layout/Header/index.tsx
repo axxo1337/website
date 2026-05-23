@@ -2,7 +2,7 @@ import Link from "next/link";
 import Logo from "../../ui/Logo";
 import MobileNavigation from "./HeaderMobileNavigation";
 import DesktopNavigation from "./HeaderDesktopNavigation";
-import { Bug, Diff, LucideIcon, Search, Shield } from "lucide-react";
+import { Bug, Diff, LucideIcon, Search, Shield, Video } from "lucide-react";
 
 //
 // [SECTION] Defines
@@ -21,6 +21,11 @@ export const links: TLink[] = [
     title: "Projects",
     href: "/projects",
     content: [
+      {
+        title: "YouTube Channel",
+        href: "/project/youtube",
+        icon: Video,
+      },
       {
         title: "Haxo Games",
         href: "/project/haxo-games",
