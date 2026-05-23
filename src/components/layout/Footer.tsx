@@ -38,7 +38,7 @@ export default function Footer() {
         <span className="text-white/50 text-sm md:text-base">
           © {new Date().getFullYear()} aXXo. All rights reserved.{" "}
           <Link href="/license" className="hover:text-white/80 font-medium transition-colors hover-underline">
-            MIT License
+            CC BY-NC-SA 4.0
           </Link>
         </span>
       </div>
