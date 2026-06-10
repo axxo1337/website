@@ -52,7 +52,7 @@ export default function Home() {
           goal with any of this. It&apos;s just a pass time I love working on.
         </p>
       </Section>
-      <Section subtitle="What do I make?" title="My best work">
+      <Section subtitle="What do I make?" title="Some of my work">
         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           {bestCreations.map((bestCreation, bestCreationIndex) => (
             <Work key={`bestCreation-${bestCreationIndex}`} {...bestCreation} />
