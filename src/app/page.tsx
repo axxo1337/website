@@ -11,12 +11,13 @@ import Link from "next/link";
 
 const bestCreations: TWork[] = [
   {
-    title: "Virtual Memory Explained",
-    description: "What are memory pages? What exactly is an address space? Well that's what you'll learn today!",
-    thumbnailPath: "/images/thumbnails/virtual-memory-explained.png",
-    createdAt: new Date(2025, 4, 19),
+    title: "Windows Internals Explained",
+    description:
+      "Windows internals is a very important subject that's sadly very poorly documented. In this video I'll do my best to give you a great guide to trampoline from.",
+    thumbnailPath: "/images/thumbnails/windows-internals-explained.png",
+    createdAt: new Date(2026, 2, 20),
     type: "video",
-    href: "/video/virtual-memory-explained",
+    href: "/video/windows-internals-explained",
   },
   {
     title: "AntiDebug",
