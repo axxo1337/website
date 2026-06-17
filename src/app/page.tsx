@@ -45,12 +45,12 @@ export default function Home() {
               aXXo
             </Link>
           </i>
-          . As of writing this I&apos;m a 20 year old male living in the French province of{" "}
+          As of writing this, I&apos;m a 20 year old male living in the French province of{" "}
           <Link href="https://en.wikipedia.org/wiki/Quebec" className="inline-anchor">
             Quebec
           </Link>{" "}
           (Canada). I make videos in my free time purely out of the joy I get from teaching people. I don&apos;t have a specific
-          goal with any of this. It&apos;s just a pass time I love working on.
+          goal with any of this. It&apos;s just a pastime I love working on.
         </p>
       </Section>
       <Section subtitle="What do I make?" title="Some of my work">
