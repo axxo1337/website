@@ -384,7 +384,7 @@ to it. This handle has permissions and behaves as a key for the using process to
 All the handles a process has open are stored in a table associated to it. Every time some code is done with using a handle it must close it so the object manager can be aware 
 when objects are not needed anymore using the [`CloseHandle`](https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle) function.
 
-When working from kernel mode although, since objects are directly accessible handles are not necessary. As an alternative to still be able to specify that an object is needed, 
+When working from kernel mode although, since objects are directly accessible, handles are not necessary. As an alternative to still be able to specify that an object is needed, 
 the reference count is used. Kernel mode code will invoke the function `ObReferenceObject` to increase the object's reference count, and `ObDereferenceObject` to decrease it.
 
 <UndocumentedStruct
@@ -456,7 +456,7 @@ The RID I mentioned stands for relative identifier. It usually comes last and id
 
 ### Section objects
 
-Back to the section objects, they come in two types: file-backed and page-backed. File-backed section objects, as their name implies represent a file to be mapped into memory.
+Back to the section objects, they come in two types: file-backed and page-backed. File-backed section objects, as their name implies, represent a file to be mapped into memory.
  I've made some pseudocode to exemplify such a use:
 
 ```cpp
@@ -652,7 +652,7 @@ into physical memory. Every process has a minimum amount of pages Windows guaran
 
 While processes have a working set, the kernel also has one for its own memory called the system working set and there is also one for every session called the 
 session working set. Sessions aren’t a super important topic to understand so I’ll be brief about it. Essentially every time you log into your desktop, or even 
-remote connect to it, a session is created and associated to this logon. Actually before you even actually login and are in the lock screen a session is already created.
+remote connect to it, a session is created and associated to this logon. Actually, before you even actually login and are in the lock screen, a session is already created.
 
 Within a session there are Window stations. Each of those holds desktops and the state of your clipboard. Each desktop contains windows, menus and hooks. 
 The system has a session 0 existent at all times for system processes. The primary purpose for sessions is to provide an isolation for the different graphical interfaces.
@@ -665,8 +665,8 @@ The allocation type is actually a set bit flag to which the two main options you
 memory region you’re allocating will be reserved, but the memory won’t be actually be charged to the system. Trying to write to this region will lead to a 
 memory access violation unless you then apply `MEM_COMMIT`. You can apply both at once which will reserve and charge the region.
 
-In both cases a node describing the region will be inserted into some VAD, but no page table entry will be created yet. When the region is accessed a page fault 
-will occur and the system will walk through the appropriate VAD to look for the entry. If it finds one and the page is committed then the entry is created. 
+In both cases, a node describing the region will be inserted into some VAD, but no page table entry will be created yet. When the region is accessed a page fault 
+will occur and the system will walk through the appropriate VAD to look for the entry. If it finds one and the page is committed, then the entry is created. 
 If an entry already existed then the VAD is not walked of course.
 
 Back to `MmCreateProcessAddressSpace`, after creating the VADs, the section created earlier in `NtCreateUserProcess` to read the executable is mapped into the address space. 
@@ -678,7 +678,7 @@ such as a list of the loaded DLLs, the base address of the image and flags such 
 
 The final step (at least in the kernel) is to create the initial thread to run the application. First `PspAllocateThread` is called. Similar to the process equivalent, 
 it will create the executive object for the new thread, the `ETHREAD`. It sets up the user stack for this new thread (using `PspSetupUserStack`), and allocates its 
-thread environment block, the `TEB` (using `MmCreateTeb`). Just like the `PEB` it is used to store information about the thread for the user-mode code to use. 
+thread environment block, the `TEB` (using `MmCreateTeb`). Just like the `PEB`, it is used to store information about the thread for the user-mode code to use. 
 Every thread has its own `TEB`.
 
 Then `KeInitThread` is called. This will setup the `KTHREAD` structure that part of the `ETHREAD` object, create a kernel stack and initialize the thread context 
@@ -689,7 +689,7 @@ Back into `NtCreateUserProcess`, `PspInsertProcess` is invoked to create and ret
 This performs further scheduling-related initialization and calls `KeStartThread`. `KeStartThread` also does some scheduling initialization along with incrementing 
 the thread count inside of the `EPROCESS` object and inserting the new thread into its list.
 
-Back into `PspInsertThread`, a handle to the new thread is created for the process and finally, `KeReadyThread` is invoked. This will simply put the thread 
+Back into `PspInsertThread`, a handle to the new thread is created for the process, and finally, `KeReadyThread` is invoked. This will simply put the thread 
 in a deferred ready state. This makes the thread ready to run on a specific core, but not yet running. We’ll discuss thread states when we get to scheduling.
 
 At this point, `NtCreateUserProcess` will return to `CreateProcessInternalW`. The function now sends a message to `Csrss` for it to register the process by 
@@ -698,7 +698,7 @@ invoking `CsrClientCallServer`. This message contains information such as the pr
 their threads running within its session with handles open to them.
 
 In order to send the message, the function uses something called an advanced local procedure call, or ALPC. It is an undocumented inter-process communication protocol. 
-As I won’t dive into how it works, if you want I made a fork of DownWithUp’s POC repository which gives a very clear example of a client and server using the 
+As I won’t dive into how it works, if you want, I made a fork of DownWithUp’s POC repository which gives a very clear example of a client and server using the 
 protocol to send and receive an ALPC message.
 
 The final step of the of the `CreateProcessInternalW` function is to resume the thread which has been in a suspended state until this point. The thread begins into 
@@ -713,7 +713,7 @@ Essentially a trap frame is just a structure describing the state of the CPU at 
 ### Image loader
 
 The trap frame is set to begin execution into the `NTDLL` function `LdrInitializeThunk`, also known as the image loader. One of the major things the loader 
-does is creating and initializing the loader database which is pointed to by the `Ldr` field of the `PEB`. This database essentially stores a list of 
+does is creating and initializing the loader database, which is pointed to by the `Ldr` field of the `PEB`. This database essentially stores a list of 
 all the DLLs loaded into the process’ address space.
 
 In order to know which modules to load, the loader parses a table stored inside of the process’ PE structure known as the IDT, or import directory table. 
@@ -748,7 +748,7 @@ union IMAGE_THUNK_DATA
 ```
 
 These tables describe functions imported from the loaded library, meaning functions which the current program’s code calls. Since DLLs are dynamically loaded, 
-their location in memory is mostly unpredictable and so the code must use the tables to find the required functions using their name and specify their address. 
+their location in memory is mostly unpredictable, and so the code must use the tables to find the required functions using their name and specify their address. 
 The address of each of those imported functions is set into the `Function` field of the `IMAGE_THUNK_DATA` structure of the IAT.
 
 The INT is used to get these functions’ name which can be a string or an ordinal. An ordinal is a number representing the specific function. 
@@ -759,11 +759,11 @@ In order to find an imported function’s address using its name, the code needs
 this process as it’s fairly alike. This is what resolving an import table looks like into code. Although don’t be mislead into thinking it’s exactly 
 how the image loader does it. Ironically, this code uses the image loader to load the libraries which completely bypasses a lot of steps it otherwise handles.
 
-One of these steps is resolving the imports of the loaded libraries. Because they indeed may themselves import functions from other libraries. 
+One of these steps is resolving the imports of the loaded libraries. Because they, indeed, may themselves import functions from other libraries. 
 The image loader using worker threads to concurrently spread out the resolving process and maximize its efficiency. Of course, while doing all of this, 
 the loader also fills up the `Ldr` database mentioned earlier.
 
-Because this video is already stretching too long, I’ll avoid going into details for today, but know that there’s a lot more that the loader does such as 
+Because this video is already stretching too long, I’ll avoid going into details for today, but know that there’s a lot more that the loader does, such as 
 initializing the heap, handling shims, relocating images and much more. But, we’ll keep all of this for a potential part 2. The loader finalizes its 
 work by calling the entry point of our application.
 
