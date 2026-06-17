@@ -36,14 +36,7 @@ const workTypesMap = new Map([
 // [SECTION] Content
 //
 
-export default function Work({
-  title,
-  type,
-  description,
-  href,
-  createdAt,
-  thumbnailPath,
-}: Work) {
+export default function Work({ title, type, description, href, createdAt, thumbnailPath }: Work) {
   const workTypesEntry = workTypesMap.get(type);
 
   if (!workTypesEntry) return <span>Something is wrong...</span>;
@@ -59,9 +52,7 @@ export default function Work({
         />
       </AspectRatio>
       <div className="my-2">
-        <span className="text-2xl font-medium group-hover-underline">
-          {title}
-        </span>
+        <span className="text-2xl font-medium group-hover-underline">{title}</span>
         <div className="flex flex-wrap gap-4 items-center text-sm font-medium text-white/75 mt-1">
           <span className="flex items-center gap-1.5">
             <workTypesEntry.icon className="size-5" />
@@ -70,7 +61,7 @@ export default function Work({
           <span>Created • {format(createdAt, "MM/dd/yyyy")}</span>
         </div>
       </div>
-      <p className="text-white/75">{description}</p>
+      <p className="text-white/75 line-clamp-2">{description}</p>
     </Link>
   );
 }
