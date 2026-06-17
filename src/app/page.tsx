@@ -44,7 +44,7 @@ export default function Home() {
             <Link href="https://www.youtube.com/@axxo1337" className="inline-anchor">
               aXXo
             </Link>
-          </i>
+          </i>{" "}
           As of writing this, I&apos;m a 20 year old male living in the French province of{" "}
           <Link href="https://en.wikipedia.org/wiki/Quebec" className="inline-anchor">
             Quebec
