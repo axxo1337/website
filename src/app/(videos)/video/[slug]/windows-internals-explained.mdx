@@ -17,23 +17,23 @@ irritating for beginners. In this video I did my best to give you a great guide 
 In 1975, a 21 year old [Paul Allen](https://en.wikipedia.org/wiki/Paul_Allen) (Microsoft's co-founder) was walking through the 
 [Harvard square](https://en.wikipedia.org/wiki/Harvard_Square) when something caught his attention. It was an issue of the magazine <i>Popular Electronics</i>. 
 The cover stared a computer called the [Altair 8800](https://en.wikipedia.org/wiki/Altair_8800). A personal computer released just the year before by Micro 
-Instrumentation and Telemetry Systems Inc., let’s just call them MITS. Allen bought the magazine and headed back to his best friend’s dorm.
+Instrumentation and Telemetry Systems Inc., let's just call them MITS. Allen bought the magazine and headed back to his best friend's dorm.
 
 That friend was [Bill Gates](https://en.wikipedia.org/wiki/Bill_Gates). The two had been considering starting a software development company for years. The problem was 
-that, at the time, consumer-grade computers didn’t exist. Manufacturers only produced systems for large companies and research labs at astronomical prices.
+that, at the time, consumer-grade computers didn't exist. Manufacturers only produced systems for large companies and research labs at astronomical prices.
 
 ![Altair 8800|center|400px|The Altair 8800 by MITS, released in 1974](/images/documents/windows-internals-explained/Altair_8800_Computer_upscaled.png)
 
 So when Allen saw that MITS managed to release a computer system at a price the consumer market could afford, he knew they had an opportunity at hand. 
 The two decided they should land a deal with the company for the development of an implementation of [BASIC](https://en.wikipedia.org/wiki/BASIC) for the system.
 
-Gates called Ed Roberts, the CEO of MITS, to tell him they already had a working interpreter, <u>which they actually didn’t</u>. Roberts had already received other 
+Gates called Ed Roberts, the CEO of MITS, to tell him they already had a working interpreter, <u>which they actually didn't</u>. Roberts had already received other 
 calls from people with the same claim so he knew it was likely a bluff. He told them that the first group to show up in Albuquerque with a working demo on the 
 Altair would get the contract.
 
 Two months later, Paul Allen went alone to the meeting with the completed software and the presentation was successful. They were the first to show a demo.
 A month later, Allen and Gates founded Micro-Soft. Over the years they secured many more contracts, and in 1980, their revenue was of 
-[8 million dollars](https://learn.microsoft.com/en-us/shows/history/history-of-microsoft-1980), or about 31 million in today’s currency. At this point, a few IBM employees approached
+[8 million dollars](https://learn.microsoft.com/en-us/shows/history/history-of-microsoft-1980), or about 31 million in today's currency. At this point, a few IBM employees approached
 them with a deal to code an operating system for their next personal computer.
 
 To save themselves a lot of time they ended up buying an already existing system called [86-DOS](https://en.wikipedia.org/wiki/86-DOS). They modified and licensed it
@@ -441,18 +441,18 @@ authenticate. When displayed as a string an SID looks like so:
 `S-1-5-21-3272137373-1459051141-3360945348-1001`
 
 While this is the standard format in which SIDs are displayed as strings, the `S` indicating that this indeed is an SID, and the hyphens separating the different parts of it are 
-only present for readability. SIDs aren’t stored as strings.
+only present for readability. SIDs aren't stored as strings.
 
-In the string format, the first part is the revision number. It’s supposed to specify the version of SID being used. As of 2026 this number can only be 1. Next is the authority. 
+In the string format, the first part is the revision number. It's supposed to specify the version of SID being used. As of 2026 this number can only be 1. Next is the authority. 
 It is a number stored over 48 bits which specifies the component that issued the SID. An authority of 5 means that it was created by the Windows security subsystem. 
 This number is present for parsing purposes so that code can identify the format of the remainder of the SID.
 
 Afterwards comes the subauthorities. While all of these are considered to be subauthorities, some subauthorities like the 21 in this case, are followed by a specific 
 kind of values. In this case it is a domain ID and an RID. On standalone computer like yours probably is, the domain ID is just a unique identifier associated with your device. 
 But on a network using active directory, this will be the ID of the domain that handles the security information of the entity identified by the SID. If you have no clue 
-what I’m talking about when I mention active directory, then don’t worry, this is not important for this lesson.
+what I'm talking about when I mention active directory, then don't worry, this is not important for this lesson.
 
-The RID I mentioned stands for relative identifier. It usually comes last and identifies the specific entity that’s part of the subauthority.
+The RID I mentioned stands for relative identifier. It usually comes last and identifies the specific entity that's part of the subauthority.
 
 ### Section objects
 
@@ -642,16 +642,16 @@ Back to `NtCreateUserProcess`, after creating the section object it calls `PspAl
 `EPROCESS`. This might be one of the most important kernel objects to know as it represents existing processes. It points to data such as the handles table and the 
 process ID. At its very top is a structure called `KPROCESS`. It exists to separate the data that is specifically used by the kernel from the rest that the executive cares about.
 
-`PspAllocateProcess` creates it by invoking `ObCreateObjectEx`. That’s the object manager function to create objects. It will then fills its values and assigns an access token. 
+`PspAllocateProcess` creates it by invoking `ObCreateObjectEx`. That's the object manager function to create objects. It will then fills its values and assigns an access token. 
 Access tokens are like keys with permissions associated to them. When you log into your account the `LSASS` process assigns one to your session, and processes which you 
 subsequently execute are given a copy of it.
 
-After assigning the token, among other things, `PspAllocateProcess` creates the process’ address space by calling `MmCreateProcessAddressSpace`. This function first 
+After assigning the token, among other things, `PspAllocateProcess` creates the process' address space by calling `MmCreateProcessAddressSpace`. This function first 
 initializes the working set list for the process (by calling `MiInitializeWorkingSetList`). A working set is a set of all the memory pages which the process currently has loaded 
 into physical memory. Every process has a minimum amount of pages Windows guarantees will be in the working set (aka in memory) and a maximum.
 
 While processes have a working set, the kernel also has one for its own memory called the system working set and there is also one for every session called the 
-session working set. Sessions aren’t a super important topic to understand so I’ll be brief about it. Essentially every time you log into your desktop, or even 
+session working set. Sessions aren't a super important topic to understand so I'll be brief about it. Essentially every time you log into your desktop, or even 
 remote connect to it, a session is created and associated to this logon. Actually, before you even actually login and are in the lock screen, a session is already created.
 
 Within a session there are Window stations. Each of those holds desktops and the state of your clipboard. Each desktop contains windows, menus and hooks. 
@@ -659,10 +659,10 @@ The system has a session 0 existent at all times for system processes. The prima
 
 Next up it allocates its virtual address descriptors, or VADs (by calling `MiAllocateProcessVads`). VADs are trees in which each node describes a region of memory that 
 was allocated. To allocate memory from an application, you can invoke the `VirtualAlloc` function from the Windows API. You optionally specifies at which virtual address 
-you’d like said allocation to reside, its size, its type and its protection.
+you'd like said allocation to reside, its size, its type and its protection.
 
 The allocation type is actually a set bit flag to which the two main options you can set are `MEM_COMMIT` and `MEM_RESERVE`. When applying `MEM_RESERVE` alone the 
-memory region you’re allocating will be reserved, but the memory won’t be actually be charged to the system. Trying to write to this region will lead to a 
+memory region you're allocating will be reserved, but the memory won't be actually be charged to the system. Trying to write to this region will lead to a 
 memory access violation unless you then apply `MEM_COMMIT`. You can apply both at once which will reserve and charge the region.
 
 In both cases, a node describing the region will be inserted into some VAD, but no page table entry will be created yet. When the region is accessed a page fault 
@@ -673,7 +673,7 @@ Back to `MmCreateProcessAddressSpace`, after creating the VADs, the section crea
 `MmCreateProcessAddressSpace` also maps `NTDLL` into the process.
 
 Back into `PspAllocateProcess`, a structure called the process environment block, or `PEB`, is created and initialized in this same address space (by calling 
-`MmCreatePeb` -> `MiCreatePebOrTeb`). Its purpose is similar to that of the `EPROCESS` in terms of its contents, except it’s for the user-mode routines. It holds information 
+`MmCreatePeb` -> `MiCreatePebOrTeb`). Its purpose is similar to that of the `EPROCESS` in terms of its contents, except it's for the user-mode routines. It holds information 
 such as a list of the loaded DLLs, the base address of the image and flags such as whether the program is being debugged.
 
 The final step (at least in the kernel) is to create the initial thread to run the application. First `PspAllocateThread` is called. Similar to the process equivalent, 
@@ -682,7 +682,7 @@ thread environment block, the `TEB` (using `MmCreateTeb`). Just like the `PEB`, 
 Every thread has its own `TEB`.
 
 Then `KeInitThread` is called. This will setup the `KTHREAD` structure that part of the `ETHREAD` object, create a kernel stack and initialize the thread context 
-(it also initializes the APC list and sets the thread entry to `KxStartUserThread` through `KiInitializeContextThread`). We’ll explore further the thread context 
+(it also initializes the APC list and sets the thread entry to `KxStartUserThread` through `KiInitializeContextThread`). We'll explore further the thread context 
 when discussing the scheduler, but for now just know it is stored on the kernel stack.
 
 Back into `NtCreateUserProcess`, `PspInsertProcess` is invoked to create and return a handle to the new process (using `ObInsertObject`), followed by `PspInsertThread`. 
@@ -690,19 +690,19 @@ This performs further scheduling-related initialization and calls `KeStartThread
 the thread count inside of the `EPROCESS` object and inserting the new thread into its list.
 
 Back into `PspInsertThread`, a handle to the new thread is created for the process, and finally, `KeReadyThread` is invoked. This will simply put the thread 
-in a deferred ready state. This makes the thread ready to run on a specific core, but not yet running. We’ll discuss thread states when we get to scheduling.
+in a deferred ready state. This makes the thread ready to run on a specific core, but not yet running. We'll discuss thread states when we get to scheduling.
 
 At this point, `NtCreateUserProcess` will return to `CreateProcessInternalW`. The function now sends a message to `Csrss` for it to register the process by 
 invoking `CsrClientCallServer`. This message contains information such as the process and thread handles, the address of the `PEB` and the section object handle. 
-`Csrss`, or the client-server-runtime-subsystem is a system process that’s constantly running on your system. It keeps a list of all the processes and 
+`Csrss`, or the client-server-runtime-subsystem is a system process that's constantly running on your system. It keeps a list of all the processes and 
 their threads running within its session with handles open to them.
 
 In order to send the message, the function uses something called an advanced local procedure call, or ALPC. It is an undocumented inter-process communication protocol. 
-As I won’t dive into how it works, if you want, I made a fork of DownWithUp’s POC repository which gives a very clear example of a client and server using the 
+As I won't dive into how it works, if you want, I made a fork of DownWithUp's POC repository which gives a very clear example of a client and server using the 
 protocol to send and receive an ALPC message.
 
 The final step of the of the `CreateProcessInternalW` function is to resume the thread which has been in a suspended state until this point. The thread begins into 
-the kernel function `KxStartUserThread`. This name is aliased as `KiStartUserThread` in Microsoft’s documentation, but the actual symbol is prefixed with `Kx`. 
+the kernel function `KxStartUserThread`. This name is aliased as `KiStartUserThread` in Microsoft's documentation, but the actual symbol is prefixed with `Kx`. 
 To put it simply, functions prefixed with `Kx` are processor architecture-specific. This means their implementation will vary from one architecture to another.
 
 This then invokes `PspUserThreadStartup`. To wrap up, this will create a trap frame which will be executed by the `iretq` instruction after returning 
@@ -714,9 +714,9 @@ Essentially a trap frame is just a structure describing the state of the CPU at 
 
 The trap frame is set to begin execution into the `NTDLL` function `LdrInitializeThunk`, also known as the image loader. One of the major things the loader 
 does is creating and initializing the loader database, which is pointed to by the `Ldr` field of the `PEB`. This database essentially stores a list of 
-all the DLLs loaded into the process’ address space.
+all the DLLs loaded into the process' address space.
 
-In order to know which modules to load, the loader parses a table stored inside of the process’ PE structure known as the IDT, or import directory table. 
+In order to know which modules to load, the loader parses a table stored inside of the process' PE structure known as the IDT, or import directory table. 
 You can find the IDT of a program by going into its optional header, into the data directories, taking the value stored under the field of the same name 
 and adding it to the base address of the program as it acts as an offset. This will lead you to either a dedicated section called `.idata` or a part of 
 some `.rdata` section where a sequence of `IMAGE_IMPORT_DESCRIPTOR` structures will be available to be parsed. The count of descriptors in the table 
@@ -747,31 +747,47 @@ union IMAGE_THUNK_DATA
 };
 ```
 
-These tables describe functions imported from the loaded library, meaning functions which the current program’s code calls. Since DLLs are dynamically loaded, 
+These tables describe functions imported from the loaded library, meaning functions which the current program's code calls. Since DLLs are dynamically loaded, 
 their location in memory is mostly unpredictable, and so the code must use the tables to find the required functions using their name and specify their address. 
 The address of each of those imported functions is set into the `Function` field of the `IMAGE_THUNK_DATA` structure of the IAT.
 
-The INT is used to get these functions’ name which can be a string or an ordinal. An ordinal is a number representing the specific function. 
+The INT is used to get these functions' name which can be a string or an ordinal. An ordinal is a number representing the specific function. 
 Note that initially both of these tables are equal, meaning you could use the IAT to get those names, but once the resolving is done, all the 
-IAT’s entries will point to the appropriate functions’ address.
+IAT's entries will point to the appropriate functions' address.
 
-In order to find an imported function’s address using its name, the code needs to parse the concerned loaded library’s export table, but we won’t dive into 
-this process as it’s fairly alike. This is what resolving an import table looks like into code. Although don’t be mislead into thinking it’s exactly 
+In order to find an imported function's address using its name, the code needs to parse the concerned loaded library's export table, but we won't dive into 
+this process as it's fairly alike. This is what resolving an import table looks like into code. Although don't be mislead into thinking it's exactly 
 how the image loader does it. Ironically, this code uses the image loader to load the libraries which completely bypasses a lot of steps it otherwise handles.
 
 One of these steps is resolving the imports of the loaded libraries. Because they, indeed, may themselves import functions from other libraries. 
 The image loader using worker threads to concurrently spread out the resolving process and maximize its efficiency. Of course, while doing all of this, 
 the loader also fills up the `Ldr` database mentioned earlier.
 
-Because this video is already stretching too long, I’ll avoid going into details for today, but know that there’s a lot more that the loader does, such as 
-initializing the heap, handling shims, relocating images and much more. But, we’ll keep all of this for a potential part 2. The loader finalizes its 
+Because this video is already stretching too long, I'll avoid going into details for today, but know that there's a lot more that the loader does, such as 
+initializing the heap, handling shims, relocating images and much more. But, we'll keep all of this for a potential part 2. The loader finalizes its 
 work by calling the entry point of our application.
 
 ### Conclusion
 
-I initially wanted this to be one single and massive video, but it’s already been way too long since I last uploaded. Here’s a list of all of the 
-concepts that are left to cover. If you’re looking forward to a second part, then please let me know in the comments. So with all of this aside, 
-never give up on learning, and I’ll be seeing you in the next one!
+I initially wanted this to be one single and massive video, but it's already been way too long since I last uploaded.
+Here's a list of all of the concepts that are left to cover:
+1. Sessions.
+2. Different types of processes (Pico, Protected, Trustlets and Native)
+3. Interrupts and the interrupt descriptor table.
+4. Jobs.
+5. Global descriptor table.
+6. Scheduler and scheduling.
+7. Device drivers.
+8. IOCTL.
+9. Object alertable state.
+10. Syncronization mechanisms (Mutex, Semaphores, etc).
+11. IRQL.
+12. APC and DPC.
+13. Notifications.
+14. Useful tools and how to use them (Windbg, sysinternals suite, etc).
+
+If you're looking forward to a second part, then please let me know in the comments. So with all of this aside, 
+never give up on learning, and I'll be seeing you in the next one!
 
 ### Sources and credits
 
