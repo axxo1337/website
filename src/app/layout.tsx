@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { ViewTransition } from "react";
 import "./globals.css";
 
 //
@@ -107,10 +108,13 @@ export default function RootLayout({
       <body className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden`}>
         <div className="px-2.5 md:px-5 lg:px-0 max-w-240 w-full">
           <Header />
-          {children}
+          <ViewTransition>
+            {children}
+          </ViewTransition>
           <Footer />
         </div>
       </body>
     </html>
   );
 }
+
