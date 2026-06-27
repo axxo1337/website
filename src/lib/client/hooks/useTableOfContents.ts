@@ -25,13 +25,15 @@ export default function useTableOfContents(exclude?: string[], pauseScroll?: boo
     function updateActiveHeading() {
       if (locked.current) return;
 
-      const scrollY = window.scrollY;
       let current = headings[0]?.id ?? "";
 
       for (const { id } of headings) {
         const el = document.getElementById(id);
-        if (el && el.offsetTop - 100 <= scrollY) {
-          current = id;
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 100) {
+            current = id;
+          }
         }
       }
 
