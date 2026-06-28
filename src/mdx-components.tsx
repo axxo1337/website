@@ -7,8 +7,6 @@ import ImageViewer from "./components/ui/ImageViewer";
 import MicrosoftLearnQuote from "./components/ui/MicrosoftLearnQuote";
 import UndocumentedStruct from "./components/ui/UndocumentedStruct";
 import YouTubeVideo from "./components/page/Video/YouTubeVideo";
-import FadeIn from "./components/ui/FadeIn";
-
 function extractText(node: ReactNode): string {
   if (typeof node === "string") return node;
   if (typeof node === "number") return String(node);
@@ -43,45 +41,45 @@ function parseImageAlt(alt: string): { text: string; align: string; width: strin
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h3: ({ children }) => (
-      <FadeIn as="h3" id={slugify(extractText(children))} className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 scroll-mt-24" y={8} duration={0.35}>
+      <h3 id={slugify(extractText(children))} className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 scroll-mt-24">
         {children}
-      </FadeIn>
+      </h3>
     ),
     h4: ({ children }) => (
-      <FadeIn as="h4" id={slugify(extractText(children))} className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 scroll-mt-24" y={8} duration={0.35}>
+      <h4 id={slugify(extractText(children))} className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 scroll-mt-24">
         {children}
-      </FadeIn>
+      </h4>
     ),
     p: ({ children }) => (
-      <FadeIn as="p" className="mt-3" y={6} duration={0.35}>
+      <p className="mt-3">
         {children}
-      </FadeIn>
+      </p>
     ),
     a: (props) => <a {...props} className={`${props.className} inline-anchor break-words`}></a>,
     ol: ({ children }) => (
-      <FadeIn as="ol" className="list-decimal pl-5 flex flex-col gap-2 mt-3" y={8} duration={0.35}>
+      <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">
         {children}
-      </FadeIn>
+      </ol>
     ),
     ul: ({ children }) => (
-      <FadeIn as="ul" className="list-disc pl-5 flex flex-col gap-2 mt-3" y={8} duration={0.35}>
+      <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">
         {children}
-      </FadeIn>
+      </ul>
     ),
     li: ({ children }) => <li className="wrap-break-words">{children}</li>,
     blockquote: ({ children }) => (
-      <FadeIn as="blockquote" className="border-l-2 border-white/30 pl-4 my-2 italic text-white/70" y={8} duration={0.35}>
+      <blockquote className="border-l-2 border-white/30 pl-4 my-2 italic text-white/70">
         {children}
-      </FadeIn>
+      </blockquote>
     ),
     span: ({ className, children, ...props }) => {
       if (className?.includes("katex-display")) {
         return (
-          <FadeIn as="span" y={8} duration={0.35} className="my-1 py-4 flex items-center justify-center">
+          <span className="my-1 py-4 flex items-center justify-center">
             <span className={`${className} block px-2 py-1 my-0!`} {...props}>
               {children}
             </span>
-          </FadeIn>
+          </span>
         );
       }
       return (
@@ -91,9 +89,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
     pre: ({ children, ...props }) => (
-      <FadeIn as="pre" className="bg-[#181818] p-4 pb-5 rounded-md my-2 border border-white/10 text-[0.9rem] relative group" y={10} duration={0.4} {...props}>
+      <pre className="bg-[#181818] p-4 pb-5 rounded-md my-2 border border-white/10 text-[0.9rem] relative group" {...props}>
         {children}
-      </FadeIn>
+      </pre>
     ),
     code: CodeBlock,
     img: ({ src, alt, ...props }) => {
@@ -126,30 +124,24 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
 
       return (
-        <FadeIn as="span" className={`flex my-4 ${wrapperAlignClass}`} y={12} duration={0.4}>
+        <span className={`flex my-4 ${wrapperAlignClass}`}>
           <span className="inline-flex flex-col items-center">
             <ImageViewer src={src || ""} alt={text}>
               {image}
             </ImageViewer>
             {caption && <span className="text-sm text-white/50 mt-1.5 italic">{caption}</span>}
           </span>
-        </FadeIn>
+        </span>
       );
     },
     MicrosoftLearnQuote: (props) => (
-      <FadeIn y={10}>
-        <MicrosoftLearnQuote {...props} />
-      </FadeIn>
+      <MicrosoftLearnQuote {...props} />
     ),
     UndocumentedStruct: (props) => (
-      <FadeIn y={10}>
-        <UndocumentedStruct {...props} />
-      </FadeIn>
+      <UndocumentedStruct {...props} />
     ),
     YouTubeVideo: (props) => (
-      <FadeIn y={12}>
-        <YouTubeVideo className="[&>div]:border [&>div]:border-white/10 mt-3" {...props} />
-      </FadeIn>
+      <YouTubeVideo className="[&>div]:border [&>div]:border-white/10 mt-3" {...props} />
     ),
     ...components,
   };
