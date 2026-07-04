@@ -1,22 +1,12 @@
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import { ReactNode } from "react";
-import { slugify } from "./lib/client/utils";
+import { slugify, extractText } from "./lib/client/utils";
 import CodeBlock from "./components/ui/CodeBlock";
 import ImageViewer from "./components/ui/ImageViewer";
 import MicrosoftLearnQuote from "./components/ui/MicrosoftLearnQuote";
 import UndocumentedStruct from "./components/ui/UndocumentedStruct";
 import YouTubeVideo from "./components/page/Video/YouTubeVideo";
-function extractText(node: ReactNode): string {
-  if (typeof node === "string") return node;
-  if (typeof node === "number") return String(node);
-  if (!node) return "";
-  if (Array.isArray(node)) return node.map(extractText).join("");
-  if (typeof node === "object" && "props" in node) {
-    return extractText((node as { props: { children?: ReactNode } }).props.children);
-  }
-  return "";
-}
 
 function parseImageAlt(alt: string): { text: string; align: string; width: string; caption: string } {
   const parts = alt.split("|").map((s) => s.trim());
@@ -50,27 +40,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </h4>
     ),
-    p: ({ children }) => (
-      <p className="mt-3">
-        {children}
-      </p>
-    ),
+    p: ({ children }) => <p className="mt-3">{children}</p>,
     a: (props) => <a {...props} className={`${props.className} inline-anchor break-words`}></a>,
-    ol: ({ children }) => (
-      <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">
-        {children}
-      </ol>
-    ),
-    ul: ({ children }) => (
-      <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">
-        {children}
-      </ul>
-    ),
+    ol: ({ children }) => <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">{children}</ol>,
+    ul: ({ children }) => <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">{children}</ul>,
     li: ({ children }) => <li className="wrap-break-words">{children}</li>,
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-white/30 pl-4 my-2 italic text-white/70">
-        {children}
-      </blockquote>
+      <blockquote className="border-l-2 border-white/30 pl-4 my-2 italic text-white/70">{children}</blockquote>
     ),
     span: ({ className, children, ...props }) => {
       if (className?.includes("katex-display")) {
@@ -134,16 +110,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </span>
       );
     },
-    MicrosoftLearnQuote: (props) => (
-      <MicrosoftLearnQuote {...props} />
-    ),
-    UndocumentedStruct: (props) => (
-      <UndocumentedStruct {...props} />
-    ),
-    YouTubeVideo: (props) => (
-      <YouTubeVideo className="[&>div]:border [&>div]:border-white/10 mt-3" {...props} />
-    ),
+    MicrosoftLearnQuote: (props) => <MicrosoftLearnQuote {...props} />,
+    UndocumentedStruct: (props) => <UndocumentedStruct {...props} />,
+    YouTubeVideo: (props) => <YouTubeVideo className="[&>div]:border [&>div]:border-white/10 mt-3" {...props} />,
     ...components,
   };
 }
-

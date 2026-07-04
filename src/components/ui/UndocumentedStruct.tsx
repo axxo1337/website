@@ -8,6 +8,7 @@ import { useRef } from "react";
 import hljs from "highlight.js/lib/core";
 import c from "highlight.js/lib/languages/c";
 import Logo from "./Logo";
+import { extractText } from "@/lib/client/utils";
 
 hljs.registerLanguage("c", c);
 
@@ -42,7 +43,7 @@ export default function UndocumentedStruct({ title, children, source, theme = "v
   const { isCopied, copyToClipboard } = useCopyToClipboard();
   const ref = useRef<HTMLElement>(null);
 
-  const raw = typeof children === "string" ? children : "";
+  const raw = extractText(children);
   const highlighted = hljs.highlight(raw, { language: "c" }).value;
   const t = themes[theme];
 

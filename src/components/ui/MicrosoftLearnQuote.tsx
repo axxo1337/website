@@ -6,6 +6,7 @@ import { useCopyToClipboard } from "@/lib/client/hooks/useCopyToClipboard";
 import { useRef } from "react";
 import hljs from "highlight.js/lib/core";
 import cpp from "highlight.js/lib/languages/cpp";
+import { extractText } from "@/lib/client/utils";
 
 hljs.registerLanguage("cpp", cpp);
 
@@ -13,7 +14,7 @@ export default function MicrosoftLearnQuote({ title, description, children, sour
   const { isCopied, copyToClipboard } = useCopyToClipboard();
   const ref = useRef<HTMLElement>(null);
 
-  const raw = typeof children === "string" ? children : "";
+  const raw = extractText(children);
   const highlighted = hljs.highlight(raw, { language: "cpp" }).value;
 
   const handleCopy = () => {
