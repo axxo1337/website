@@ -1,5 +1,5 @@
 import type { MDXComponents } from "mdx/types";
-import Image from "next/image";
+import { ReactNode } from "react";
 import { slugify, extractText } from "./lib/client/utils";
 import CodeBlock from "./components/ui/CodeBlock";
 import ImageViewer from "./components/ui/ImageViewer";
@@ -39,13 +39,27 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </h4>
     ),
-    p: ({ children }) => <p className="mt-3">{children}</p>,
-    a: (props) => <a {...props} className={`${props.className} inline-anchor wrap-break-word`}></a>,
-    ol: ({ children }) => <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">{children}</ol>,
-    ul: ({ children }) => <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">{children}</ul>,
+    p: ({ children }) => (
+      <p className="mt-3">
+        {children}
+      </p>
+    ),
+    a: (props) => <a {...props} className={`${props.className} inline-anchor break-words`}></a>,
+    ol: ({ children }) => (
+      <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">
+        {children}
+      </ol>
+    ),
+    ul: ({ children }) => (
+      <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">
+        {children}
+      </ul>
+    ),
     li: ({ children }) => <li className="wrap-break-words">{children}</li>,
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-white/30 pl-4 my-2 italic text-white/70">{children}</blockquote>
+      <blockquote className="border-l-2 border-white/30 pl-4 my-2 italic text-white/70">
+        {children}
+      </blockquote>
     ),
     span: ({ className, children, ...props }) => {
       if (className?.includes("katex-display")) {
@@ -79,19 +93,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       const sizeClass = width ? "" : "w-full";
       const imgClassName = `rounded-lg h-auto ${sizeClass}`;
 
+      // eslint-disable-next-line @next/next/no-img-element
       const image = isAuto ? (
-        // eslint-disable-next-line @next/next/no-img-element
         <img src={src} alt={text} className="rounded-lg h-auto" {...props} />
-      ) : src?.startsWith("http") ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={text} className={imgClassName} style={hasExplicitWidth ? { width } : undefined} {...props} />
       ) : (
-        <Image
-          src={src || ""}
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
           alt={text}
-          width={0}
-          height={0}
-          sizes={hasExplicitWidth ? width : "100vw"}
           className={imgClassName}
           style={hasExplicitWidth ? { width } : undefined}
           {...props}
