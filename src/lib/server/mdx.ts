@@ -55,7 +55,8 @@ export async function getAllContentMetadata(
     return { ...post.metadata, slug } as MDXMetadata;
   });
 
-  return Promise.all(metadataPromises);
+  const all = await Promise.all(metadataPromises);
+  return all.filter((item) => item.status !== "DRAFT");
 }
 
 export async function getAdjacentContent(
@@ -90,6 +91,7 @@ export interface MDXMetadata {
   description?: string;
   thumbnailPath?: string;
   tags?: string[];
+  status?: "DRAFT" | "WIP" | "COMPLETE";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
