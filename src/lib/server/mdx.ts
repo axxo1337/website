@@ -50,16 +50,17 @@ export function parseMetadata(content: string): Partial<MDXMetadata> {
   const objStr = match[1];
   const result: Record<string, any> = {};
 
-  const lines = objStr.split("\n");
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("//")) continue;
+  const cleanObjStr = objStr
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\/\/.*$/gm, "");
 
-    const colonIdx = trimmed.indexOf(":");
-    if (colonIdx === -1) continue;
+  // Matches object keys and captures their values (supporting double, single, and backtick quoted strings with escaped chars, arrays, and primitive literals)
+  const regex = /\b([a-zA-Z0-9_]+)\s*:\s*("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`|\[[\s\S]*?\]|null|true|false|\d+)/g;
 
-    const key = trimmed.slice(0, colonIdx).trim().replace(/['"]/g, "");
-    const valStr = trimmed.slice(colonIdx + 1).trim().replace(/,$/, "").trim();
+  let m;
+  while ((m = regex.exec(cleanObjStr)) !== null) {
+    const key = m[1];
+    const valStr = m[2].trim();
 
     if (valStr === "null") {
       result[key] = null;
@@ -67,7 +68,11 @@ export function parseMetadata(content: string): Partial<MDXMetadata> {
       result[key] = true;
     } else if (valStr === "false") {
       result[key] = false;
-    } else if ((valStr.startsWith('"') && valStr.endsWith('"')) || (valStr.startsWith("'") && valStr.endsWith("'"))) {
+    } else if (
+      (valStr.startsWith('"') && valStr.endsWith('"')) ||
+      (valStr.startsWith("'") && valStr.endsWith("'")) ||
+      (valStr.startsWith("`") && valStr.endsWith("`"))
+    ) {
       result[key] = valStr.slice(1, -1);
     } else if (valStr.startsWith("[") && valStr.endsWith("]")) {
       try {
@@ -79,6 +84,7 @@ export function parseMetadata(content: string): Partial<MDXMetadata> {
       result[key] = valStr;
     }
   }
+
   return result;
 }
 

@@ -27,17 +27,12 @@ export default async function Videos() {
   }, new Date(0));
 
   return (
-    <Main
-      title="Videos"
-      createdAt={new Date(2025, 11, 22)}
-      updatedAt={mostRecentUpdate}
-    >
+    <Main title="Videos" createdAt={new Date(2025, 11, 22)} updatedAt={mostRecentUpdate}>
       <Section title="Library">
         <p>
-          This page doesn&apos;t list ALL of my videos, but you can find some of
-          my most recent here. Clicking any of them will direct you to another
-          page dedicated to directing you to the actual video, but also to
-          providing an overview of its contents through some sort of blog post.
+          This page doesn&apos;t list ALL of my videos, but you can find some of my most recent here. Clicking any of them will
+          direct you to another page dedicated to directing you to the actual video, but also to providing an overview of its
+          contents through some sort of blog post.
         </p>
         <hr className="my-4 md:my-6 border-white/20" />
         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
