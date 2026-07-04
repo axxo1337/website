@@ -116,6 +116,22 @@
 }
 
 /* Custom Page Transitions */
+header {
+  view-transition-name: main-header;
+}
+
+footer {
+  view-transition-name: main-footer;
+}
+
+::view-transition-old(main-header),
+::view-transition-new(main-header),
+::view-transition-old(main-footer),
+::view-transition-new(main-footer) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 ::view-transition-old(root) {
   animation: 150ms cubic-bezier(0.4, 0, 1, 1) both page-fade-out;
 }
