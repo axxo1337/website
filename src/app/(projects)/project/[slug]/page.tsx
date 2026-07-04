@@ -71,9 +71,17 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <Main title={metadata.title} createdAt={new Date(metadata.createdAt)} updatedAt={new Date(metadata.updatedAt)}>
       <div className="mt-8 md:mt-14 overflow-hidden rounded-md border-2 border-white/20">
-        <AspectRatio ratio={16 / 9}>
-          <Image alt="thumbnail" className="object-cover" src={metadata.thumbnailPath as string} fill />
-        </AspectRatio>
+        {metadata.thumbnailPath ? (
+          <AspectRatio ratio={16 / 9}>
+            <Image alt="thumbnail" className="object-cover" src={metadata.thumbnailPath} fill />
+          </AspectRatio>
+        ) : (
+          <AspectRatio ratio={16 / 9} className="bg-black relative">
+            <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-2xl text-center">
+              This project has no thumbnail yet.
+            </span>
+          </AspectRatio>
+        )}
       </div>
       <Section subtitle="What's this project about?" title="Overview">
         <div>
