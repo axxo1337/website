@@ -1,6 +1,5 @@
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
-import { ReactNode } from "react";
 import { slugify, extractText } from "./lib/client/utils";
 import CodeBlock from "./components/ui/CodeBlock";
 import ImageViewer from "./components/ui/ImageViewer";
@@ -41,7 +40,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </h4>
     ),
     p: ({ children }) => <p className="mt-3">{children}</p>,
-    a: (props) => <a {...props} className={`${props.className} inline-anchor break-words`}></a>,
+    a: (props) => <a {...props} className={`${props.className} inline-anchor wrap-break-word`}></a>,
     ol: ({ children }) => <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">{children}</ol>,
     ul: ({ children }) => <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">{children}</ul>,
     li: ({ children }) => <li className="wrap-break-words">{children}</li>,
@@ -80,8 +79,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       const sizeClass = width ? "" : "w-full";
       const imgClassName = `rounded-lg h-auto ${sizeClass}`;
 
-      // eslint-disable-next-line @next/next/no-img-element
       const image = isAuto ? (
+        // eslint-disable-next-line @next/next/no-img-element
         <img src={src} alt={text} className="rounded-lg h-auto" {...props} />
       ) : src?.startsWith("http") ? (
         // eslint-disable-next-line @next/next/no-img-element
