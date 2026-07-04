@@ -89,6 +89,13 @@ export default async function VideoPage({ params }: Props) {
 
   return (
     <Main title={metadata.title} createdAt={new Date(metadata.createdAt)} updatedAt={new Date(metadata.updatedAt)}>
+      <div className="mt-4">
+        {metadata.status === "WIP" && (
+          <span className="px-2 py-1 border-yellow-500 bg-yellow-500/10 text-yellow-500 border rounded-full text-xs">
+            Work in progress
+          </span>
+        )}
+      </div>
       <div>
         <YouTubeVideo className="mt-8 md:mt-14" id={metadata.youtubeId} thumbnailPath={metadata.thumbnailPath} />
       </div>
