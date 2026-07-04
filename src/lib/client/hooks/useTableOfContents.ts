@@ -22,8 +22,13 @@ export default function useTableOfContents(exclude?: string[], pauseScroll?: boo
   useEffect(() => {
     if (headings.length === 0 || pauseScroll) return;
 
+    let ticking = false;
+
     function updateActiveHeading() {
-      if (locked.current) return;
+      if (locked.current) {
+        ticking = false;
+        return;
+      }
 
       let current = headings[0]?.id ?? "";
 
@@ -38,12 +43,20 @@ export default function useTableOfContents(exclude?: string[], pauseScroll?: boo
       }
 
       setActiveId(current);
+      ticking = false;
     }
 
-    window.addEventListener("scroll", updateActiveHeading, { passive: true });
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateActiveHeading);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     updateActiveHeading();
 
-    return () => window.removeEventListener("scroll", updateActiveHeading);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [headings, pauseScroll]);
 
   useEffect(() => {
