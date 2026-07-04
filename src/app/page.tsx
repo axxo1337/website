@@ -99,5 +99,5 @@ type TWork = {
   type: "video" | "tool" | "library";
   href: string;
   createdAt: Date;
-  thumbnailPath: string;
+  thumbnailPath?: string | null;
 };

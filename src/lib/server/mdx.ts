@@ -43,19 +43,59 @@ export function contentExists(contentType: ContentType, slug: string): boolean {
   return fs.existsSync(mdxPath);
 }
 
+export function parseMetadata(content: string): Partial<MDXMetadata> {
+  const match = content.match(/export const metadata = \s*\{([\s\S]*?)\};/);
+  if (!match) return {};
+
+  const objStr = match[1];
+  const result: Record<string, any> = {};
+
+  const lines = objStr.split("\n");
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("//")) continue;
+
+    const colonIdx = trimmed.indexOf(":");
+    if (colonIdx === -1) continue;
+
+    const key = trimmed.slice(0, colonIdx).trim().replace(/['"]/g, "");
+    const valStr = trimmed.slice(colonIdx + 1).trim().replace(/,$/, "").trim();
+
+    if (valStr === "null") {
+      result[key] = null;
+    } else if (valStr === "true") {
+      result[key] = true;
+    } else if (valStr === "false") {
+      result[key] = false;
+    } else if ((valStr.startsWith('"') && valStr.endsWith('"')) || (valStr.startsWith("'") && valStr.endsWith("'"))) {
+      result[key] = valStr.slice(1, -1);
+    } else if (valStr.startsWith("[") && valStr.endsWith("]")) {
+      try {
+        result[key] = JSON.parse(valStr.replace(/'/g, '"'));
+      } catch {
+        result[key] = [];
+      }
+    } else {
+      result[key] = valStr;
+    }
+  }
+  return result;
+}
+
 export async function getAllContentMetadata(
   contentType: ContentType,
 ): Promise<MDXMetadata[]> {
   const slugs = getContentSlugs(contentType);
-  const metadataPromises = slugs.map(async (slug) => {
-    const contentRelativePath = contentRelativePathsMap.get(contentType);
-    const post = await import(
-      `@/app/${contentRelativePath}/[slug]/${slug}.mdx`
-    );
-    return { ...post.metadata, slug } as MDXMetadata;
+  const contentDir = getContentDirectory(contentType);
+
+  const all = slugs.map((slug) => {
+    const mdxPath = path.join(contentDir, `${slug}.mdx`);
+    const content = fs.readFileSync(mdxPath, "utf-8");
+    const metadata = parseMetadata(content);
+    return { ...metadata, slug } as MDXMetadata;
   });
 
-  return Promise.all(metadataPromises);
+  return all.filter((item) => item.status !== "DRAFT");
 }
 
 export async function getAdjacentContent(
@@ -90,6 +130,7 @@ export interface MDXMetadata {
   description?: string;
   thumbnailPath?: string;
   tags?: string[];
+  status?: "DRAFT" | "WIP" | "COMPLETE";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }

@@ -38,7 +38,7 @@ export default async function Projects() {
               title={project.title}
               description={project.description as string}
               createdAt={new Date(project.createdAt)}
-              thumbnailPath={project.thumbnailPath as string}
+              thumbnailPath={project.thumbnailPath}
               href={`/project/${project.slug}`}
             />
           ))}

@@ -47,7 +47,7 @@ export default async function Videos() {
               title={video.title}
               description={video.description as string}
               createdAt={new Date(video.createdAt)}
-              thumbnailPath={video.thumbnailPath as string}
+              thumbnailPath={video.thumbnailPath}
               href={`/video/${video.slug}`}
             />
           ))}

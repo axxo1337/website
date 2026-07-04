@@ -21,6 +21,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const post = await import(`@/app/(videos)/video/[slug]/${slug}.mdx`);
   const metadata: MDXMetadata = post.metadata;
+
+  if (metadata.status === "DRAFT") {
+    return {};
+  }
+
   const thumbnailUrl = metadata.thumbnailPath || "/images/seo/og-image.png";
 
   return {
@@ -75,6 +80,11 @@ export default async function VideoPage({ params }: Props) {
   const post = await import(`@/app/(videos)/video/[slug]/${slug}.mdx`);
   const MDXContent = post.default;
   const metadata: MDXMetadata = post.metadata;
+
+  if (metadata.status === "DRAFT") {
+    notFound();
+  }
+
   const { prev, next } = await getAdjacentContent("video", slug);
 
   return (

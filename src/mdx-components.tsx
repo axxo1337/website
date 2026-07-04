@@ -1,22 +1,11 @@
 import type { MDXComponents } from "mdx/types";
-import Image from "next/image";
 import { ReactNode } from "react";
-import { slugify } from "./lib/client/utils";
+import { slugify, extractText } from "./lib/client/utils";
 import CodeBlock from "./components/ui/CodeBlock";
 import ImageViewer from "./components/ui/ImageViewer";
 import MicrosoftLearnQuote from "./components/ui/MicrosoftLearnQuote";
 import UndocumentedStruct from "./components/ui/UndocumentedStruct";
 import YouTubeVideo from "./components/page/Video/YouTubeVideo";
-function extractText(node: ReactNode): string {
-  if (typeof node === "string") return node;
-  if (typeof node === "number") return String(node);
-  if (!node) return "";
-  if (Array.isArray(node)) return node.map(extractText).join("");
-  if (typeof node === "object" && "props" in node) {
-    return extractText((node as { props: { children?: ReactNode } }).props.children);
-  }
-  return "";
-}
 
 function parseImageAlt(alt: string): { text: string; align: string; width: string; caption: string } {
   const parts = alt.split("|").map((s) => s.trim());
@@ -107,16 +96,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       // eslint-disable-next-line @next/next/no-img-element
       const image = isAuto ? (
         <img src={src} alt={text} className="rounded-lg h-auto" {...props} />
-      ) : src?.startsWith("http") ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={text} className={imgClassName} style={hasExplicitWidth ? { width } : undefined} {...props} />
       ) : (
-        <Image
-          src={src || ""}
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
           alt={text}
-          width={0}
-          height={0}
-          sizes={hasExplicitWidth ? width : "100vw"}
           className={imgClassName}
           style={hasExplicitWidth ? { width } : undefined}
           {...props}
@@ -134,16 +118,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </span>
       );
     },
-    MicrosoftLearnQuote: (props) => (
-      <MicrosoftLearnQuote {...props} />
-    ),
-    UndocumentedStruct: (props) => (
-      <UndocumentedStruct {...props} />
-    ),
-    YouTubeVideo: (props) => (
-      <YouTubeVideo className="[&>div]:border [&>div]:border-white/10 mt-3" {...props} />
-    ),
+    MicrosoftLearnQuote: (props) => <MicrosoftLearnQuote {...props} />,
+    UndocumentedStruct: (props) => <UndocumentedStruct {...props} />,
+    YouTubeVideo: (props) => <YouTubeVideo className="[&>div]:border [&>div]:border-white/10 mt-3" {...props} />,
     ...components,
   };
 }
-
