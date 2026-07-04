@@ -1,5 +1,5 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { format } from "date-fns";
+import { formatUTC } from "@/lib/client/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,7 +24,7 @@ export default function Project({ title, description, createdAt, thumbnailPath, 
         <div className="my-2">
           <span className="text-2xl font-medium group-hover-underline">{title}</span>
           <div className="flex flex-wrap gap-4 items-center text-sm font-medium text-white/75 mt-0.5">
-            <span>Created • {format(createdAt, "MM/dd/yyyy")}</span>
+            <span>Created • {formatUTC(createdAt)}</span>
           </div>
         </div>
         <p className="text-white/75 line-clamp-2">{description}</p>

@@ -1,5 +1,5 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { format } from "date-fns";
+import { formatUTC } from "@/lib/client/utils";
 import { Hammer, Puzzle, Video } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -64,7 +64,7 @@ export default function Work({ title, type, description, href, createdAt, thumbn
             <workTypesEntry.icon className="size-5" />
             {workTypesEntry.title}
           </span>
-          <span>Created • {format(createdAt, "MM/dd/yyyy")}</span>
+          <span>Created • {formatUTC(createdAt)}</span>
         </div>
       </div>
       <p className="text-white/75 line-clamp-2">{description}</p>

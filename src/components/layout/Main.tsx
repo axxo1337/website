@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { formatUTC } from "@/lib/client/utils";
 import FadeIn from "@/components/ui/FadeIn";
 
 //
@@ -15,13 +15,13 @@ export default function Main({ title, createdAt, updatedAt, children }: Main) {
             <span>
               Created •{" "}
               <time dateTime={createdAt.toISOString()}>
-                {format(createdAt, "MM/dd/yyyy")}
+                {formatUTC(createdAt)}
               </time>
             </span>
             <span>
               Last updated •{" "}
               <time dateTime={updatedAt.toISOString()}>
-                {format(updatedAt, "MM/dd/yyyy")}
+                {formatUTC(updatedAt)}
               </time>
             </span>
           </div>
