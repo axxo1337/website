@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { TPostStatus } from "../client/types/post";
 
 //
 // [SECTION] Defines
@@ -15,12 +16,7 @@ const contentRelativePathsMap = new Map<ContentType, string>([
 //
 
 function getContentDirectory(contentType: ContentType): string {
-  return path.join(
-    process.cwd(),
-    "src/app",
-    contentRelativePathsMap.get(contentType) ?? "",
-    "[slug]",
-  );
+  return path.join(process.cwd(), "src/app", contentRelativePathsMap.get(contentType) ?? "", "[slug]");
 }
 
 export function getContentSlugs(contentType: ContentType): string[] {
@@ -48,14 +44,14 @@ export function parseMetadata(content: string): Partial<MDXMetadata> {
   if (!match) return {};
 
   const objStr = match[1];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const result: Record<string, any> = {};
 
-  const cleanObjStr = objStr
-    .replace(/\/\*[\s\S]*?\*\//g, "")
-    .replace(/\/\/.*$/gm, "");
+  const cleanObjStr = objStr.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
 
   // Matches object keys and captures their values (supporting double, single, and backtick quoted strings with escaped chars, arrays, and primitive literals)
-  const regex = /\b([a-zA-Z0-9_]+)\s*:\s*("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`|\[[\s\S]*?\]|null|true|false|\d+)/g;
+  const regex =
+    /\b([a-zA-Z0-9_]+)\s*:\s*("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`|\[[\s\S]*?\]|null|true|false|\d+)/g;
 
   let m;
   while ((m = regex.exec(cleanObjStr)) !== null) {
@@ -88,9 +84,7 @@ export function parseMetadata(content: string): Partial<MDXMetadata> {
   return result;
 }
 
-export async function getAllContentMetadata(
-  contentType: ContentType,
-): Promise<MDXMetadata[]> {
+export async function getAllContentMetadata(contentType: ContentType): Promise<MDXMetadata[]> {
   const slugs = getContentSlugs(contentType);
   const contentDir = getContentDirectory(contentType);
 
@@ -109,9 +103,7 @@ export async function getAdjacentContent(
   currentSlug: string,
 ): Promise<{ prev: MDXMetadata | null; next: MDXMetadata | null }> {
   const all = await getAllContentMetadata(contentType);
-  const sorted = all.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-  );
+  const sorted = all.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   const currentIndex = sorted.findIndex((item) => item.slug === currentSlug);
 
@@ -136,7 +128,7 @@ export interface MDXMetadata {
   description?: string;
   thumbnailPath?: string;
   tags?: string[];
-  status?: "DRAFT" | "WIP" | "COMPLETE";
+  status: TPostStatus;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
