@@ -89,7 +89,7 @@ export default async function ProjectPage({ params }: Props) {
           </AspectRatio>
         ) : (
           <AspectRatio ratio={16 / 9} className="bg-black relative">
-            <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-2xl text-center">
+            <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-xl sm:text-2xl text-center">
               This project has no thumbnail yet.
             </span>
           </AspectRatio>
