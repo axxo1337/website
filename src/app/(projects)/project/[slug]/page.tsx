@@ -3,6 +3,7 @@ import Section from "@/components/layout/Section";
 import SubscribeCTA from "@/components/page/Videos/SubscribeCTA";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import ContentNavigation from "@/components/ui/ContentNavigation";
+import PostStatusIndicator from "@/components/ui/PostStatusIndicator";
 import TableOfContents from "@/components/ui/TableOfContents";
 import { contentExists, getAdjacentContent, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
@@ -72,7 +73,7 @@ export default async function ProjectPage({ params }: Props) {
   const MDXContent = post.default;
   const metadata: MDXMetadata = post.metadata;
 
-  if (metadata.status === "DRAFT") {
+  if (metadata.status === "DRAFT" && process.env.NODE_ENV === "production") {
     notFound();
   }
 
@@ -80,6 +81,7 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <Main title={metadata.title} createdAt={new Date(metadata.createdAt)} updatedAt={new Date(metadata.updatedAt)}>
+      <PostStatusIndicator status={metadata.status} />
       <div className="mt-8 md:mt-14 overflow-hidden rounded-md border-2 border-white/20">
         {metadata.thumbnailPath ? (
           <AspectRatio ratio={16 / 9}>
@@ -87,7 +89,7 @@ export default async function ProjectPage({ params }: Props) {
           </AspectRatio>
         ) : (
           <AspectRatio ratio={16 / 9} className="bg-black relative">
-            <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-2xl text-center">
+            <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-xl sm:text-2xl text-center">
               This project has no thumbnail yet.
             </span>
           </AspectRatio>

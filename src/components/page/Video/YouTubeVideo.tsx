@@ -30,11 +30,10 @@ export default function YouTubeVideo({
           <iframe
             src={embedUrl}
             title={title}
-            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
-            className="absolute inset-0 h-full w-full"
+            className="absolute inset-0 h-full w-full border-0"
           />
         ) : (
           <AspectRatio ratio={16 / 9} className="bg-black relative">
