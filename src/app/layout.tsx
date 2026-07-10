@@ -108,13 +108,10 @@ export default function RootLayout({
       <body className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden`}>
         <div className="px-2.5 md:px-5 lg:px-0 max-w-240 w-full">
           <Header />
-          <ViewTransition>
-            {children}
-          </ViewTransition>
+          <ViewTransition>{children}</ViewTransition>
           <Footer />
         </div>
       </body>
     </html>
   );
 }
-
