@@ -1,7 +1,7 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Socials from "@/components/page/Home/Socials";
-import Work from "@/components/page/Home/Work";
+import Work, { WorkProps } from "@/components/page/Home/Work";
 import { getContentMetadata, ContentType } from "@/lib/server/mdx";
 import { MoveRight } from "lucide-react";
 import Link from "next/link";
@@ -20,21 +20,22 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 //
 
 export default async function Home() {
-  const bestCreations: TWork[] = bestCreationsKeys
+  const bestCreations: WorkProps[] = bestCreationsKeys
     .map(({ contentType, slug }) => {
       const metadata = getContentMetadata(contentType, slug);
       if (!metadata) return null;
 
       return {
         title: metadata.title,
+        status: metadata.status,
         description: metadata.description || "",
         type: metadata.type || (contentType === "video" ? "video" : "tool"),
         href: `/${contentType}/${slug}`,
         createdAt: new Date(metadata.createdAt),
         thumbnailPath: metadata.thumbnailPath || null,
-      } as TWork;
+      } as WorkProps;
     })
-    .filter((work): work is TWork => work !== null);
+    .filter((work): work is WorkProps => work !== null);
 
   return (
     <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2026, 2, 26)}>
@@ -90,16 +91,3 @@ export default async function Home() {
     </Main>
   );
 }
-
-//
-// [SECTION] Types
-//
-
-type TWork = {
-  title: string;
-  description: string;
-  type: "video" | "tool" | "library";
-  href: string;
-  createdAt: Date;
-  thumbnailPath?: string | null;
-};

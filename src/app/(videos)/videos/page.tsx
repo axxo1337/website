@@ -44,6 +44,7 @@ export default async function Videos() {
               createdAt={new Date(video.createdAt)}
               thumbnailPath={video.thumbnailPath}
               href={`/video/${video.slug}`}
+              status={video.status}
             />
           ))}
         </div>
