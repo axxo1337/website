@@ -40,6 +40,7 @@ export default async function Projects() {
               createdAt={new Date(project.createdAt)}
               thumbnailPath={project.thumbnailPath}
               href={`/project/${project.slug}`}
+              status={project.status}
             />
           ))}
         </div>

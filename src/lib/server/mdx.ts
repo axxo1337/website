@@ -84,16 +84,54 @@ export function parseMetadata(content: string): Partial<MDXMetadata> {
   return result;
 }
 
+export function readMetadataFromFile(mdxPath: string, slug: string): MDXMetadata | null {
+  if (!fs.existsSync(mdxPath)) return null;
+
+  const fd = fs.openSync(mdxPath, "r");
+  const CHUNK_SIZE = 2048;
+  const buffer = Buffer.alloc(CHUNK_SIZE);
+  let accumulated = "";
+  let metadata: Partial<MDXMetadata> = {};
+
+  try {
+    let bytesRead = 0;
+    while ((bytesRead = fs.readSync(fd, buffer, 0, CHUNK_SIZE, null)) > 0) {
+      accumulated += buffer.toString("utf8", 0, bytesRead);
+      if (accumulated.includes("};")) {
+        metadata = parseMetadata(accumulated);
+        if (Object.keys(metadata).length > 0) break;
+      }
+      if (accumulated.length > 16384) break;
+    }
+  } catch (err) {
+    console.error(`Error reading metadata from ${mdxPath}:`, err);
+  } finally {
+    fs.closeSync(fd);
+  }
+
+  if (Object.keys(metadata).length === 0) {
+    return null;
+  }
+
+  return { ...metadata, slug } as MDXMetadata;
+}
+
+export function getContentMetadata(contentType: ContentType, slug: string): MDXMetadata | null {
+  const contentDir = getContentDirectory(contentType);
+  const mdxPath = path.join(contentDir, `${slug}.mdx`);
+  return readMetadataFromFile(mdxPath, slug);
+}
+
 export async function getAllContentMetadata(contentType: ContentType): Promise<MDXMetadata[]> {
   const slugs = getContentSlugs(contentType);
   const contentDir = getContentDirectory(contentType);
 
-  const all = slugs.map((slug) => {
-    const mdxPath = path.join(contentDir, `${slug}.mdx`);
-    const content = fs.readFileSync(mdxPath, "utf-8");
-    const metadata = parseMetadata(content);
-    return { ...metadata, slug } as MDXMetadata;
-  });
+  const all = slugs
+    .map((slug) => {
+      const mdxPath = path.join(contentDir, `${slug}.mdx`);
+      return readMetadataFromFile(mdxPath, slug);
+    })
+    .filter((item): item is MDXMetadata => item !== null);
 
   return all.filter((item) => item.status !== "DRAFT");
 }

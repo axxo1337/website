@@ -1,7 +1,8 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Socials from "@/components/page/Home/Socials";
-import Work from "@/components/page/Home/Work";
+import Work, { WorkProps } from "@/components/page/Home/Work";
+import { getContentMetadata, ContentType } from "@/lib/server/mdx";
 import { MoveRight } from "lucide-react";
 import Link from "next/link";
 
@@ -9,31 +10,33 @@ import Link from "next/link";
 // [SECTION] Defines
 //
 
-const bestCreations: TWork[] = [
-  {
-    title: "Windows Internals Explained",
-    description:
-      "Windows internals is a very important subject that's sadly very poorly documented. In this video I'll do my best to give you a great guide to trampoline from.",
-    thumbnailPath: "/images/thumbnails/windows-internals-explained.png",
-    createdAt: new Date(2026, 2, 20),
-    type: "video",
-    href: "/video/windows-internals-explained",
-  },
-  {
-    title: "AntiDebug",
-    description: "A simple terminal interface tool to test Windows x86_64 anti-debugging techniques.",
-    thumbnailPath: "/images/thumbnails/antidebug.png",
-    createdAt: new Date(2025, 7, 10),
-    type: "tool",
-    href: "/project/antidebug",
-  },
+const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
+  { contentType: "video", slug: "windows-internals-explained" },
+  { contentType: "project", slug: "antidebug" },
 ];
 
 //
 // [SECTION] Content
 //
 
-export default function Home() {
+export default async function Home() {
+  const bestCreations: WorkProps[] = bestCreationsKeys
+    .map(({ contentType, slug }) => {
+      const metadata = getContentMetadata(contentType, slug);
+      if (!metadata) return null;
+
+      return {
+        title: metadata.title,
+        status: metadata.status,
+        description: metadata.description || "",
+        type: metadata.type || (contentType === "video" ? "video" : "tool"),
+        href: `/${contentType}/${slug}`,
+        createdAt: new Date(metadata.createdAt),
+        thumbnailPath: metadata.thumbnailPath || null,
+      } as WorkProps;
+    })
+    .filter((work): work is WorkProps => work !== null);
+
   return (
     <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2026, 2, 26)}>
       <Section subtitle="Who am I?" title="In my own words">
@@ -88,16 +91,3 @@ export default function Home() {
     </Main>
   );
 }
-
-//
-// [SECTION] Types
-//
-
-type TWork = {
-  title: string;
-  description: string;
-  type: "video" | "tool" | "library";
-  href: string;
-  createdAt: Date;
-  thumbnailPath?: string | null;
-};
