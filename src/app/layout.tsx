@@ -14,13 +14,6 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  viewportFit: "cover",
-  themeColor: "#0c0c0c",
-};
-
 export const metadata: Metadata = {
   title: {
     template: "%s - aXXo's website",
