@@ -106,7 +106,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden relative before:pointer-events-none before:fixed before:inset-0 before:-z-10 before:bg-[url('/images/texture.png')] before:bg-repeat before:opacity-25 before:brightness-165 before:invert before:mix-blend-screen`}
+        className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden relative bg-[url('/images/texture.png')] bg-fixed bg-center bg-cover`}
       >
         <div className="px-2.5 md:px-5 lg:px-0 max-w-240 w-full">
           <Header />
