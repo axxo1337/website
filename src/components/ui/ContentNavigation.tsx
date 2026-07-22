@@ -35,24 +35,24 @@ export default function ContentNavigation({ contentType, prev, next }: ContentNa
       {prev ? (
         <Link
           href={`${basePath}/${prev.slug}`}
-          className="border rounded-md p-3 gap-2.5 w-full flex items-center border-white/20 hover:border-white transition-colors"
+          className="border rounded-md p-3 gap-2.5 w-full flex items-center border-white/20 hover:border-white transition-colors blured-bg"
         >
           {prevContent}
         </Link>
       ) : (
-        <div className="border rounded-md p-3 gap-2.5 w-full flex items-center border-white/20 brightness-50 cursor-not-allowed select-none">
+        <div className="border rounded-md p-3 gap-2.5 w-full flex items-center border-white/20 brightness-50 cursor-not-allowed select-none blured-bg">
           {prevContent}
         </div>
       )}
       {next ? (
         <Link
           href={`${basePath}/${next.slug}`}
-          className="border rounded-md p-3 gap-2.5 w-full flex items-center border-white/20 hover:border-white transition-colors"
+          className="border rounded-md p-3 gap-2.5 w-full flex items-center border-white/20 hover:border-white transition-colors blured-bg"
         >
           {nextContent}
         </Link>
       ) : (
-        <div className="border rounded-md p-3 gap-2.5 w-full flex items-center border-white/20 brightness-50 cursor-not-allowed select-none">
+        <div className="border rounded-md p-3 gap-2.5 w-full flex items-center border-white/20 brightness-50 cursor-not-allowed select-none blured-bg">
           {nextContent}
         </div>
       )}

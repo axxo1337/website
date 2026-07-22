@@ -104,6 +104,10 @@
   @apply underline text-[#317FFB];
 }
 
+.blured-bg {
+  @apply bg-[#0c0c0c]/65 backdrop-blur-sm;
+}
+
 ::view-transition-group(image-viewer) {
   animation-duration: 300ms;
   animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
