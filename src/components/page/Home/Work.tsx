@@ -59,7 +59,7 @@ export default function Work({ title, type, description, href, createdAt, thumbn
         )}
 
         {status === "WIP" && (
-          <div className="absolute top-0 left-0 bg-yellow-500/20 px-2 py-1 rounded-br-md ease-in-out flex justify-between items-center border-r border-b border-yellow-500 group-hover:opacity-0 opacity-100 transition-opacity duration-250">
+          <div className="absolute top-0 left-0 backdrop-brightness-35 bg-yellow-500/20 px-2 py-1 rounded-br-md ease-in-out flex justify-between items-center border-r border-b border-yellow-500 group-hover:opacity-0 opacity-100 transition-opacity duration-250">
             <span className="text-sm text-yellow-500">Work in progress</span>
           </div>
         )}
