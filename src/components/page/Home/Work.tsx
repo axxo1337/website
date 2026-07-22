@@ -50,10 +50,10 @@ export default function Work({ title, type, description, href, createdAt, thumbn
             src={thumbnailPath}
             fill={true}
             alt="thumnail"
-            className="group-hover:scale-[102%] transition-all duration-250 ease-in-out absolute group-hover:blur-sm blur-none"
+            className="group-hover:scale-[98%] transition-all duration-250 ease-in-out absolute group-hover:blur-sm blur-none"
           />
         ) : (
-          <span className="absolute left-1/2 top-1/2 -translate-1/2 duration-250 font-medium text-lg md:text-xl text-center px-4 w-full select-none text-white/50 group-hover:scale-[102%] transition-[transform,opacity] ease-in-out group-hover:opacity-0 opacity-100">
+          <span className="absolute left-1/2 top-1/2 -translate-1/2 duration-250 font-medium text-lg md:text-xl text-center px-4 w-full select-none text-white/50 group-hover:scale-[98%] transition-[transform,opacity] ease-in-out group-hover:opacity-0 opacity-100">
             This project has no thumbnail yet.
           </span>
         )}

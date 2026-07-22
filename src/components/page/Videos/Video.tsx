@@ -16,10 +16,10 @@ export default function Video({ title, description, createdAt, thumbnailPath, hr
               src={thumbnailPath}
               fill={true}
               alt="thumnail"
-              className="group-hover:scale-[102%] transition-all group-hover:blur-sm blur-none duration-200 ease-in-out absolute"
+              className="group-hover:scale-[98%] transition-all group-hover:blur-sm blur-none duration-200 ease-in-out absolute"
             />
           ) : (
-            <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-lg md:text-xl text-center px-4 w-full select-none text-white/50 group-hover:scale-[102%] transition-all duration-250 ease-in-out opacity-100 group-hover:opacity-0">
+            <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-lg md:text-xl text-center px-4 w-full select-none text-white/50 group-hover:scale-[98%] transition-all duration-250 ease-in-out opacity-100 group-hover:opacity-0">
               This video has no thumbnail yet.
             </span>
           )}
