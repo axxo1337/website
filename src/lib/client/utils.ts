@@ -1,6 +1,34 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { ReactNode } from "react"
+import { TPostStatus } from "./types/post";
+
+//
+// [SECTION] Defines
+//
+
+export const postStatusObjectMap = new Map<TPostStatus, { spanClassName: string; containerClassName: string; text: string }>([
+  [
+    "WIP",
+    {
+      containerClassName: "bg-yellow-500/20 border-yellow-500",
+      spanClassName: "text-yellow-500",
+      text: "Work in progress",
+    },
+  ],
+  [
+    "DRAFT",
+    {
+      containerClassName: "bg-red-500/20 border-red-500",
+      spanClassName: "text-red-500",
+      text: "Draft (Not available in prod)",
+    },
+  ],
+]);
+
+//
+// [SECTION] Functions
+//
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
