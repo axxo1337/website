@@ -6,7 +6,7 @@ export default function Social({ href, iconPath, title }: Social) {
     <li>
       <Link
         href={href}
-        className="flex items-center gap-2 border border-white/20 hover:border-white duration-250 transition-colors rounded-full py-2 px-4 blured-bg grayscale-100"
+        className="flex items-center group gap-2 border border-white/20 hover:border-white duration-250 transition-colors rounded-full py-2 px-4 blured-bg"
       >
         <Image src={iconPath} className="size-6 md:size-8" width={32} height={32} alt={title} />
         <span className="font-medium text-lg md:text-xl">{title}</span>
