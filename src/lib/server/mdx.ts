@@ -133,7 +133,10 @@ export async function getAllContentMetadata(contentType: ContentType): Promise<M
     })
     .filter((item): item is MDXMetadata => item !== null);
 
-  return all.filter((item) => item.status !== "DRAFT");
+  if (process.env.NODE_ENV === "production")
+    return all.filter((item) => item.status !== "DRAFT");
+
+  return all;
 }
 
 export async function getAdjacentContent(
