@@ -50,21 +50,21 @@ export default function Work({ title, type, description, href, createdAt, thumbn
             src={thumbnailPath}
             fill={true}
             alt="thumnail"
-            className="group-hover:scale-[102%] transition-all duration-200 ease-in-out absolute group-hover:blur-sm blur-none"
+            className="group-hover:scale-[102%] transition-all duration-250 ease-in-out absolute group-hover:blur-sm blur-none"
           />
         ) : (
-          <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-lg md:text-xl text-center px-4 w-full select-none text-white/50 group-hover:scale-[102%] transition-[transform,opacity] duration-200 ease-in-out group-hover:opacity-0 opacity-100">
+          <span className="absolute left-1/2 top-1/2 -translate-1/2 duration-250 font-medium text-lg md:text-xl text-center px-4 w-full select-none text-white/50 group-hover:scale-[102%] transition-[transform,opacity] ease-in-out group-hover:opacity-0 opacity-100">
             This project has no thumbnail yet.
           </span>
         )}
 
         {status === "WIP" && (
-          <div className="absolute top-0 left-0 bg-yellow-500/20 px-2 py-1 rounded-br-md flex justify-between items-center border-r border-b border-yellow-500 group-hover:opacity-0 opacity-100 transition-opacity">
+          <div className="absolute top-0 left-0 bg-yellow-500/20 px-2 py-1 rounded-br-md ease-in-out flex justify-between items-center border-r border-b border-yellow-500 group-hover:opacity-0 opacity-100 transition-opacity duration-250">
             <span className="text-sm text-yellow-500">Work in progress</span>
           </div>
         )}
 
-        <span className="absolute left-1/2 top-1/2 -translate-1/2 opacity-0 transition-opacity group-hover:opacity-100 text-center text-xl font-bold underline">
+        <span className="absolute left-1/2 top-1/2 -translate-1/2 opacity-0 transition-opacity duration-250 ease-in-out group-hover:opacity-100 text-center text-xl font-bold underline">
           Click to open
         </span>
       </AspectRatio>
