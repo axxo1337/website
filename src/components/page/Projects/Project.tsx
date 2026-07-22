@@ -27,7 +27,7 @@ export default function Project({ title, description, createdAt, thumbnailPath, 
           {statusObject && (
             <div
               className={cn(
-                "absolute top-0 left-0 backdrop-blur-sm px-2 py-1 rounded-br-md flex justify-between items-center border-r border-b group-hover:opacity-0 opacity-100 duration-250 transition-opacity",
+                "absolute top-0 left-0 backdrop-blur-sm backdrop-brightness-35 px-2 py-1 rounded-br-md flex justify-between items-center border-r border-b group-hover:opacity-0 opacity-100 duration-250 transition-opacity",
                 statusObject.containerClassName,
               )}
             >

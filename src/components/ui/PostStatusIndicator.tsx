@@ -23,7 +23,9 @@ export default function PostStatusIndicator({ status }: PostStatusIndicatorProps
 
   return (
     <div className="mt-4">
-      <span className={cn("px-2 py-1 border rounded-full text-xs", statusObject.style)}>{statusObject.title}</span>
+      <span className={cn("px-2 py-1 border rounded-full text-xs backdrop-brightness-35", statusObject.style)}>
+        {statusObject.title}
+      </span>
     </div>
   );
 }
