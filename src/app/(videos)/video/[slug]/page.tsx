@@ -5,13 +5,18 @@ import SubscribeCTA from "@/components/page/Videos/SubscribeCTA";
 import ContentNavigation from "@/components/ui/ContentNavigation";
 import PostStatusIndicator from "@/components/ui/PostStatusIndicator";
 import TableOfContents from "@/components/ui/TableOfContents";
-import { contentExists, getAdjacentContent, MDXMetadata } from "@/lib/server/mdx";
+import { contentExists, getAdjacentContent, getContentSlugs, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 //
 // [SECTION] Content
 //
+
+export async function generateStaticParams() {
+  const slugs = getContentSlugs("video");
+  return slugs.map((slug) => ({ slug }));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -33,11 +38,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: metadata.title,
     description: metadata.description,
     keywords: metadata.tags,
+    alternates: {
+      canonical: `/video/${slug}`,
+    },
     openGraph: {
       type: "video.other",
       title: metadata.title,
       description: metadata.description,
-      url: `https://axxowastaken.me/video/${slug}`,
+      url: `/video/${slug}`,
       images: [
         {
           url: thumbnailUrl,

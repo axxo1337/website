@@ -5,7 +5,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import ContentNavigation from "@/components/ui/ContentNavigation";
 import PostStatusIndicator from "@/components/ui/PostStatusIndicator";
 import TableOfContents from "@/components/ui/TableOfContents";
-import { contentExists, getAdjacentContent, MDXMetadata } from "@/lib/server/mdx";
+import { contentExists, getAdjacentContent, getContentSlugs, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -13,6 +13,11 @@ import { notFound } from "next/navigation";
 //
 // [SECTION] Content
 //
+
+export async function generateStaticParams() {
+  const slugs = getContentSlugs("project");
+  return slugs.map((slug) => ({ slug }));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -35,11 +40,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: metadata.description,
     keywords: metadata.tags,
     authors: [{ name: "aXXo" }],
+    alternates: {
+      canonical: `/project/${slug}`,
+    },
     openGraph: {
       type: "article",
       title: metadata.title,
       description: metadata.description,
-      url: `https://axxowastaken.me/project/${slug}`,
+      url: `/project/${slug}`,
       images: [
         {
           url: thumbnailUrl,
