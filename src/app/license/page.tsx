@@ -1,9 +1,15 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "License",
+  description: "License terms for aXXo's website content under Creative Commons CC BY-NC-SA 4.0.",
+};
 
 export default function LicensePage() {
   return (
-    <Main title="License" createdAt={new Date(2025, 5, 21)} updatedAt={new Date(2026, 5, 21)}>
+    <Main title="License" createdAt={new Date(2025, 5, 21)} updatedAt={new Date(2026, 6, 28)}>
       <Section title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International">
         <div className="flex flex-col gap-4 md:gap-6 font-medium">
           <p>Copyright (C) 2026 axxo1337</p>
