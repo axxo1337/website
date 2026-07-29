@@ -4,16 +4,17 @@ import path from 'path';
 import { getContentMetadata } from '@/lib/server/mdx';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://axxowastaken.me';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://axxowastaken.me';
   
   const projectsDirectory = path.join(process.cwd(), 'src/app/(projects)/project/[slug]');
-  const projectFiles = fs.readdirSync(projectsDirectory);
+  const projectFiles = fs.existsSync(projectsDirectory) ? fs.readdirSync(projectsDirectory) : [];
   const projectRoutes = projectFiles
     .filter((file) => file.endsWith('.mdx'))
     .map((file) => {
       const slug = file.replace('.mdx', '');
       const metadata = getContentMetadata('project', slug);
       if (!metadata) return null;
+      if (process.env.NODE_ENV === 'production' && metadata.status === 'DRAFT') return null;
       return {
         url: `${baseUrl}/project/${slug}`,
         lastModified: metadata.updatedAt || new Date().toISOString(),
@@ -24,13 +25,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((route): route is NonNullable<typeof route> => route !== null);
 
   const videosDirectory = path.join(process.cwd(), 'src/app/(videos)/video/[slug]');
-  const videoFiles = fs.readdirSync(videosDirectory);
+  const videoFiles = fs.existsSync(videosDirectory) ? fs.readdirSync(videosDirectory) : [];
   const videoRoutes = videoFiles
     .filter((file) => file.endsWith('.mdx'))
     .map((file) => {
       const slug = file.replace('.mdx', '');
       const metadata = getContentMetadata('video', slug);
       if (!metadata) return null;
+      if (process.env.NODE_ENV === 'production' && metadata.status === 'DRAFT') return null;
       return {
         url: `${baseUrl}/video/${slug}`,
         lastModified: metadata.updatedAt || new Date().toISOString(),

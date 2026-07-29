@@ -1,5 +1,4 @@
 import type { MDXComponents } from "mdx/types";
-import { ReactNode } from "react";
 import { slugify, extractText } from "./lib/client/utils";
 import CodeBlock from "./components/ui/CodeBlock";
 import ImageViewer from "./components/ui/ImageViewer";
