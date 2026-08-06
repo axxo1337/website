@@ -38,7 +38,7 @@ export default async function Home() {
     .filter((work): work is WorkProps => work !== null);
 
   return (
-    <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2026, 2, 26)}>
+    <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2026, 7, 6)}>
       <Section subtitle="Who am I?" title="In my own words">
         <p>
           Hey! I&apos;m Charles.{" "}
@@ -48,7 +48,7 @@ export default async function Home() {
               aXXo
             </Link>
           </i>{" "}
-          As of writing this, I&apos;m a 20 year old male living in the French province of{" "}
+          As of writing this, I&apos;m a 20 year old living in the French province of{" "}
           <Link href="https://en.wikipedia.org/wiki/Quebec" className="inline-anchor">
             Quebec
           </Link>{" "}
