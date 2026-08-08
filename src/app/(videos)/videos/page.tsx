@@ -54,7 +54,7 @@ export default async function Videos() {
         </div>
         <hr className="my-4 md:my-6 border-white/20" />
         <Link
-          href="https://github.com/axxo1337"
+          href="https://www.youtube.com/@axxo1337"
           className="rounded-lg border border-white/20 p-3 justify-between blured-bg flex items-center group"
         >
           <div className="flex items-center gap-3">
