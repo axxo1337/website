@@ -36,6 +36,7 @@ export default async function Projects() {
               thumbnailPath={project.thumbnailPath}
               href={`/project/${project.slug}`}
               status={project.status}
+              categories={project.categories}
             />
           ))}
         </div>

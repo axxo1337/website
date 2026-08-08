@@ -1,6 +1,6 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { TPostStatus } from "@/lib/client/types/post";
-import { cn, formatUTC, postStatusObjectMap } from "@/lib/client/utils";
+import { TPostCategory, TPostStatus } from "@/lib/client/types/post";
+import { cn, formatUTC, postCategoryMap, postStatusObjectMap } from "@/lib/client/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { LucideIcon } from "lucide-react";
@@ -16,6 +16,7 @@ export default function ContentCard({
   thumbnailPath,
   href,
   status,
+  categories,
   fallbackText = "This item has no thumbnail yet.",
   typeBadge,
 }: ContentCardProps) {
@@ -66,6 +67,28 @@ export default function ContentCard({
           </div>
         </div>
         <p className="text-white/75 line-clamp-2">{description}</p>
+        {categories && categories.length > 0 && (
+          <ul className="flex flex-wrap gap-2 gap-y-1 mt-1.5">
+            {categories.map((cat) => {
+              const categoryObj = postCategoryMap.get(cat);
+              if (!categoryObj) return null;
+              const Icon = categoryObj.icon;
+              return (
+                <li
+                  key={cat}
+                  className={cn(
+                    "text-xs border rounded-lg px-2 py-0.5 inline-flex items-center gap-1",
+                    categoryObj.containerClassName,
+                    categoryObj.spanClassName,
+                  )}
+                >
+                  <Icon className="size-3.5" />
+                  <span>{categoryObj.text}</span>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </article>
     </Link>
   );
@@ -82,6 +105,7 @@ export interface ContentCardProps {
   thumbnailPath?: string | null;
   href: string;
   status: TPostStatus;
+  categories?: TPostCategory[];
   fallbackText?: string;
   typeBadge?: {
     title: string;

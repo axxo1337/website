@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { TPostStatus } from "../client/types/post";
+import { TPostCategory, TPostStatus } from "../client/types/post";
 
 //
 // [SECTION] Defines
@@ -169,6 +169,7 @@ export interface MDXMetadata {
   description?: string;
   thumbnailPath?: string;
   tags?: string[];
+  categories?: TPostCategory[];
   status: TPostStatus;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;

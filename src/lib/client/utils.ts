@@ -1,7 +1,8 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { ReactNode } from "react"
-import { TPostStatus } from "./types/post";
+import { TPostCategory, TPostStatus } from "./types/post";
+import { Cpu, Globe, LucideIcon, ShieldCheck, Sparkles } from "lucide-react";
 
 //
 // [SECTION] Defines
@@ -22,6 +23,48 @@ export const postStatusObjectMap = new Map<TPostStatus, { spanClassName: string;
       containerClassName: "bg-red-500/20 border-red-500",
       spanClassName: "text-red-500",
       text: "Draft (Not available in prod)",
+    },
+  ],
+]);
+
+export const postCategoryMap = new Map<
+  TPostCategory,
+  { spanClassName: string; containerClassName: string; text: string; icon: LucideIcon }
+>([
+  [
+    "COMPUTER_SCIENCE",
+    {
+      containerClassName: "border-yellow-500 bg-yellow-500/20 backdrop-blur-md",
+      spanClassName: "text-yellow-500",
+      text: "Computer Science",
+      icon: Cpu,
+    },
+  ],
+  [
+    "CYBERSECURITY",
+    {
+      containerClassName: "border-red-500 bg-red-500/20 backdrop-blur-md",
+      spanClassName: "text-red-500",
+      text: "Cybersecurity",
+      icon: ShieldCheck,
+    },
+  ],
+  [
+    "WEB",
+    {
+      containerClassName: "border-cyan-500 bg-cyan-500/20 backdrop-blur-md",
+      spanClassName: "text-cyan-500",
+      text: "Web",
+      icon: Globe,
+    },
+  ],
+  [
+    "MISC",
+    {
+      containerClassName: "border-zinc-500 bg-zinc-500/20 backdrop-blur-md",
+      spanClassName: "text-zinc-400",
+      text: "Misc",
+      icon: Sparkles,
     },
   ],
 ]);

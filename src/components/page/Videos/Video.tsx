@@ -1,5 +1,5 @@
 import ContentCard from "@/components/ui/ContentCard";
-import { TPostStatus } from "@/lib/client/types/post";
+import { TPostCategory, TPostStatus } from "@/lib/client/types/post";
 
 //
 // [SECTION] Content
@@ -20,4 +20,5 @@ export interface VideoProps {
   thumbnailPath?: string | null;
   href: string;
   status: TPostStatus;
+  categories?: TPostCategory[];
 }

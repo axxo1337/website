@@ -1,10 +1,11 @@
 import type { MDXComponents } from "mdx/types";
-import { slugify, extractText } from "./lib/client/utils";
+import { slugify, extractText, cn } from "./lib/client/utils";
 import CodeBlock from "./components/ui/CodeBlock";
 import ImageViewer from "./components/ui/ImageViewer";
 import MicrosoftLearnQuote from "./components/ui/MicrosoftLearnQuote";
 import UndocumentedStruct from "./components/ui/UndocumentedStruct";
 import YouTubeVideo from "./components/page/Video/YouTubeVideo";
+import GithubRepo from "./components/ui/GithubRepo";
 
 function parseImageAlt(alt: string): { text: string; align: string; width: string; caption: string } {
   const parts = alt.split("|").map((s) => s.trim());
@@ -38,33 +39,19 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </h4>
     ),
-    p: ({ children }) => (
-      <p className="mt-3">
-        {children}
-      </p>
-    ),
-    a: (props) => <a {...props} className={`${props.className} inline-anchor break-words`}></a>,
-    ol: ({ children }) => (
-      <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">
-        {children}
-      </ol>
-    ),
-    ul: ({ children }) => (
-      <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">
-        {children}
-      </ul>
-    ),
+    p: ({ children }) => <p className="mt-3">{children}</p>,
+    a: (props) => <a {...props} className={cn("inline-anchor break-words", props.className)}></a>,
+    ol: ({ children }) => <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">{children}</ol>,
+    ul: ({ children }) => <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">{children}</ul>,
     li: ({ children }) => <li className="wrap-break-words">{children}</li>,
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-white/30 pl-4 my-2 italic text-white/70">
-        {children}
-      </blockquote>
+      <blockquote className="border-l-2 border-white/30 pl-4 my-2 italic text-white/70">{children}</blockquote>
     ),
     span: ({ className, children, ...props }) => {
       if (className?.includes("katex-display")) {
         return (
           <span className="my-1 py-4 flex items-center justify-center">
-            <span className={`${className} block px-2 py-1 my-0!`} {...props}>
+            <span className={cn("block px-2 py-1 my-0!", className)} {...props}>
               {children}
             </span>
           </span>
@@ -97,13 +84,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <img src={src} alt={text} className="rounded-lg h-auto" {...props} />
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={src}
-          alt={text}
-          className={imgClassName}
-          style={hasExplicitWidth ? { width } : undefined}
-          {...props}
-        />
+        <img src={src} alt={text} className={imgClassName} style={hasExplicitWidth ? { width } : undefined} {...props} />
       );
 
       return (
@@ -120,6 +101,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     MicrosoftLearnQuote: (props) => <MicrosoftLearnQuote {...props} />,
     UndocumentedStruct: (props) => <UndocumentedStruct {...props} />,
     YouTubeVideo: (props) => <YouTubeVideo className="[&>div]:border [&>div]:border-white/10 mt-3" {...props} />,
+    GithubRepo: (props) => <GithubRepo {...props} />,
     ...components,
   };
 }
