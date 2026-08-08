@@ -68,7 +68,7 @@ export default function ContentCard({
         </div>
         <p className="text-white/75 line-clamp-2">{description}</p>
         {categories && categories.length > 0 && (
-          <ul className="flex flex-wrap gap-2 gap-y-1 mt-1.5">
+          <ul className="flex flex-wrap gap-2 gap-y-1 mt-3">
             {categories.map((cat) => {
               const categoryObj = postCategoryMap.get(cat);
               if (!categoryObj) return null;

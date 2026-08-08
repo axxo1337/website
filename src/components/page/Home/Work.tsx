@@ -1,6 +1,6 @@
 import ContentCard from "@/components/ui/ContentCard";
 import { TPostCategory, TPostStatus } from "@/lib/client/types/post";
-import { Hammer, Puzzle, Video } from "lucide-react";
+import { Compass, Hammer, Puzzle, Video } from "lucide-react";
 
 //
 // [SECTION] Defines
@@ -12,6 +12,13 @@ const workTypesMap = new Map([
     {
       title: "Video",
       icon: Video,
+    },
+  ],
+  [
+    "project",
+    {
+      title: "Project",
+      icon: Compass,
     },
   ],
   [

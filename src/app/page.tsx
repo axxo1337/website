@@ -29,7 +29,7 @@ export default async function Home() {
         title: metadata.title,
         status: metadata.status,
         description: metadata.description || "",
-        type: metadata.type || (contentType === "video" ? "video" : "tool"),
+        type: metadata.type || (contentType === "video" ? "video" : "project"),
         href: `/${contentType}/${slug}`,
         createdAt: new Date(metadata.createdAt),
         thumbnailPath: metadata.thumbnailPath || null,
