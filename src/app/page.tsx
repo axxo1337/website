@@ -38,7 +38,7 @@ export default async function Home() {
     .filter((work): work is WorkProps => work !== null);
 
   return (
-    <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2026, 7, 6)}>
+    <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2026, 7, 8)}>
       <Section subtitle="Who am I?" title="In my own words">
         <p>
           Hey! I&apos;m Charles.{" "}
@@ -47,13 +47,14 @@ export default async function Home() {
             <Link href="https://www.youtube.com/@axxo1337" className="inline-anchor">
               aXXo
             </Link>
+            .
           </i>{" "}
           As of writing this, I&apos;m a 20 year old living in the French province of{" "}
           <Link href="https://en.wikipedia.org/wiki/Quebec" className="inline-anchor">
             Quebec
           </Link>{" "}
-          (Canada). I make videos in my free time purely out of the joy I get from teaching people. I don&apos;t have a specific
-          goal with any of this. It&apos;s just a pastime I love working on.
+          (Canada). I've been doing independent software engineering and cybersecurity for almost 7 years now, although,
+          nowadays, I spend most of my time in this space working on video projects and studying for university.
         </p>
       </Section>
       <Section subtitle="What do I make?" title="Some of my work">
