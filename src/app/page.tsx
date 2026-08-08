@@ -33,6 +33,7 @@ export default async function Home() {
         href: `/${contentType}/${slug}`,
         createdAt: new Date(metadata.createdAt),
         thumbnailPath: metadata.thumbnailPath || null,
+        categories: metadata.categories,
       } as WorkProps;
     })
     .filter((work): work is WorkProps => work !== null);

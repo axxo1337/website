@@ -1,5 +1,5 @@
 import ContentCard from "@/components/ui/ContentCard";
-import { TPostStatus } from "@/lib/client/types/post";
+import { TPostCategory, TPostStatus } from "@/lib/client/types/post";
 import { Hammer, Puzzle, Video } from "lucide-react";
 
 //
@@ -34,7 +34,7 @@ const workTypesMap = new Map([
 // [SECTION] Content
 //
 
-export default function Work({ title, type, description, href, createdAt, thumbnailPath, status }: WorkProps) {
+export default function Work({ title, type, description, href, createdAt, thumbnailPath, status, categories }: WorkProps) {
   const workTypesEntry = workTypesMap.get(type);
 
   return (
@@ -45,6 +45,7 @@ export default function Work({ title, type, description, href, createdAt, thumbn
       createdAt={createdAt}
       thumbnailPath={thumbnailPath}
       status={status}
+      categories={categories}
       typeBadge={workTypesEntry}
       fallbackText="This project has no thumbnail yet."
     />
@@ -63,4 +64,5 @@ export interface WorkProps {
   createdAt: Date;
   thumbnailPath?: string | null;
   status: TPostStatus;
+  categories?: TPostCategory[];
 }

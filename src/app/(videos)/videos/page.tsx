@@ -45,6 +45,7 @@ export default async function Videos() {
               thumbnailPath={video.thumbnailPath}
               href={`/video/${video.slug}`}
               status={video.status}
+              categories={video.categories}
             />
           ))}
         </div>
