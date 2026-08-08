@@ -77,7 +77,7 @@ export default async function Home() {
         </p>
         <div className="hidden sm:flex text-xl md:text-2xl items-center justify-between">
           <span className="flex items-center gap-3">
-            Or see everything <MoveRight />
+            Links to full pages <MoveRight />
           </span>
           <div className="flex items-center gap-6">
             <Link href="/videos" className="hover-underline hover:text-white/80 transition-colors">
