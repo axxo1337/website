@@ -12,6 +12,12 @@ CTO of [Haxo Games Inc](/project/haxo-games). (a now defunct company). You can f
 
 <GithubRepo link="https://github.com/axxo1337/AntiDebug" />
 
+### Design
+
+For the CLI, the code depends on the library [FTXUI](https://github.com/ArthurSonzogni/FTXUI). The rendering logic runs on a thread independent of the detection logic. 
+Synchronization is done using `std::atomic` and a mutex here and there. Nothing too fancy. I don't intend to work on this anymore since Haxo is gone, but I'm open to outside 
+contributions at any time :)
+
 ### Detections
 
 #### `IsDebuggerPresent`
@@ -98,4 +104,3 @@ times then it assumes that there was a breakpoint set inside it.
 
 `IsWindowsFunctionBreakpointed` scans for the first 1 or 2 bytes of WinAPI functions (mostly those used for anti-debugging) for software breakpoint INT3 (0xCC / 0xCD03) 
 and an undefined opcode which can be used to throw an exception (0x0F0B).
-
