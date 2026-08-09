@@ -90,7 +90,7 @@ export const metadata: Metadata = {
       "Just some дебил with unrestricted access to a computer (No I do not make DVD rips). I mostly teach computer-science stuff, but I also have an interest in mathematics and engineering.",
     images: [
       {
-        url: "/images/seo/og-image.png",
+        url: "/images/seo/og-image.webp",
         width: 1200,
         height: 630,
         alt: "aXXo's website banner",
@@ -127,7 +127,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden relative min-h-screen before:content-[''] before:fixed before:inset-0 before:-z-50 before:bg-[url('/images/bliss.png')] before:bg-center before:bg-cover before:bg-no-repeat before:pointer-events-none`}
+        className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden relative min-h-screen before:content-[''] before:fixed before:inset-0 before:-z-50 before:bg-[url('/images/bliss.webp')] before:bg-center before:bg-cover before:bg-no-repeat before:pointer-events-none`}
       >
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <div className="px-2.5 md:px-5 lg:px-0 max-w-240 w-full">

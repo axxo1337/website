@@ -58,7 +58,7 @@ export default async function Videos() {
           className="rounded-lg border border-white/20 p-3 justify-between blured-bg flex items-center group"
         >
           <div className="flex items-center gap-3">
-            <Image alt="YouTube Logo" src="/images/socials/youtube.png" className="size-6 md:size-8" width={32} height={32} />
+            <Image alt="YouTube Logo" src="/images/socials/youtube.webp" className="size-6 md:size-8" width={32} height={32} />
             <div className="flex flex-col">
               <p>To see more of my videos you should check my full YouTube page ;)</p>
             </div>
