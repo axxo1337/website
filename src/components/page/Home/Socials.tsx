@@ -17,7 +17,7 @@ export const socials = [
     iconPath: "/images/socials/instagram.webp",
   },
   {
-    href: "https://www.reddit.com/r/aXXo/",
+    href: "https://www.reddit.com/r/aXXo",
     title: "Reddit",
     iconPath: "/images/socials/reddit.webp",
   },
