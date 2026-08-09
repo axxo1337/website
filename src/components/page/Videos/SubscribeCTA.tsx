@@ -14,11 +14,11 @@ export default function SubscribeCTA() {
         href="https://www.youtube.com/@axxo1337?sub_confirmation=1"
         className="flex items-center gap-2.5 rounded-lg bg-blue-600 px-5 py-3 font-semibold text-sm hover:bg-blue-500 transition-colors"
       >
-        <Image src="/images/socials/youtube.png" alt="YouTube" width={20} height={20} />
+        <Image src="/images/socials/youtube.webp" alt="YouTube" width={20} height={20} />
         Subscribe
       </Link>
       <Image
-        src="/images/axxo.png"
+        src="/images/axxo.webp"
         alt="Mascot"
         width={160}
         height={204.33}

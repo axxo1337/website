@@ -9,27 +9,27 @@ export const socials = [
   {
     href: "https://www.youtube.com/@axxo1337",
     title: "YouTube",
-    iconPath: "/images/socials/youtube.png",
+    iconPath: "/images/socials/youtube.webp",
   },
   {
     href: "https://www.instagram.com/axxo1337",
     title: "Instagram",
-    iconPath: "/images/socials/instagram.png",
+    iconPath: "/images/socials/instagram.webp",
   },
   {
     href: "https://www.reddit.com/r/aXXo/",
     title: "Reddit",
-    iconPath: "/images/socials/reddit.png",
+    iconPath: "/images/socials/reddit.webp",
   },
   {
     href: "https://discord.gg/tdEAJU2XwZ",
     title: "Discord (apply to join)",
-    iconPath: "/images/socials/discord.png",
+    iconPath: "/images/socials/discord.webp",
   },
   {
     href: "https://github.com/axxo1337",
     title: "Github",
-    iconPath: "/images/socials/github.png",
+    iconPath: "/images/socials/github.webp",
   },
 ];
 

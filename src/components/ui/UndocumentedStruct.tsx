@@ -18,7 +18,7 @@ hljs.registerLanguage("c", c);
 
 const themes = {
   vergilius: {
-    logo: <Image alt="Vergilius Logo" src="/images/socials/vergilius.png" width={36} height={39} />,
+    logo: <Image alt="Vergilius Logo" src="/images/socials/vergilius.webp" width={36} height={39} />,
     label: "Vergilius",
     labelColor: "text-[#F6F1A3]",
     bgCard: "#141422",

@@ -49,7 +49,7 @@ export default async function Projects() {
           className="rounded-lg border border-white/20 p-3 justify-between blured-bg flex items-center group"
         >
           <div className="flex items-center gap-3">
-            <Image alt="Github Logo" src="/images/socials/github.png" className="size-6 md:size-8" width={32} height={32} />
+            <Image alt="Github Logo" src="/images/socials/github.webp" className="size-6 md:size-8" width={32} height={32} />
             <div className="flex flex-col">
               <p>To see more of my projects you should check my full Github profile ;)</p>
             </div>

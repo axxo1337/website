@@ -4,7 +4,7 @@ export const metadata = {
     createdAt: "2025-05-20",
     updatedAt: "2026-08-08",
     youtubeId: "ultz9m0n0GE",
-    thumbnailPath: "/images/thumbnails/virtual-memory-explained.png",
+    thumbnailPath: "/images/thumbnails/virtual-memory-explained.webp",
     categories: ["COMPUTER_SCIENCE"],
     status: "COMPLETE"
 };
@@ -52,13 +52,13 @@ But that's not the only property we can discern between number bases. Let's star
 The parentheses and the suffix 2 are to let us know that the number is specifically in base 2 (binary) and not the decimal number 1011. So how do we convert this back to base 10?
 To do so we'll need to read the number from right to left, convert each digit to its decimal value and sum all of the results together.
 
-![Binary number powers](/images/documents/virtual-memory-explained/binary_powers.png)
+![Binary number powers](/images/documents/virtual-memory-explained/binary_powers.webp)
 
 In the above illustration I assigned the appropriate index to each digit of the concerned binary number from right to left starting from 0. This is a very important step because
 each one of these indices represent the power of the digit at said position. Since we're working with base two, the power is $2^n$, where n is said index. The digit itself represents
 the product by which we multiply the result of that power. Here's a full depiction below:
 
-![Binary results](/images/documents/virtual-memory-explained/binary_results.png)
+![Binary results](/images/documents/virtual-memory-explained/binary_results.webp)
 
 The result would be:
 
@@ -74,7 +74,7 @@ A single binary digit is called a bit. The number we were working with was 4 bit
 length. And just like such measurements we have other names to simplify larger values. In the case of bits we have bytes. One byte is 8 bits. Then for 2 bytes, or 16 bits,
 there is the word (it's literally called word). Here's a depiction of these measurements:
 
-![Memory scale](/images/documents/virtual-memory-explained/memory_scale.png)
+![Memory scale](/images/documents/virtual-memory-explained/memory_scale.webp)
 
 The format of memory we'll mostly care about today is random access memory (RAM). This medium is volatile meaning the method it uses to read and write bits is temporary. When you
 cut the power to your machine all of its contents are lost. It's also the second fastest storage format in computers after in-processor memory, and that's where programs are
@@ -83,7 +83,7 @@ stored while executing.
 So how is your computer able to tell which parts of RAM it should access when it needs to read or write anything? It uses something known as addressing. Every single byte in
 memory has its own unique address, like houses on a street. Address 0 would lead to the first byte in memory, and address 1 to the second.
 
-![Example addressing](/images/documents/virtual-memory-explained/example_addressing.png)
+![Example addressing](/images/documents/virtual-memory-explained/example_addressing.webp)
 
 The figure above provides an example of memory addressing. Each row consists of a byte (8 bits) and is indexed as such (row 1 is 0x0, row 2 is 0x1 and row 3 is 0x2). You may be
 wondering why we prefix each address by "0x". That's because these numbers are in a base called hexadecimal. We won't dive into the details, but essentially when working with
@@ -99,20 +99,20 @@ How can hexadecimal support this many digits if we only know up to 9? It uses th
 Imagine your computer only had 28 kilobytes of RAM. You decide to open Discord and Minecraft so you can play bedwars with your friends. The thing is, you remember it's
 the holidays and your friends are all busy. So you close Discord and open Chrome instead.
 
-![Example scenario 1](/images/documents/virtual-memory-explained/scenario1.png)
+![Example scenario 1](/images/documents/virtual-memory-explained/scenario1.webp)
 
 As illustrated in the above figure there's an issue. Chrome requires too much memory to be placed where Discord was, and it can't possibly fit under Minecraft. So what would happen?
 Well luckily virtual memory is enabled and so memory is divided in equal-sized 4-kilobyte chunks called pages (this scenario is theoretical and ignores the fact that the operating
 system itself would also be taking up memory).
 
-![Example scenario 1.1](/images/documents/virtual-memory-explained/scenario1-1.png)
+![Example scenario 1.1](/images/documents/virtual-memory-explained/scenario1-1.webp)
 
 The system can take the first two pages of Chrome, fit them where Discord was, and take the remaining page and fit it under Minecraft. That's memory paging.
 
 But what if that memory page couldn't fit under Minecraft because say the calculator app was using up that last page. Well the system could take a memory page that hasn't been used
 in a while, say the third page from Minecraft, store it on the main SSD, and place Chrome's page in the now empty space.
 
-![Example scenario 1.2](/images/documents/virtual-memory-explained/scenario1-2.png)
+![Example scenario 1.2](/images/documents/virtual-memory-explained/scenario1-2.webp)
 
 When Minecraft will need its page again, a page fault will occur. This is essentially the CPU raising its hand to say that it can't find the memory page at the specified address.
 When this happens the operating system steps in, and locates the needed page on disk, finds another rarely-accessed page, and essentially switches the two. During this entire process
