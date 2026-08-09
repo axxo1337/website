@@ -1,7 +1,7 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Socials from "@/components/page/Home/Socials";
-import Work, { WorkProps } from "@/components/page/Home/Work";
+import Work from "@/components/page/Home/Work";
 import { getContentMetadata, ContentType } from "@/lib/server/mdx";
 import { MoveRight } from "lucide-react";
 import Link from "next/link";
@@ -20,24 +20,6 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 //
 
 export default async function Home() {
-  const bestCreations: WorkProps[] = bestCreationsKeys
-    .map(({ contentType, slug }) => {
-      const metadata = getContentMetadata(contentType, slug);
-      if (!metadata) return null;
-
-      return {
-        title: metadata.title,
-        status: metadata.status,
-        description: metadata.description || "",
-        type: metadata.type || (contentType === "video" ? "video" : "project"),
-        href: `/${contentType}/${slug}`,
-        createdAt: new Date(metadata.createdAt),
-        thumbnailPath: metadata.thumbnailPath || null,
-        categories: metadata.categories,
-      } as WorkProps;
-    })
-    .filter((work): work is WorkProps => work !== null);
-
   return (
     <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2026, 7, 8)}>
       <Section subtitle="Who am I?" title="In my own words">
@@ -60,9 +42,24 @@ export default async function Home() {
       </Section>
       <Section subtitle="What do I make?" title="Some of my work">
         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-          {bestCreations.map((bestCreation, bestCreationIndex) => (
-            <Work key={`bestCreation-${bestCreationIndex}`} {...bestCreation} />
-          ))}
+          {bestCreationsKeys.map(({ contentType, slug }, index) => {
+            const metadata = getContentMetadata(contentType, slug);
+            if (!metadata) return null;
+
+            return (
+              <Work
+                key={`bestCreation-${index}`}
+                title={metadata.title}
+                status={metadata.status}
+                description={metadata.description || ""}
+                type={contentType}
+                href={`/${contentType}/${slug}`}
+                createdAt={new Date(metadata.createdAt)}
+                thumbnailPath={metadata.thumbnailPath || null}
+                categories={metadata.categories}
+              />
+            );
+          })}
         </div>
         <hr className="my-4 md:my-6 border-white/20" />
         <p className="text-xl sm:hidden">

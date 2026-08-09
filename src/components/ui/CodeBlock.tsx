@@ -28,12 +28,14 @@ export default function CodeBlock({ className, children, ...props }: React.Compo
         </code>
         <ScrollBar orientation="horizontal" className="**:data-[slot=scroll-area-thumb]:bg-white/20" />
       </ScrollArea>
-      <div
+      <button
+        type="button"
         onClick={handleCopy}
-        className="absolute opacity-0 group-hover:opacity-100 transition-opacity top-3 cursor-pointer p-1 right-3 bg-transparent hover:bg-white/15 rounded-sm"
+        aria-label="Copy code"
+        className="absolute opacity-0 group-hover:opacity-100 transition-opacity top-3 cursor-pointer p-1 right-3 bg-transparent hover:bg-white/15 rounded-sm focus:opacity-100"
       >
         {isCopied ? <Check size={12} /> : <Copy size={12} />}
-      </div>
+      </button>
     </div>
   );
 }
