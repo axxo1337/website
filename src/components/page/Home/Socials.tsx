@@ -31,6 +31,11 @@ export const socials = [
     title: "Github",
     iconPath: "/images/socials/github.webp",
   },
+  {
+    copyContent: "axxo1337@proton.me",
+    title: "axxo1337 [at] proton [dot] me",
+    iconPath: "/images/socials/email.webp",
+  },
 ];
 
 //
