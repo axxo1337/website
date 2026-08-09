@@ -29,6 +29,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  manifest: "/manifest.json",
   applicationName: "aXXo's website",
   alternates: {
     canonical: "./",
