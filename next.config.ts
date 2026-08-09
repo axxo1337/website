@@ -2,12 +2,13 @@ import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "export",
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   experimental: {
     viewTransition: true,
   },
   images: {
+    unoptimized: true,
     minimumCacheTTL: 604800,
     formats: ["image/avif", "image/webp"],
   },
