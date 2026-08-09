@@ -10,6 +10,7 @@ import "./globals.css";
 //
 
 const roboto = Roboto({
+  weight: ["400", "500", "700"],
   variable: "--font-roboto",
   subsets: ["latin"],
 });
@@ -50,7 +51,7 @@ export const metadata: Metadata = {
     "game mods",
     "how to hack games",
     "make game hacks",
-    "mincraft game hacking",
+    "minecraft game hacking",
 
     "JNI",
     "Java Native Interface",
