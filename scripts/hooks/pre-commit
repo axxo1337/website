@@ -8,8 +8,7 @@ const year = now.getFullYear();
 const month = String(now.getMonth() + 1).padStart(2, "0");
 const day = String(now.getDate()).padStart(2, "0");
 
-const mdxDate = `${year}-${month}-${day}`;
-const tsxDate = `${year}, ${now.getMonth()}, ${now.getDate()}`;
+const isoDate = `${year}-${month}-${day}`;
 
 const staged = execSync("git diff --cached --name-only --diff-filter=ACM", {
   encoding: "utf-8",
@@ -23,7 +22,7 @@ for (const file of staged) {
     let content = fs.readFileSync(file, "utf-8");
     const updated = content.replace(
       /updatedAt: "\d{4}-\d{2}-\d{2}"/,
-      `updatedAt: "${mdxDate}"`
+      `updatedAt: "${isoDate}"`
     );
     if (updated !== content) {
       fs.writeFileSync(file, updated);
@@ -32,8 +31,8 @@ for (const file of staged) {
   } else if (file.endsWith(".tsx")) {
     let content = fs.readFileSync(file, "utf-8");
     const updated = content.replace(
-      /updatedAt=\{new Date\(\d+, \d+, \d+\)\}/,
-      `updatedAt={new Date(${tsxDate})}`
+      /updatedAt=\{new Date\((?:"\d{4}-\d{2}-\d{2}"|\d+,\s*\d+,\s*\d+)\)\}/,
+      `updatedAt={new Date("${isoDate}")}`
     );
     if (updated !== content) {
       fs.writeFileSync(file, updated);
