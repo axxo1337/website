@@ -1,5 +1,7 @@
 import fs from "fs";
 import path from "path";
+import { cache } from "react";
+import { unstable_cache } from "next/cache";
 import { TPostCategory, TPostStatus } from "../client/types/post";
 
 //
@@ -116,28 +118,37 @@ export function readMetadataFromFile(mdxPath: string, slug: string): MDXMetadata
   return { ...metadata, slug } as MDXMetadata;
 }
 
-export function getContentMetadata(contentType: ContentType, slug: string): MDXMetadata | null {
+export const getContentMetadata = cache((contentType: ContentType, slug: string): MDXMetadata | null => {
   const contentDir = getContentDirectory(contentType);
   const mdxPath = path.join(contentDir, `${slug}.mdx`);
   return readMetadataFromFile(mdxPath, slug);
-}
+});
 
-export async function getAllContentMetadata(contentType: ContentType): Promise<MDXMetadata[]> {
-  const slugs = getContentSlugs(contentType);
-  const contentDir = getContentDirectory(contentType);
+export const getAllContentMetadata = cache(async (contentType: ContentType): Promise<MDXMetadata[]> => {
+  return unstable_cache(
+    async () => {
+      const slugs = getContentSlugs(contentType);
+      const contentDir = getContentDirectory(contentType);
 
-  const all = slugs
-    .map((slug) => {
-      const mdxPath = path.join(contentDir, `${slug}.mdx`);
-      return readMetadataFromFile(mdxPath, slug);
-    })
-    .filter((item): item is MDXMetadata => item !== null);
+      const all = slugs
+        .map((slug) => {
+          const mdxPath = path.join(contentDir, `${slug}.mdx`);
+          return readMetadataFromFile(mdxPath, slug);
+        })
+        .filter((item): item is MDXMetadata => item !== null);
 
-  if (process.env.NODE_ENV === "production")
-    return all.filter((item) => item.status !== "DRAFT");
+      if (process.env.NODE_ENV === "production")
+        return all.filter((item) => item.status !== "DRAFT");
 
-  return all;
-}
+      return all;
+    },
+    [`all-content-metadata-${contentType}`],
+    {
+      revalidate: 3600,
+      tags: [`mdx-${contentType}`],
+    }
+  )();
+});
 
 export async function getAdjacentContent(
   contentType: ContentType,
