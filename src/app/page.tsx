@@ -54,7 +54,7 @@ export default async function Home() {
           <Link href="https://en.wikipedia.org/wiki/Quebec" className="inline-anchor">
             Quebec
           </Link>{" "}
-          (Canada). I've been doing independent software engineering and cybersecurity for almost 7 years now, although,
+          (Canada). I&apos;ve been doing independent software engineering and cybersecurity for almost 7 years now, although,
           nowadays, I spend most of my time in this space working on video projects and studying for university.
         </p>
       </Section>
