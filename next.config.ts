@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   experimental: {
     viewTransition: true,
+    optimizePackageImports: ["lucide-react"],
   },
   images: {
     unoptimized: true,
