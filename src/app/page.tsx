@@ -21,7 +21,7 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 
 export default async function Home() {
   return (
-    <Main title="About me" createdAt={new Date(2025, 11, 19)} updatedAt={new Date(2026, 7, 8)}>
+    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-08-08")}>
       <Section subtitle="Who am I?" title="In my own words">
         <p>
           Hey! I&apos;m Charles.{" "}

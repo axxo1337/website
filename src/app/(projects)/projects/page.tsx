@@ -1,7 +1,7 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Project from "@/components/page/Projects/Project";
-import { getAllContentMetadata } from "@/lib/server/mdx";
+import { getAllContentMetadata, getMostRecentUpdate } from "@/lib/server/mdx";
 import { ArrowRight } from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -12,17 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Projects() {
-  const projects = (await getAllContentMetadata("project")).sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  });
-
-  const mostRecentUpdate = projects.reduce((latest, project) => {
-    const projectUpdate = new Date(project.updatedAt);
-    return projectUpdate > latest ? projectUpdate : latest;
-  }, new Date(0));
+  const projects = await getAllContentMetadata("project");
+  const mostRecentUpdate = getMostRecentUpdate(projects);
 
   return (
-    <Main title="Projects" createdAt={new Date(2025, 11, 22)} updatedAt={mostRecentUpdate}>
+    <Main title="Projects" createdAt={new Date("2025-12-22")} updatedAt={mostRecentUpdate}>
       <Section title="Library">
         <p>
           This page doesn&apos;t list ALL of my projects, but you can find some of my most recent here. Clicking any of them

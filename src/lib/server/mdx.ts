@@ -46,8 +46,7 @@ export function parseMetadata(content: string): Partial<MDXMetadata> {
   if (!match) return {};
 
   const objStr = match[1];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const result: Record<string, any> = {};
+  const result: Record<string, unknown> = {};
 
   const cleanObjStr = objStr.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
 
@@ -74,7 +73,8 @@ export function parseMetadata(content: string): Partial<MDXMetadata> {
       result[key] = valStr.slice(1, -1);
     } else if (valStr.startsWith("[") && valStr.endsWith("]")) {
       try {
-        result[key] = JSON.parse(valStr.replace(/'/g, '"'));
+        const jsonArrStr = valStr.replace(/'((?:[^'\\]|\\.)*)'/g, '"$1"');
+        result[key] = JSON.parse(jsonArrStr);
       } catch {
         result[key] = [];
       }
@@ -137,10 +137,11 @@ export const getAllContentMetadata = cache(async (contentType: ContentType): Pro
         })
         .filter((item): item is MDXMetadata => item !== null);
 
-      if (process.env.NODE_ENV === "production")
-        return all.filter((item) => item.status !== "DRAFT");
+      const filtered = process.env.NODE_ENV === "production"
+        ? all.filter((item) => item.status !== "DRAFT")
+        : all;
 
-      return all;
+      return filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     },
     [`all-content-metadata-${contentType}`],
     {
@@ -150,12 +151,18 @@ export const getAllContentMetadata = cache(async (contentType: ContentType): Pro
   )();
 });
 
+export function getMostRecentUpdate(items: MDXMetadata[]): Date {
+  return items.reduce((latest, item) => {
+    const itemUpdate = new Date(item.updatedAt);
+    return itemUpdate > latest ? itemUpdate : latest;
+  }, new Date(0));
+}
+
 export async function getAdjacentContent(
   contentType: ContentType,
   currentSlug: string,
 ): Promise<{ prev: MDXMetadata | null; next: MDXMetadata | null }> {
-  const all = await getAllContentMetadata(contentType);
-  const sorted = all.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  const sorted = await getAllContentMetadata(contentType);
 
   const currentIndex = sorted.findIndex((item) => item.slug === currentSlug);
 
@@ -182,6 +189,5 @@ export interface MDXMetadata {
   tags?: string[];
   categories?: TPostCategory[];
   status: TPostStatus;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
+  [key: string]: unknown;
 }
