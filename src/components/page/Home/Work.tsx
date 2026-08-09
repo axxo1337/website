@@ -1,12 +1,12 @@
 import ContentCard from "@/components/ui/ContentCard";
 import { TPostCategory, TPostStatus } from "@/lib/client/types/post";
-import { Compass, Hammer, Puzzle, Video } from "lucide-react";
+import { Compass, Video } from "lucide-react";
 
 //
 // [SECTION] Defines
 //
 
-const workTypesMap = new Map([
+const workTypesMap = new Map<"video" | "project", { title: string; icon: typeof Video }>([
   [
     "video",
     {
@@ -19,20 +19,6 @@ const workTypesMap = new Map([
     {
       title: "Project",
       icon: Compass,
-    },
-  ],
-  [
-    "tool",
-    {
-      title: "Tool",
-      icon: Hammer,
-    },
-  ],
-  [
-    "library",
-    {
-      title: "Library",
-      icon: Puzzle,
     },
   ],
 ]);
@@ -66,7 +52,7 @@ export default function Work({ title, type, description, href, createdAt, thumbn
 export interface WorkProps {
   title: string;
   description: string;
-  type: "video" | "tool" | "library";
+  type: "video" | "project";
   href: string;
   createdAt: Date;
   thumbnailPath?: string | null;

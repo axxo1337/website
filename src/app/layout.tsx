@@ -10,6 +10,7 @@ import "./globals.css";
 //
 
 const roboto = Roboto({
+  weight: ["400", "500", "700"],
   variable: "--font-roboto",
   subsets: ["latin"],
 });
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     default: "aXXo's website",
   },
   description:
-    "Just some дебил with unrestricted access to a computer (No I do not make DVD rips). I mostly teach computer-science stuff, but I also have an interest in mathematics and engineering.",
+    "Hey! I'm Charles. Although you may know me as aXXo. As of writing this, I'm a 20 year old living in the French province of Quebec (Canada). I've been doing independent software engineering and cybersecurity for almost 7 years now, although, nowadays, I spend most of my time in this space working on video projects and studying for university.",
   icons: {
     icon: "/favicon.ico",
   },
@@ -50,7 +51,7 @@ export const metadata: Metadata = {
     "game mods",
     "how to hack games",
     "make game hacks",
-    "mincraft game hacking",
+    "minecraft game hacking",
 
     "JNI",
     "Java Native Interface",
@@ -128,10 +129,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden relative min-h-screen before:content-[''] before:fixed before:inset-0 before:-z-50 before:bg-[url('/images/bliss.png')] before:bg-center before:bg-cover before:bg-no-repeat before:pointer-events-none`}
       >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <div className="px-2.5 md:px-5 lg:px-0 max-w-240 w-full">
           <Header />
           <ViewTransition>{children}</ViewTransition>

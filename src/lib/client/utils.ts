@@ -98,6 +98,7 @@ export function extractText(node: ReactNode): string {
 }
 
 export function formatUTC(date: Date): string {
+  if (!date || isNaN(date.getTime())) return "N/A";
   return date.toLocaleDateString("en-US", {
     timeZone: "UTC",
     month: "2-digit",

@@ -28,26 +28,28 @@ function SecondaryNavigation({
 }: SecondaryNavigation) {
   return (
     <div className="w-full border-t last:border-b border-white/25">
-      <div
-        className="px-2.5 py-4 flex items-center justify-between cursor-pointer"
+      <button
+        type="button"
+        className="w-full px-2.5 py-4 flex items-center justify-between cursor-pointer text-left font-medium text-lg"
         onClick={() => setOpenSecondaryNav(link.title)}
       >
         <span>{link.title}</span>
         <ChevronRight />
-      </div>
+      </button>
       <aside
         className={cn(
           "absolute w-full h-full transition-[left] ease-in-out top-0 left-full bg-background border-t border-white/25",
           openSecondaryNav === link.title && "left-0"
         )}
       >
-        <div
-          className="px-2.5 py-4 flex items-center cursor-pointer border-b gap-1 border-white/25"
+        <button
+          type="button"
+          className="w-full px-2.5 py-4 flex items-center cursor-pointer border-b gap-1 border-white/25 text-left font-medium text-lg"
           onClick={() => setOpenSecondaryNav(null)}
         >
           <ChevronLeft />
           <span>Back</span>
-        </div>
+        </button>
         <div className="pt-5 px-2.5">
           <div className="border-b border-white/25 pb-2">
             <span className="text-sm">{link.title}</span>

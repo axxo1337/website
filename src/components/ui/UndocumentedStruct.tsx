@@ -72,12 +72,14 @@ export default function UndocumentedStruct({ title, children, source, theme = "v
         <div className="w-full rounded-sm overflow-hidden group relative" style={{ backgroundColor: t.bgCodeHeader }}>
           <div className="flex items-center justify-between py-1 px-2 md:px-3">
             <span className="font-medium">C</span>
-            <div
+            <button
+              type="button"
               onClick={handleCopy}
-              className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-1 bg-transparent hover:bg-white/15 rounded-sm"
+              aria-label="Copy struct code"
+              className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-1 bg-transparent hover:bg-white/15 rounded-sm focus:opacity-100"
             >
               {isCopied ? <Check size={12} /> : <Copy size={12} />}
-            </div>
+            </button>
           </div>
           <div className="p-2 md:p-3" style={{ backgroundColor: t.bgCodeBody }}>
             <ScrollArea>
