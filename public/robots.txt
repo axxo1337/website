@@ -24,7 +24,7 @@
 # RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN UNION DIRECTIVE 2019/790 ON COPYRIGHT
 # AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.
 
-# BEGIN Cloudflare Managed content (THIS WAS COPIED FROM CLOUDFLARE'S TEMPLATE)
+# BEGIN Cloudflare Managed content
 
 User-agent: *
 Content-Signal: search=yes,ai-train=no,use=reference
