@@ -1,14 +1,5 @@
 import { TPostStatus } from "@/lib/client/types/post";
-import { cn } from "@/lib/client/utils";
-
-//
-// [SECTION] Defines
-//
-
-const statusObjectMap = new Map<TPostStatus, { title: string; style: string }>([
-  ["WIP", { title: "Work in progress", style: "border-yellow-500 bg-yellow-500/10 text-yellow-500" }],
-  ["DRAFT", { title: "Draft (Not available in prod)", style: "border-red-500 bg-red-500/10 text-red-500" }],
-]);
+import { cn, postStatusObjectMap } from "@/lib/client/utils";
 
 //
 // [SECTION] Content
@@ -17,14 +8,20 @@ const statusObjectMap = new Map<TPostStatus, { title: string; style: string }>([
 export default function PostStatusIndicator({ status }: PostStatusIndicatorProps) {
   if (status === "COMPLETE") return null;
 
-  const statusObject = statusObjectMap.get(status);
+  const statusObject = postStatusObjectMap.get(status);
 
   if (!statusObject) return null;
 
   return (
     <div className="mt-4">
-      <span className={cn("px-2 py-1 border rounded-full text-xs backdrop-brightness-35", statusObject.style)}>
-        {statusObject.title}
+      <span
+        className={cn(
+          "px-2 py-1 border rounded-full text-xs backdrop-brightness-35",
+          statusObject.containerClassName,
+          statusObject.spanClassName,
+        )}
+      >
+        {statusObject.text}
       </span>
     </div>
   );
