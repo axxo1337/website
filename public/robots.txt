@@ -76,4 +76,6 @@ Disallow: /
 
 User-agent: *
 Allow: /
-Disallow: /__next/
+Disallow: /_next/
+
+Sitemap: https://axxowastaken.me/sitemap.xml
