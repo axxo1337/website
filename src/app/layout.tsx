@@ -13,6 +13,7 @@ const roboto = Roboto({
   weight: ["400", "500", "700"],
   variable: "--font-roboto",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://axxowastaken.me";
@@ -81,6 +82,13 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "aXXo's website",
+    description: "Computer science, cybersecurity, and engineering projects by aXXo.",
+    images: ["/images/seo/og-image.webp"],
+    creator: "@axxo1337",
+  },
   openGraph: {
     type: "website",
     siteName: "aXXo's website",
@@ -94,7 +102,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: "aXXo's website banner",
-        type: "image/png",
+        type: "image/webp",
       },
     ],
     locale: "en_US",
