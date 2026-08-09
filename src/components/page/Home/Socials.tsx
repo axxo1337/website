@@ -17,7 +17,7 @@ export const socials = [
     iconPath: "/images/socials/instagram.webp",
   },
   {
-    href: "https://www.reddit.com/r/aXXo/",
+    href: "https://www.reddit.com/r/aXXo",
     title: "Reddit",
     iconPath: "/images/socials/reddit.webp",
   },
@@ -30,6 +30,11 @@ export const socials = [
     href: "https://github.com/axxo1337",
     title: "Github",
     iconPath: "/images/socials/github.webp",
+  },
+  {
+    copyContent: "axxo1337@proton.me",
+    title: "axxo1337 [at] proton [dot] me",
+    iconPath: "/images/socials/email.webp",
   },
 ];
 

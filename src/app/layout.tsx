@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ViewTransition } from "react";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 //
@@ -144,6 +145,7 @@ export default function RootLayout({
           <ViewTransition>{children}</ViewTransition>
           <Footer />
         </div>
+        <Toaster />
       </body>
     </html>
   );
