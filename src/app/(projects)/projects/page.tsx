@@ -1,12 +1,9 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
-import GithubCTA from "@/components/page/Projects/ChannelCTA";
+import GithubCTA from "@/components/page/Projects/GithubCTA";
 import Project from "@/components/page/Projects/Project";
 import { getAllContentMetadata, getMostRecentUpdate } from "@/lib/server/mdx";
-import { ArrowRight } from "lucide-react";
 import { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Projects",
