@@ -1,5 +1,6 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
+import GithubCTA from "@/components/page/Projects/ChannelCTA";
 import Project from "@/components/page/Projects/Project";
 import { getAllContentMetadata, getMostRecentUpdate } from "@/lib/server/mdx";
 import { ArrowRight } from "lucide-react";
@@ -38,20 +39,7 @@ export default async function Projects() {
           ))}
         </div>
         <hr className="my-4 md:my-6 border-white/20" />
-        <Link
-          href="https://github.com/axxo1337"
-          className="rounded-lg border border-white/20 p-3 justify-between blured-bg flex items-center group"
-        >
-          <div className="flex items-center gap-3">
-            <Image alt="Github Logo" src="/images/socials/github.webp" className="size-6 md:size-8" width={32} height={32} />
-            <div className="flex flex-col">
-              <p>To see more of my projects you should check my full Github profile ;)</p>
-            </div>
-          </div>
-          <span className="inline-anchor text-sm flex items-center gap-1">
-            Click to open <ArrowRight size={20} />
-          </span>
-        </Link>
+        <GithubCTA />
       </Section>
     </Main>
   );

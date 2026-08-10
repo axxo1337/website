@@ -3,7 +3,7 @@ import Section from "@/components/layout/Section";
 import Socials from "@/components/page/Home/Socials";
 import Work from "@/components/page/Home/Work";
 import { getContentMetadata, ContentType } from "@/lib/server/mdx";
-import { MoveRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 //
@@ -21,7 +21,8 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 
 export default async function Home() {
   return (
-    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-08-08")}>
+    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-08-09")}>
+      {/*<Image alt="Banner" src="/images/banner.webp" width={960} height={279} className="mt-8 md:mt-10 rounded-md border-2" />*/}
       <Section subtitle="Who am I?" title="In my own words">
         <p>
           Hey! I&apos;m Charles.{" "}
@@ -40,7 +41,12 @@ export default async function Home() {
           nowadays, I spend most of my time in this space working on video projects and studying for university.
         </p>
       </Section>
-      <Section subtitle="What do I make?" title="Some of my work">
+      {/*
+      <Section subtitle="What am I up to?" title="Beyond the character">
+        <p>I don&apos;t know what to put there just yet, but I&apos;ll think of something soon trust.</p>
+      </Section>
+      */}
+      <Section subtitle="What have I made?" title="Some of my work">
         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           {bestCreationsKeys.map(({ contentType, slug }, index) => {
             const metadata = getContentMetadata(contentType, slug);
@@ -62,28 +68,18 @@ export default async function Home() {
           })}
         </div>
         <hr className="my-4 md:my-6 border-white/20" />
-        <p className="text-xl sm:hidden">
-          Or see all{" "}
-          <Link href="/videos" className="inline-anchor">
-            Videos
-          </Link>{" "}
-          and{" "}
-          <Link href="/projects" className="inline-anchor">
-            Projects
-          </Link>
-        </p>
-        <div className="hidden sm:flex text-xl md:text-2xl items-center justify-between">
-          <span className="flex items-center gap-3">
-            Links to full pages <MoveRight />
+        <div className="text-xl md:text-2xl">
+          <span>
+            See more of my{" "}
+            <Link href="/videos" className="inline-anchor">
+              videos
+            </Link>{" "}
+            or{" "}
+            <Link href="/projects" className="inline-anchor">
+              projects
+            </Link>
+            .
           </span>
-          <div className="flex items-center gap-6">
-            <Link href="/videos" className="hover-underline hover:text-white/80 transition-colors">
-              Videos
-            </Link>
-            <Link href="/projects" className="hover-underline hover:text-white/80 transition-colors">
-              Projects
-            </Link>
-          </div>
         </div>
       </Section>
       <Socials />
