@@ -18,7 +18,7 @@ export default function SubscribeCTA() {
         Subscribe
       </Link>
       <Image
-        src="/images/axxo.webp"
+        src="/images/axxo_blue.webp"
         alt="Mascot"
         width={160}
         height={204.33}

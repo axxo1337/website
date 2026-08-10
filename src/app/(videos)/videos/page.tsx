@@ -1,5 +1,6 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
+import ChannelCTA from "@/components/page/Videos/ChannelCTA";
 import Video from "@/components/page/Videos/Video";
 import { getAllContentMetadata, getMostRecentUpdate } from "@/lib/server/mdx";
 import { ArrowRight } from "lucide-react";
@@ -47,20 +48,7 @@ export default async function Videos() {
           ))}
         </div>
         <hr className="my-4 md:my-6 border-white/20" />
-        <Link
-          href="https://www.youtube.com/@axxo1337"
-          className="rounded-lg border border-white/20 p-3 justify-between blured-bg flex items-center group"
-        >
-          <div className="flex items-center gap-3">
-            <Image alt="YouTube Logo" src="/images/socials/youtube.webp" className="size-6 md:size-8" width={32} height={32} />
-            <div className="flex flex-col">
-              <p>To see more of my videos you should check my full YouTube page ;)</p>
-            </div>
-          </div>
-          <span className="inline-anchor text-sm flex items-center gap-1">
-            Click to open <ArrowRight size={20} />
-          </span>
-        </Link>
+        <ChannelCTA />
       </Section>
     </Main>
   );

@@ -101,7 +101,7 @@
 }
 
 .inline-anchor {
-  @apply underline text-[#317FFB];
+  @apply underline text-[#317FFB] hover:brightness-85 transition-all duration-250 ease-in-out;
 }
 
 .blured-bg {
