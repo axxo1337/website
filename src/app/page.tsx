@@ -22,7 +22,7 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 export default async function Home() {
   return (
     <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-08-09")}>
-      {/*<Image alt="Banner" src="/images/banner.webp" width={960} height={279} className="mt-8 md:mt-10 rounded-md border-2" />*/}
+      <Image alt="Banner" src="/images/banner.webp" width={960} height={224} className="mt-5 md:mt-8 rounded-md border-2" />
       <Section subtitle="Who am I?" title="In my own words">
         <p>
           Hey! I&apos;m Charles.{" "}
