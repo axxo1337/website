@@ -17,6 +17,13 @@ export default function GithubCTA() {
         <Image src="/images/socials/github.webp" alt="YouTube" width={20} height={20} />
         Go to Github
       </Link>
+      <Image
+        src="/images/jack.webp"
+        alt="Mascot"
+        width={160}
+        height={204.33}
+        className="absolute sm:block hidden -z-10 -bottom-10.5 group-hover:-bottom-8 left-3 md:-bottom-15.5 md:left-10 w-30 md:w-40 md:group-hover:-bottom-11.5 select-none pointer-events-none brightness-50 transition-all group-hover:brightness-85 ease-in-out"
+      />
     </div>
   );
 }
