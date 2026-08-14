@@ -7,6 +7,15 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Projects",
+  description: "A showcase of software engineering, reverse engineering, and cybersecurity projects by aXXo.",
+  alternates: {
+    canonical: "/projects",
+  },
+  openGraph: {
+    title: "Projects - aXXo's website",
+    description: "A showcase of software engineering, reverse engineering, and cybersecurity projects by aXXo.",
+    url: "/projects",
+  },
 };
 
 export default async function Projects() {

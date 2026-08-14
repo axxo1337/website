@@ -79,13 +79,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       const sizeClass = width ? "" : "w-full";
       const imgClassName = `rounded-lg h-auto ${sizeClass}`;
 
-      // eslint-disable-next-line @next/next/no-img-element
+      /* eslint-disable @next/next/no-img-element */
       const image = isAuto ? (
         <img src={src} alt={text} className="rounded-lg h-auto" {...props} />
       ) : (
-        // eslint-disable-next-line @next/next/no-img-element
         <img src={src} alt={text} className={imgClassName} style={hasExplicitWidth ? { width } : undefined} {...props} />
       );
+      /* eslint-enable @next/next/no-img-element */
 
       return (
         <span className={`flex my-4 ${wrapperAlignClass}`}>

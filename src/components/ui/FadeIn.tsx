@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type HTMLMotionProps } from "framer-motion";
 
 //
 // [SECTION] Content
@@ -15,7 +15,7 @@ export default function FadeIn({
   className,
   ...props
 }: FadeIn) {
-  const Component = (motion as any)[as] || motion.div;
+  const Component = (as in motion ? motion[as as keyof typeof motion] : motion.div) as typeof motion.div;
 
   return (
     <Component
@@ -35,10 +35,10 @@ export default function FadeIn({
 // [SECTION] Types
 //
 
-interface FadeIn extends React.HTMLAttributes<HTMLElement> {
+interface FadeIn extends HTMLMotionProps<"div"> {
   children: React.ReactNode;
   delay?: number;
   y?: number;
   duration?: number;
-  as?: string;
+  as?: keyof typeof motion;
 }

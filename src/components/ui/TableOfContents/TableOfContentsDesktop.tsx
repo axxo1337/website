@@ -22,6 +22,12 @@ export default function TableOfContentsDesktop({ exclude }: TableOfContentsDeskt
       )}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setHovered(true)}
+      onBlurCapture={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+          setHovered(false);
+        }
+      }}
     >
       <div
         className={cn(

@@ -13,6 +13,7 @@ This is my personal portfolio website. I've always wanted a sort of portfolio we
 - [Radix UI](https://www.radix-ui.com/) (UI primitives used by Shadcn)
 - [MDX](https://mdxjs.com/) (Content authoring)
 - [KaTeX](https://katex.org/) (Math rendering)
+- [Conventional Commits](https://www.conventionalcommits.org/) (Commit message specification)
 - [Bun](https://bun.sh/) (Package manager)
 - [Vercel](https://vercel.com/) (Deployment)
 

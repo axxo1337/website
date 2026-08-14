@@ -3,10 +3,7 @@ import Section from "@/components/layout/Section";
 import ChannelCTA from "@/components/page/Videos/ChannelCTA";
 import Video from "@/components/page/Videos/Video";
 import { getAllContentMetadata, getMostRecentUpdate } from "@/lib/server/mdx";
-import { ArrowRight } from "lucide-react";
 import { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 
 //
 // [SECTION] Defines
@@ -14,6 +11,15 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Videos",
+  description: "A library of videos explaining computer science, reverse engineering, and low-level concepts by aXXo.",
+  alternates: {
+    canonical: "/videos",
+  },
+  openGraph: {
+    title: "Videos - aXXo's website",
+    description: "A library of videos explaining computer science, reverse engineering, and low-level concepts by aXXo.",
+    url: "/videos",
+  },
 };
 
 //

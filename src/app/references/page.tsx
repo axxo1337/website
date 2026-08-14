@@ -6,6 +6,15 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "References",
+  description: "A curated collection of resources for learning game hacking, C++, data structures, Windows internals, and reverse engineering.",
+  alternates: {
+    canonical: "/references",
+  },
+  openGraph: {
+    title: "References - aXXo's website",
+    description: "A curated collection of resources for learning game hacking, C++, data structures, Windows internals, and reverse engineering.",
+    url: "/references",
+  },
 };
 
 export default async function References() {
@@ -16,7 +25,7 @@ export default async function References() {
     <Main
       title="References"
       createdAt={new Date(2025, 11, 22)}
-      updatedAt={new Date(2026, 0, 1)}
+      updatedAt={new Date("2026-08-14")}
     >
       <Section subtitle="Some advice and links" title="Material">
         <div>

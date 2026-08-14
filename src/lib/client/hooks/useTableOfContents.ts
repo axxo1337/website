@@ -14,10 +14,14 @@ export default function useTableOfContents(exclude?: string[], pauseScroll?: boo
   const locked = useRef(false);
 
   useEffect(() => {
-    const items = extractHeadings(exclude);
-    setHeadings(items);
-    if (items.length > 0) setActiveId(items[0].id);
-  }, []);
+    const frameId = window.requestAnimationFrame(() => {
+      const items = extractHeadings(exclude);
+      setHeadings(items);
+      if (items.length > 0) setActiveId(items[0].id);
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [exclude]);
 
   useEffect(() => {
     if (headings.length === 0 || pauseScroll) return;
