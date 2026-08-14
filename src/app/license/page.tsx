@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function LicensePage() {
   return (
-    <Main title="License" createdAt={new Date(2025, 5, 21)} updatedAt={new Date(2026, 6, 28)}>
+    <Main title="License" createdAt={new Date("2025-06-21")} updatedAt={new Date("2026-08-14")}>
       <Section title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International">
         <div className="flex flex-col gap-4 md:gap-6 font-medium">
           <p>Copyright (C) 2026 axxo1337</p>

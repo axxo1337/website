@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
+import { compareDesc, max, parseISO } from "date-fns";
 import { TPostCategory, TPostStatus } from "../client/types/post";
 
 //
@@ -141,7 +142,7 @@ export const getAllContentMetadata = cache(async (contentType: ContentType): Pro
         ? all.filter((item) => item.status !== "DRAFT")
         : all;
 
-      return filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      return filtered.sort((a, b) => compareDesc(parseISO(a.createdAt), parseISO(b.createdAt)));
     },
     [`all-content-metadata-${contentType}`],
     {
@@ -152,10 +153,8 @@ export const getAllContentMetadata = cache(async (contentType: ContentType): Pro
 });
 
 export function getMostRecentUpdate(items: MDXMetadata[]): Date {
-  return items.reduce((latest, item) => {
-    const itemUpdate = new Date(item.updatedAt);
-    return itemUpdate > latest ? itemUpdate : latest;
-  }, new Date(0));
+  if (items.length === 0) return new Date(0);
+  return max(items.map((item) => parseISO(item.updatedAt)));
 }
 
 export async function getAdjacentContent(

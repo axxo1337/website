@@ -2,13 +2,9 @@
 
 const { execSync } = require("child_process");
 const fs = require("fs");
+const { format } = require("date-fns");
 
-const now = new Date();
-const year = now.getFullYear();
-const month = String(now.getMonth() + 1).padStart(2, "0");
-const day = String(now.getDate()).padStart(2, "0");
-
-const isoDate = `${year}-${month}-${day}`;
+const isoDate = format(new Date(), "yyyy-MM-dd");
 
 const staged = execSync("git diff --cached --name-only --diff-filter=ACM", {
   encoding: "utf-8",
