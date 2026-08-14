@@ -14,7 +14,7 @@ export const postStatusObjectMap = new Map<TPostStatus, { spanClassName: string;
     "WIP",
     {
       containerClassName: "bg-yellow-500/20 border-yellow-500",
-      spanClassName: "text-yellow-500",
+      spanClassName: "text-yellow-400",
       text: "Work in progress",
     },
   ],
@@ -22,7 +22,7 @@ export const postStatusObjectMap = new Map<TPostStatus, { spanClassName: string;
     "DRAFT",
     {
       containerClassName: "bg-red-500/20 border-red-500",
-      spanClassName: "text-red-500",
+      spanClassName: "text-red-400",
       text: "Draft (Not available in prod)",
     },
   ],
@@ -36,7 +36,7 @@ export const postCategoryMap = new Map<
     "COMPUTER_SCIENCE",
     {
       containerClassName: "border-yellow-500 bg-yellow-500/20 backdrop-blur-md",
-      spanClassName: "text-yellow-500",
+      spanClassName: "text-yellow-400",
       text: "Computer Science",
       icon: Cpu,
     },
@@ -45,7 +45,7 @@ export const postCategoryMap = new Map<
     "CYBERSECURITY",
     {
       containerClassName: "border-red-500 bg-red-500/20 backdrop-blur-md",
-      spanClassName: "text-red-500",
+      spanClassName: "text-red-400",
       text: "Cybersecurity",
       icon: ShieldCheck,
     },
@@ -54,7 +54,7 @@ export const postCategoryMap = new Map<
     "WEB",
     {
       containerClassName: "border-cyan-500 bg-cyan-500/20 backdrop-blur-md",
-      spanClassName: "text-cyan-500",
+      spanClassName: "text-cyan-400",
       text: "Web",
       icon: Globe,
     },
@@ -63,7 +63,7 @@ export const postCategoryMap = new Map<
     "MISC",
     {
       containerClassName: "border-zinc-500 bg-zinc-500/20 backdrop-blur-md",
-      spanClassName: "text-zinc-400",
+      spanClassName: "text-zinc-300",
       text: "Misc",
       icon: Sparkles,
     },
