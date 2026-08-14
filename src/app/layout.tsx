@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   applicationName: "aXXo's website",
   alternates: {
-    canonical: "./",
+    canonical: "/",
   },
   keywords: [
     "reverse engineering",

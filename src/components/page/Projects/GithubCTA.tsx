@@ -14,7 +14,7 @@ export default function GithubCTA() {
         href="https://github.com/axxo1337"
         className="flex items-center gap-2.5 rounded-lg bg-blue-600 px-5 py-3 font-semibold text-sm hover:bg-blue-500 transition-colors"
       >
-        <Image src="/images/socials/github.webp" alt="YouTube" width={20} height={20} />
+        <Image src="/images/socials/github.webp" alt="Github" width={20} height={20} />
         Go to Github
       </Link>
       <Image

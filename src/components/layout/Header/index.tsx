@@ -2,7 +2,7 @@ import Link from "next/link";
 import Logo from "../../ui/Logo";
 import MobileNavigation from "./HeaderMobileNavigation";
 import DesktopNavigation from "./HeaderDesktopNavigation";
-import { Bug, Diff, LucideIcon, Search, Shield, Video } from "lucide-react";
+import { Bug, LucideIcon, Shield, Video } from "lucide-react";
 
 //
 // [SECTION] Defines

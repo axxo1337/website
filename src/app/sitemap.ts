@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projects = await getAllContentMetadata('project');
   const projectRoutes = projects.map((metadata) => ({
     url: `${baseUrl}/project/${metadata.slug}`,
-    lastModified: metadata.updatedAt || new Date().toISOString(),
+    lastModified: metadata.updatedAt ? new Date(metadata.updatedAt).toISOString() : new Date().toISOString(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
@@ -17,7 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const videos = await getAllContentMetadata('video');
   const videoRoutes = videos.map((metadata) => ({
     url: `${baseUrl}/video/${metadata.slug}`,
-    lastModified: metadata.updatedAt || new Date().toISOString(),
+    lastModified: metadata.updatedAt ? new Date(metadata.updatedAt).toISOString() : new Date().toISOString(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
@@ -46,6 +46,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date().toISOString(),
       changeFrequency: 'weekly' as const,
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/license`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: 'yearly' as const,
+      priority: 0.5,
     },
   ];
 
