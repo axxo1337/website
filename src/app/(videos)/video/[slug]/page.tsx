@@ -5,6 +5,8 @@ import SubscribeCTA from "@/components/page/Videos/SubscribeCTA";
 import ContentNavigation from "@/components/ui/ContentNavigation";
 import PostStatusIndicator from "@/components/ui/PostStatusIndicator";
 import TableOfContents from "@/components/ui/TableOfContents";
+import JsonLd from "@/components/ui/JsonLd";
+import { getVideoJsonLd } from "@/lib/server/jsonld";
 import { contentExists, getAdjacentContent, getContentSlugs, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -63,18 +65,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : undefined,
     },
     twitter: {
-      card: "player",
+      card: "summary_large_image",
       title: metadata.title,
       description: metadata.description,
       images: [thumbnailUrl],
-      players: metadata.youtubeId
-        ? {
-            playerUrl: `https://www.youtube.com/embed/${metadata.youtubeId}`,
-            streamUrl: `https://www.youtube.com/watch?v=${metadata.youtubeId}`,
-            width: 1280,
-            height: 720,
-          }
-        : undefined,
     },
   };
 }
@@ -98,6 +92,7 @@ export default async function VideoPage({ params }: Props) {
 
   return (
     <Main title={metadata.title} createdAt={new Date(metadata.createdAt)} updatedAt={new Date(metadata.updatedAt)}>
+      <JsonLd schema={getVideoJsonLd(metadata)} />
       <PostStatusIndicator status={metadata.status} />
       <div>
         <YouTubeVideo className="mt-8 md:mt-14" id={metadata.youtubeId} thumbnailPath={metadata.thumbnailPath} />

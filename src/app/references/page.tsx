@@ -2,6 +2,8 @@ import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import TableOfContents from "@/components/ui/TableOfContents";
 import Socials from "@/components/page/Home/Socials";
+import JsonLd from "@/components/ui/JsonLd";
+import { getBreadcrumbJsonLd } from "@/lib/server/jsonld";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,11 +17,21 @@ export const metadata: Metadata = {
     description: "A curated collection of resources for learning game hacking, C++, data structures, Windows internals, and reverse engineering.",
     url: "/references",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "References - aXXo's website",
+    description: "A curated collection of resources for learning game hacking, C++, data structures, Windows internals, and reverse engineering.",
+  },
 };
 
 export default async function References() {
   const post = await import("@/app/references/references.mdx");
   const MDXContent = post.default;
+
+  const breadcrumbs = getBreadcrumbJsonLd([
+    { name: "Home", url: "/" },
+    { name: "References", url: "/references" },
+  ]);
 
   return (
     <Main
@@ -27,6 +39,7 @@ export default async function References() {
       createdAt={new Date("2025-12-22")}
       updatedAt={new Date("2026-08-14")}
     >
+      <JsonLd schema={breadcrumbs} />
       <Section subtitle="Some advice and links" title="Material">
         <div>
           <MDXContent />

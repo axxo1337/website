@@ -5,6 +5,19 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "License",
   description: "License terms for aXXo's website content under Creative Commons CC BY-NC-SA 4.0.",
+  alternates: {
+    canonical: "/license",
+  },
+  openGraph: {
+    title: "License - aXXo's website",
+    description: "License terms for aXXo's website content under Creative Commons CC BY-NC-SA 4.0.",
+    url: "/license",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "License - aXXo's website",
+    description: "License terms for aXXo's website content under Creative Commons CC BY-NC-SA 4.0.",
+  },
 };
 
 export default function LicensePage() {

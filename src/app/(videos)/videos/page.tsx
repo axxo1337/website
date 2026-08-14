@@ -3,6 +3,8 @@ import Section from "@/components/layout/Section";
 import ChannelCTA from "@/components/page/Videos/ChannelCTA";
 import Video from "@/components/page/Videos/Video";
 import { getAllContentMetadata, getMostRecentUpdate } from "@/lib/server/mdx";
+import JsonLd from "@/components/ui/JsonLd";
+import { getBreadcrumbJsonLd } from "@/lib/server/jsonld";
 import { Metadata } from "next";
 
 //
@@ -20,6 +22,11 @@ export const metadata: Metadata = {
     description: "A library of videos explaining computer science, reverse engineering, and low-level concepts by aXXo.",
     url: "/videos",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Videos - aXXo's website",
+    description: "A library of videos explaining computer science, reverse engineering, and low-level concepts by aXXo.",
+  },
 };
 
 //
@@ -30,8 +37,14 @@ export default async function Videos() {
   const videos = await getAllContentMetadata("video");
   const mostRecentUpdate = getMostRecentUpdate(videos);
 
+  const breadcrumbs = getBreadcrumbJsonLd([
+    { name: "Home", url: "/" },
+    { name: "Videos", url: "/videos" },
+  ]);
+
   return (
     <Main title="Videos" createdAt={new Date("2025-12-22")} updatedAt={mostRecentUpdate}>
+      <JsonLd schema={breadcrumbs} />
       <Section title="Library">
         <p>
           This page doesn&apos;t list ALL of my videos, but you can find some of my most recent here. Clicking any of them will

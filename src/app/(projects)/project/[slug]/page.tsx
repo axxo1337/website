@@ -5,6 +5,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import ContentNavigation from "@/components/ui/ContentNavigation";
 import PostStatusIndicator from "@/components/ui/PostStatusIndicator";
 import TableOfContents from "@/components/ui/TableOfContents";
+import JsonLd from "@/components/ui/JsonLd";
+import { getProjectJsonLd } from "@/lib/server/jsonld";
 import { contentExists, getAdjacentContent, getContentSlugs, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -89,6 +91,7 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <Main title={metadata.title} createdAt={new Date(metadata.createdAt)} updatedAt={new Date(metadata.updatedAt)}>
+      <JsonLd schema={getProjectJsonLd(metadata)} />
       <PostStatusIndicator status={metadata.status} />
       <div className="mt-8 md:mt-14 overflow-hidden rounded-md border-2 border-white/20">
         {metadata.thumbnailPath ? (
