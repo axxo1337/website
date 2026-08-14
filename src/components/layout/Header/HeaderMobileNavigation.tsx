@@ -97,8 +97,8 @@ export default function MobileNavigation() {
         if (state === true) setOpenSecondaryNav(null);
       }}
     >
-      <SheetTrigger className="md:hidden cursor-pointer">
-        <Menu className="size-6.5" />
+      <SheetTrigger className="md:hidden cursor-pointer" aria-label="Open navigation menu">
+        <Menu className="size-6.5" aria-hidden="true" />
       </SheetTrigger>
       <SheetContent className="border-0 w-full">
         <SheetHeader className="pt-6 px-2.5">

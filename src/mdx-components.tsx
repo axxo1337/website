@@ -81,9 +81,17 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
       /* eslint-disable @next/next/no-img-element */
       const image = isAuto ? (
-        <img src={src} alt={text} className="rounded-lg h-auto" {...props} />
+        <img src={src} alt={text} loading="lazy" decoding="async" className="rounded-lg h-auto" {...props} />
       ) : (
-        <img src={src} alt={text} className={imgClassName} style={hasExplicitWidth ? { width } : undefined} {...props} />
+        <img
+          src={src}
+          alt={text}
+          loading="lazy"
+          decoding="async"
+          className={imgClassName}
+          style={hasExplicitWidth ? { width } : undefined}
+          {...props}
+        />
       );
       /* eslint-enable @next/next/no-img-element */
 

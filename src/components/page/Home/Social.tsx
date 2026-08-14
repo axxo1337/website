@@ -27,7 +27,8 @@ export default function Social({ copyContent, copyTitle, href, iconPath, title }
         className="size-6 md:size-8 group-hover:brightness-85 duration-250 transition-all shrink-0"
         width={32}
         height={32}
-        alt={title}
+        alt=""
+        aria-hidden="true"
       />
       <span className="font-medium text-lg md:text-xl group-hover:text-white/80 transition-colors duration-250 group-hover-underline flex items-center gap-2">
         <span>{title}</span>
