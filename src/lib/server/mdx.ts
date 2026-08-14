@@ -87,36 +87,35 @@ export function parseMetadata(content: string): Partial<MDXMetadata> {
   return result;
 }
 
+export function calculateReadingTime(rawContent: string, wpm: number = 200): string {
+  const text = rawContent
+    .replace(/export const metadata = \s*\{[\s\S]*?\};/, "")
+    .replace(/<[^>]*>/g, "")
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/!\[.*?\]\(.*?\)/g, "")
+    .replace(/\[([^\]]+)\]\(.*?\)/g, "$1")
+    .replace(/[#*`_~]/g, "");
+
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(words / wpm));
+  return `${minutes} min read`;
+}
+
 export function readMetadataFromFile(mdxPath: string, slug: string): MDXMetadata | null {
   if (!fs.existsSync(mdxPath)) return null;
 
-  const fd = fs.openSync(mdxPath, "r");
-  const CHUNK_SIZE = 2048;
-  const buffer = Buffer.alloc(CHUNK_SIZE);
-  let accumulated = "";
-  let metadata: Partial<MDXMetadata> = {};
-
   try {
-    let bytesRead = 0;
-    while ((bytesRead = fs.readSync(fd, buffer, 0, CHUNK_SIZE, null)) > 0) {
-      accumulated += buffer.toString("utf8", 0, bytesRead);
-      if (accumulated.includes("};")) {
-        metadata = parseMetadata(accumulated);
-        if (Object.keys(metadata).length > 0) break;
-      }
-      if (accumulated.length > 16384) break;
-    }
+    const fileContent = fs.readFileSync(mdxPath, "utf-8");
+    const metadata = parseMetadata(fileContent);
+    if (Object.keys(metadata).length === 0) return null;
+
+    const readingTime = calculateReadingTime(fileContent);
+
+    return { ...metadata, slug, readingTime } as MDXMetadata;
   } catch (err) {
     console.error(`Error reading metadata from ${mdxPath}:`, err);
-  } finally {
-    fs.closeSync(fd);
-  }
-
-  if (Object.keys(metadata).length === 0) {
     return null;
   }
-
-  return { ...metadata, slug } as MDXMetadata;
 }
 
 export const getContentMetadata = cache((contentType: ContentType, slug: string): MDXMetadata | null => {
@@ -182,6 +181,7 @@ export interface MDXMetadata {
   title: string;
   createdAt: string;
   updatedAt: string;
+  readingTime?: string;
   youtubeId?: string | null;
   description?: string;
   thumbnailPath?: string;

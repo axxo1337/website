@@ -32,7 +32,7 @@ export default function CodeBlock({ className, children, ...props }: React.Compo
         type="button"
         onClick={handleCopy}
         aria-label="Copy code"
-        className="absolute opacity-0 group-hover:opacity-100 transition-opacity top-3 cursor-pointer p-1 right-3 bg-transparent hover:bg-white/15 rounded-sm focus:opacity-100"
+        className="absolute opacity-0 group-hover:opacity-100 transition-opacity top-3 cursor-pointer p-1 right-3 bg-transparent hover:bg-white/15 rounded-sm focus:opacity-100 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
       >
         {isCopied ? <Check size={12} /> : <Copy size={12} />}
       </button>

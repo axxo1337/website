@@ -7,7 +7,7 @@ import PostStatusIndicator from "@/components/ui/PostStatusIndicator";
 import TableOfContents from "@/components/ui/TableOfContents";
 import JsonLd from "@/components/ui/JsonLd";
 import { getProjectJsonLd } from "@/lib/server/jsonld";
-import { contentExists, getAdjacentContent, getContentSlugs, MDXMetadata } from "@/lib/server/mdx";
+import { contentExists, getAdjacentContent, getContentMetadata, getContentSlugs, MDXMetadata } from "@/lib/server/mdx";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -82,6 +82,7 @@ export default async function ProjectPage({ params }: Props) {
   const post = await import(`@/app/(projects)/project/[slug]/${slug}.mdx`);
   const MDXContent = post.default;
   const metadata: MDXMetadata = post.metadata;
+  const contentMetadata = getContentMetadata("project", slug);
 
   if (metadata.status === "DRAFT" && process.env.NODE_ENV === "production") {
     notFound();
@@ -90,8 +91,13 @@ export default async function ProjectPage({ params }: Props) {
   const { prev, next } = await getAdjacentContent("project", slug);
 
   return (
-    <Main title={metadata.title} createdAt={new Date(metadata.createdAt)} updatedAt={new Date(metadata.updatedAt)}>
-      <JsonLd schema={getProjectJsonLd(metadata)} />
+    <Main
+      title={metadata.title}
+      createdAt={new Date(metadata.createdAt)}
+      updatedAt={new Date(metadata.updatedAt)}
+      readingTime={contentMetadata?.readingTime}
+    >
+      <JsonLd schema={getProjectJsonLd({ ...metadata, slug })} />
       <PostStatusIndicator status={metadata.status} />
       <div className="mt-8 md:mt-14 overflow-hidden rounded-md border-2 border-white/20">
         {metadata.thumbnailPath ? (
