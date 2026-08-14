@@ -3,6 +3,8 @@ import Section from "@/components/layout/Section";
 import GithubCTA from "@/components/page/Projects/GithubCTA";
 import Project from "@/components/page/Projects/Project";
 import { getAllContentMetadata, getMostRecentUpdate } from "@/lib/server/mdx";
+import JsonLd from "@/components/ui/JsonLd";
+import { getBreadcrumbJsonLd } from "@/lib/server/jsonld";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,14 +18,25 @@ export const metadata: Metadata = {
     description: "A showcase of software engineering, reverse engineering, and cybersecurity projects by aXXo.",
     url: "/projects",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Projects - aXXo's website",
+    description: "A showcase of software engineering, reverse engineering, and cybersecurity projects by aXXo.",
+  },
 };
 
 export default async function Projects() {
   const projects = await getAllContentMetadata("project");
   const mostRecentUpdate = getMostRecentUpdate(projects);
 
+  const breadcrumbs = getBreadcrumbJsonLd([
+    { name: "Home", url: "/" },
+    { name: "Projects", url: "/projects" },
+  ]);
+
   return (
     <Main title="Projects" createdAt={new Date("2025-12-22")} updatedAt={mostRecentUpdate}>
+      <JsonLd schema={breadcrumbs} />
       <Section title="Library">
         <p>
           This page doesn&apos;t list ALL of my projects, but you can find some of my most recent here. Clicking any of them

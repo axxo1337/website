@@ -38,10 +38,6 @@ export const links: TLink[] = [
       },
     ],
   },
-  {
-    title: "References",
-    href: "/references",
-  },
 ];
 
 //

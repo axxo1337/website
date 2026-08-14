@@ -37,7 +37,13 @@ export default function MicrosoftLearnQuote({ title, description, children, sour
           <span className="text-2xl font-bold">Learn</span>
         </div>
         {source && (
-          <a href={source} className="inline-anchor" target="_blank">
+          <a
+            href={source}
+            className="inline-anchor"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View source for ${title} on Microsoft Learn`}
+          >
             <ExternalLink />
           </a>
         )}
@@ -56,7 +62,7 @@ export default function MicrosoftLearnQuote({ title, description, children, sour
                 type="button"
                 onClick={handleCopy}
                 aria-label="Copy syntax"
-                className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-1 bg-transparent hover:bg-white/15 rounded-sm focus:opacity-100"
+                className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-1 bg-transparent hover:bg-white/15 rounded-sm focus:opacity-100 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
               >
                 {isCopied ? <Check size={12} /> : <Copy size={12} />}
               </button>

@@ -21,7 +21,7 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 
 export default async function Home() {
   return (
-    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-08-09")}>
+    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-08-14")}>
       <Image alt="Banner" src="/images/banner.webp" width={960} height={224} className="mt-5 md:mt-8 rounded-md border-2" />
       <Section subtitle="Who am I?" title="In my own words">
         <p>
@@ -41,11 +41,6 @@ export default async function Home() {
           nowadays, I spend most of my time in this space working on video projects and studying for university.
         </p>
       </Section>
-      {/*
-      <Section subtitle="What am I up to?" title="Beyond the character">
-        <p>I don&apos;t know what to put there just yet, but I&apos;ll think of something soon trust.</p>
-      </Section>
-      */}
       <Section subtitle="What have I made?" title="Some of my work">
         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           {bestCreationsKeys.map(({ contentType, slug }, index) => {
@@ -82,6 +77,11 @@ export default async function Home() {
           </span>
         </div>
       </Section>
+      {/*
+      <Section subtitle="What am I up to?" title="Beyond the character">
+        <p>I don&apos;t know what to put there just yet, but I&apos;ll think of something soon trust.</p>
+      </Section>
+      */}
       <Socials />
     </Main>
   );

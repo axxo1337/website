@@ -5,7 +5,7 @@ import FadeIn from "@/components/ui/FadeIn";
 // [SECTION] Content
 //
 
-export default function Main({ title, createdAt, updatedAt, children }: Main) {
+export default function Main({ title, createdAt, updatedAt, readingTime, children }: MainProps) {
   return (
     <main className="mt-8 md:mt-12">
       <FadeIn>
@@ -24,6 +24,11 @@ export default function Main({ title, createdAt, updatedAt, children }: Main) {
                 {formatUTC(updatedAt)}
               </time>
             </span>
+            {readingTime && (
+              <span>
+                Reading time • {readingTime}
+              </span>
+            )}
           </div>
         </div>
       </FadeIn>
@@ -38,10 +43,11 @@ export default function Main({ title, createdAt, updatedAt, children }: Main) {
 // [SECTION] Types
 //
 
-interface Main {
+interface MainProps {
   title: string;
   createdAt: Date;
   updatedAt: Date;
+  readingTime?: string;
   children: React.ReactNode;
 }
 

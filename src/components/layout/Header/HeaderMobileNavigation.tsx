@@ -82,9 +82,11 @@ export default function MobileNavigation() {
   const [openSecondaryNav, setOpenSecondaryNav] = useState<null | string>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSheetOpen(false);
-    setOpenSecondaryNav(null);
+    const handle = requestAnimationFrame(() => {
+      setSheetOpen(false);
+      setOpenSecondaryNav(null);
+    });
+    return () => cancelAnimationFrame(handle);
   }, [pathname]);
 
   return (
