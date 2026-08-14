@@ -24,7 +24,7 @@ export default async function References() {
   return (
     <Main
       title="References"
-      createdAt={new Date(2025, 11, 22)}
+      createdAt={new Date("2025-12-22")}
       updatedAt={new Date("2026-08-14")}
     >
       <Section subtitle="Some advice and links" title="Material">

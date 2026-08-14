@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { ReactNode } from "react"
+import { format, isValid } from "date-fns"
 import { TPostCategory, TPostStatus } from "./types/post";
 import { Cpu, Globe, LucideIcon, ShieldCheck, Sparkles } from "lucide-react";
 
@@ -97,12 +98,8 @@ export function extractText(node: ReactNode): string {
   return "";
 }
 
-export function formatUTC(date: Date): string {
-  if (!date || isNaN(date.getTime())) return "N/A";
-  return date.toLocaleDateString("en-US", {
-    timeZone: "UTC",
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
-  });
+export function formatUTC(date: Date, formatPattern: string = "MMM d, yyyy"): string {
+  if (!date || !isValid(date)) return "N/A";
+  const utcDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+  return format(utcDate, formatPattern);
 }
