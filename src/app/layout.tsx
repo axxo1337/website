@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import { ViewTransition } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import JsonLd from "@/components/ui/JsonLd";
+import ServiceWorkerRegister from "@/components/layout/ServiceWorkerRegister";
 import { getRootJsonLd } from "@/lib/server/jsonld";
 import "./globals.css";
 
@@ -37,8 +38,14 @@ export const metadata: Metadata = {
     "Charles (aXXo) — Independent software engineer and educator sharing projects, reverse engineering, Windows internals, and computer science tutorials.",
   icons: {
     icon: "/favicon.ico",
+    apple: "/images/icons/apple-touch-icon.png",
   },
   manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "aXXo",
+  },
   applicationName: "aXXo's website",
   alternates: {
     canonical: "/",
@@ -123,6 +130,7 @@ export default function RootLayout({
           <Footer />
         </div>
         <Toaster />
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
