@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Roboto } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { ViewTransition } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import JsonLd from "@/components/ui/JsonLd";
 import ServiceWorkerRegister from "@/components/layout/ServiceWorkerRegister";
@@ -126,7 +125,7 @@ export default function RootLayout({
         <JsonLd schema={getRootJsonLd()} />
         <div className="px-2.5 md:px-5 lg:px-0 max-w-240 w-full">
           <Header />
-          <ViewTransition>{children}</ViewTransition>
+          {children}
           <Footer />
         </div>
         <Toaster />

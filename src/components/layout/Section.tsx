@@ -1,18 +1,15 @@
-import FadeIn from "@/components/ui/FadeIn";
 import { slugify } from "@/lib/client/utils";
 
 export default function Section({ subtitle, title, children }: Section) {
   return (
     <section className="mt-8 md:mt-14">
-      <FadeIn y={15} duration={0.45}>
-        <div className="flex flex-col md:gap-1.5 mb-4 md:mb-6">
-          {subtitle && (
-            <span className="text-xl md:text-2xl text-white/70">{subtitle}</span>
-          )}
-          <h2 id={slugify(title)} className="text-3xl md:text-4xl scroll-mt-24">{title}</h2>
-        </div>
-        {children}
-      </FadeIn>
+      <div className="flex flex-col md:gap-1.5 mb-4 md:mb-6">
+        {subtitle && (
+          <span className="text-xl md:text-2xl text-white/70">{subtitle}</span>
+        )}
+        <h2 id={slugify(title)} className="text-3xl md:text-4xl scroll-mt-24">{title}</h2>
+      </div>
+      {children}
     </section>
   );
 }

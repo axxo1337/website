@@ -27,11 +27,6 @@ export default function Footer() {
                 Projects
               </Link>
             </li>
-            <li>
-              <Link href="/references" className="hover:text-white/80 font-medium transition-colors hover-underline">
-                References
-              </Link>
-            </li>
           </ul>
         </nav>
       </div>
