@@ -28,6 +28,7 @@
     "radix-ui": "^1.6.7",
     "react": "19.2.1",
     "react-dom": "19.2.1",
+    "react-medium-image-zoom": "^5.4.9",
     "rehype-highlight": "^7.0.2",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
