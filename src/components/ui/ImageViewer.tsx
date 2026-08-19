@@ -14,9 +14,6 @@ function UnzoomIcon() {
 }
 
 export default function ImageViewer({
-  src,
-  alt = "",
-  caption,
   children,
   className,
 }: ImageViewerProps) {
@@ -24,10 +21,9 @@ export default function ImageViewer({
     <span className={cn("inline-block", className)}>
       <Zoom
         wrapElement="span"
-        zoomMargin={24}
+        zoomMargin={40}
         canSwipeToUnzoom
         IconUnzoom={UnzoomIcon}
-        zoomImg={src ? { src, alt: alt || caption || "" } : undefined}
       >
         {children}
       </Zoom>
