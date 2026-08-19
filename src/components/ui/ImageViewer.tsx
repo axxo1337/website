@@ -14,8 +14,7 @@ export default function ImageViewer({ src, alt, children }: ImageViewerProps) {
   const thumbRef = useRef<HTMLButtonElement>(null);
   const dialogImgRef = useRef<HTMLImageElement>(null);
 
-  const getThumbImg = () =>
-    thumbRef.current?.querySelector("img") as HTMLElement | null;
+  const getThumbImg = () => thumbRef.current?.querySelector("img") as HTMLElement | null;
 
   const handleOpen = useCallback(() => {
     const thumb = getThumbImg();
@@ -61,13 +60,18 @@ export default function ImageViewer({ src, alt, children }: ImageViewerProps) {
   }, []);
 
   return (
-    <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
+    <Dialog
+      open={open}
+      onOpenChange={(v) => {
+        if (!v) handleClose();
+      }}
+    >
       <button
         type="button"
         ref={thumbRef}
         className={cn(
-          "cursor-zoom-in bg-transparent border-0 p-0 text-left block w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-lg",
-          open && "opacity-0"
+          "cursor-zoom-in bg-transparent border-0 p-0 text-left flex justify-center w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-lg",
+          open && "opacity-0",
         )}
         onClick={handleOpen}
         aria-label={alt ? `View full size image: ${alt}` : "View full size image"}

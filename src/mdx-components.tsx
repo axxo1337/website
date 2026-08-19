@@ -1,31 +1,11 @@
 import type { MDXComponents } from "mdx/types";
-import { slugify, extractText, cn } from "./lib/client/utils";
+import { slugify, extractText, cn, parseImageAlt } from "./lib/client/utils";
 import CodeBlock from "./components/ui/CodeBlock";
 import ImageViewer from "./components/ui/ImageViewer";
 import MicrosoftLearnQuote from "./components/ui/MicrosoftLearnQuote";
 import UndocumentedStruct from "./components/ui/UndocumentedStruct";
 import YouTubeVideo from "./components/page/Video/YouTubeVideo";
 import GithubRepo from "./components/ui/GithubRepo";
-
-function parseImageAlt(alt: string): { text: string; align: string; width: string; caption: string } {
-  const parts = alt.split("|").map((s) => s.trim());
-  const text = parts[0];
-  let align = "center";
-  let width = "";
-  let caption = "";
-
-  for (const part of parts.slice(1)) {
-    if (["left", "center", "right"].includes(part)) {
-      align = part;
-    } else if (/^\d/.test(part)) {
-      width = part;
-    } else if (part) {
-      caption = part;
-    }
-  }
-
-  return { text, align, width, caption };
-}
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -96,7 +76,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       /* eslint-enable @next/next/no-img-element */
 
       return (
-        <span className={`flex my-4 ${wrapperAlignClass}`}>
+        <span className={`flex my-4 w-full ${wrapperAlignClass}`}>
           <span className="inline-flex flex-col items-center">
             <ImageViewer src={src || ""} alt={text}>
               {image}
