@@ -78,7 +78,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       return (
         <span className={`flex my-4 w-full ${wrapperAlignClass}`}>
           <span className="inline-flex flex-col items-center">
-            <ImageViewer src={src || ""} alt={text}>
+            <ImageViewer src={src || ""} alt={text} caption={caption}>
               {image}
             </ImageViewer>
             {caption && <span className="text-sm text-white/50 mt-1.5 italic">{caption}</span>}

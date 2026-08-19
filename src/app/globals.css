@@ -108,13 +108,32 @@
   @apply bg-[#0c0c0c]/65 backdrop-blur-sm;
 }
 
-::view-transition-group(image-viewer) {
-  animation-duration: 300ms;
-  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+/* react-medium-image-zoom dark theme customizations */
+[data-rmiz-modal-overlay="visible"] {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-::view-transition-old(image-viewer),
-::view-transition-new(image-viewer) {
-  animation: none;
-  mix-blend-mode: normal;
+[data-rmiz-modal-img] {
+  border-radius: 0.5rem;
 }
+
+[data-rmiz-btn-unzoom] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+[data-rmiz-btn-unzoom]:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+
