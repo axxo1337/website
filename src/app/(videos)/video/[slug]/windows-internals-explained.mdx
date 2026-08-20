@@ -2,7 +2,7 @@ export const metadata = {
     title: "Windows Internals Explained",
     description: "Windows internals is a very important subject that's sadly very poorly documented. In this video I'll do my best to give you a great guide to trampoline from.",
     createdAt: "2026-02-20",
-    updatedAt: "2026-08-08",
+    updatedAt: "2026-08-20",
     youtubeId: null,
     thumbnailPath: "/images/thumbnails/windows-internals-explained.webp",
     categories: ["COMPUTER_SCIENCE", "CYBERSECURITY"],
@@ -91,6 +91,11 @@ The table entries don't use their full 64 bits to point to the next tables or pa
 as whether or not the described pages should be executable and or writable. While virtual memory isolates programs into their own address space, it's still possible for
 their page tables to point to the same physical pages if they need to share memory. In fact, the system uses this to share dynamic libraries between programs and save on
 physical memory (in reality it uses something called prototype page table entries, but the concept is the same).
+
+By the way, I made a video about virtual memory with a [post](/video/virtual-memory-explained). It is not very advanced, and this explanation covers things 
+it hasn't, but if you are slightly lost I'd recommend watching the video.
+
+<YouTubeVideo id="ultz9m0n0GE" thumbnailPath="/images/thumbnails/virtual-memory-explained.webp" />
 
 To ensure that one program may not modify the code of a shared library, a bit in page table entries is set to specify that the concerned pages use the copy on write
 mechanism. When a program writes to such a page, the system will copy its contents into a fresh physical page and change the page table entry of the writing program
