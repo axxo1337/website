@@ -83,8 +83,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "aXXo's website",
-    description:
-      "Charles (aXXo) — Computer science, cybersecurity, and software engineering projects.",
+    description: "Charles (aXXo) — Computer science, cybersecurity, and software engineering projects.",
     images: ["/images/seo/og-image.webp"],
     creator: "@axxo1337",
   },
@@ -93,8 +92,7 @@ export const metadata: Metadata = {
     siteName: "aXXo's website",
     url: siteUrl,
     title: "aXXo's website",
-    description:
-      "Charles (aXXo) — Computer science, cybersecurity, and software engineering projects and tutorials.",
+    description: "Charles (aXXo) — Computer science, cybersecurity, and software engineering projects and tutorials.",
     images: [
       {
         url: "/images/seo/og-image.webp",
