@@ -1,28 +1,11 @@
-"use client";
-
-import { ScrollArea, ScrollBar } from "./scroll-area";
-import { Check, Copy, ExternalLink } from "lucide-react";
-import { useCopyToClipboard } from "@/lib/client/hooks/useCopyToClipboard";
-import { useRef } from "react";
-import hljs from "highlight.js/lib/core";
-import cpp from "highlight.js/lib/languages/cpp";
+import { ExternalLink } from "lucide-react";
 import { extractText } from "@/lib/client/utils";
-
-hljs.registerLanguage("cpp", cpp);
+import { highlightCode } from "@/lib/server/highlight";
+import HighlightedCode from "./HighlightedCode";
 
 export default function MicrosoftLearnQuote({ title, description, children, source }: MicrosoftLearnQuoteProps) {
-  const { isCopied, copyToClipboard } = useCopyToClipboard();
-  const ref = useRef<HTMLElement>(null);
-
   const raw = extractText(children);
-  const highlighted = hljs.highlight(raw, { language: "cpp" }).value;
-
-  const handleCopy = () => {
-    if (ref.current) {
-      const text = ref.current.innerText || "";
-      copyToClipboard(text);
-    }
-  };
+  const highlighted = highlightCode(raw, "cpp");
 
   return (
     <div className="my-4 rounded-lg overflow-hidden p-3 md:p-5 border bg-[#0C0C0C]">
@@ -55,31 +38,14 @@ export default function MicrosoftLearnQuote({ title, description, children, sour
         </div>
         <div className="flex flex-col gap-2 md:gap-3.5">
           <span className="text-2xl font-bold">Syntax</span>
-          <div className="w-full rounded-sm overflow-hidden bg-[#2F2F2F] border group relative">
-            <div className="flex items-center justify-between py-1 px-2 md:px-3">
-              <span className="font-medium">C++</span>
-              <button
-                type="button"
-                onClick={handleCopy}
-                aria-label="Copy syntax"
-                className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-1 bg-transparent hover:bg-white/15 rounded-sm focus:opacity-100 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
-              >
-                {isCopied ? <Check size={12} /> : <Copy size={12} />}
-              </button>
-            </div>
-            <div className="p-2 md:p-3 bg-[#1F1F1F]">
-              <ScrollArea>
-                <pre className="m-0!">
-                  <code
-                    className="bg-transparent! p-0! language-cpp"
-                    ref={ref}
-                    dangerouslySetInnerHTML={{ __html: highlighted }}
-                  />
-                </pre>
-                <ScrollBar orientation="horizontal" className="**:data-[slot=scroll-area-thumb]:bg-white/20" />
-              </ScrollArea>
-            </div>
-          </div>
+          <HighlightedCode
+            language="C++"
+            rawCode={raw}
+            highlightedHtml={highlighted}
+            copyLabel="Copy syntax"
+            className="bg-[#2F2F2F] border"
+            codeClassName="language-cpp"
+          />
         </div>
       </div>
     </div>

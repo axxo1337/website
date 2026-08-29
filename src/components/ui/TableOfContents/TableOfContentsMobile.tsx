@@ -10,15 +10,19 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import useTableOfContents from "@/lib/client/hooks/useTableOfContents";
+import { Heading } from "./index";
 
 //
 // [SECTION] Content
 //
 
-export default function TableOfContentsMobile({ exclude }: TableOfContentsMobile) {
+export default function TableOfContentsMobile({
+  headings,
+  activeId,
+  visible,
+  scrollToDelayed,
+}: TableOfContentsMobileProps) {
   const [open, setOpen] = useState(false);
-  const { headings, activeId, visible, scrollToDelayed } = useTableOfContents(exclude, open);
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -86,6 +90,9 @@ export default function TableOfContentsMobile({ exclude }: TableOfContentsMobile
 // [SECTION] Types
 //
 
-interface TableOfContentsMobile {
-  exclude?: string[];
+interface TableOfContentsMobileProps {
+  headings: Heading[];
+  activeId: string;
+  visible: boolean;
+  scrollToDelayed: (id: string, delay: number) => void;
 }

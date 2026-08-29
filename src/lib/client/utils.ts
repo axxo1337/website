@@ -13,16 +13,16 @@ export const postStatusObjectMap = new Map<TPostStatus, { spanClassName: string;
   [
     "WIP",
     {
-      containerClassName: "bg-yellow-500/20 border-yellow-500",
-      spanClassName: "text-yellow-400",
+      containerClassName: "bg-[#FBDD31]/20 border-[#FBDD31]",
+      spanClassName: "text-[#FBDD31]",
       text: "Work in progress",
     },
   ],
   [
     "DRAFT",
     {
-      containerClassName: "bg-red-500/20 border-red-500",
-      spanClassName: "text-red-400",
+      containerClassName: "bg-[#FB3131]/20 border-[#FB3131]",
+      spanClassName: "text-[#FB3131]",
       text: "Draft (Not available in prod)",
     },
   ],
@@ -35,8 +35,8 @@ export const postCategoryMap = new Map<
   [
     "COMPUTER_SCIENCE",
     {
-      containerClassName: "border-yellow-500 bg-yellow-500/20 backdrop-blur-md",
-      spanClassName: "text-yellow-400",
+      containerClassName: "border-[#FBDD31] bg-[#FBDD31]/20 backdrop-blur-md",
+      spanClassName: "text-[#FBDD31]",
       text: "Computer Science",
       icon: Cpu,
     },
@@ -44,8 +44,8 @@ export const postCategoryMap = new Map<
   [
     "CYBERSECURITY",
     {
-      containerClassName: "border-red-500 bg-red-500/20 backdrop-blur-md",
-      spanClassName: "text-red-400",
+      containerClassName: "border-[#FB3131] bg-[#FB3131]/20 backdrop-blur-md",
+      spanClassName: "text-[#FB3131]",
       text: "Cybersecurity",
       icon: ShieldCheck,
     },
@@ -53,8 +53,8 @@ export const postCategoryMap = new Map<
   [
     "WEB",
     {
-      containerClassName: "border-cyan-500 bg-cyan-500/20 backdrop-blur-md",
-      spanClassName: "text-cyan-400",
+      containerClassName: "border-[#317FFB] bg-[#317FFB]/20 backdrop-blur-md",
+      spanClassName: "text-[#317FFB]",
       text: "Web",
       icon: Globe,
     },

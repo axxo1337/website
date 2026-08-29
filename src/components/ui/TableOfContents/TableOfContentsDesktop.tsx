@@ -2,14 +2,18 @@
 
 import { cn } from "@/lib/client/utils";
 import { useState } from "react";
-import useTableOfContents from "@/lib/client/hooks/useTableOfContents";
+import { Heading } from "./index";
 
 //
 // [SECTION] Content
 //
 
-export default function TableOfContentsDesktop({ exclude }: TableOfContentsDesktop) {
-  const { headings, activeId, visible, scrollTo } = useTableOfContents(exclude);
+export default function TableOfContentsDesktop({
+  headings,
+  activeId,
+  visible,
+  scrollTo,
+}: TableOfContentsDesktopProps) {
   const [hovered, setHovered] = useState(false);
 
   if (headings.length === 0) return null;
@@ -88,6 +92,9 @@ export default function TableOfContentsDesktop({ exclude }: TableOfContentsDeskt
 // [SECTION] Types
 //
 
-interface TableOfContentsDesktop {
-  exclude?: string[];
+interface TableOfContentsDesktopProps {
+  headings: Heading[];
+  activeId: string;
+  visible: boolean;
+  scrollTo: (id: string) => void;
 }

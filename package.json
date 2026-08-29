@@ -7,12 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "prepare": "cp scripts/hooks/* .git/hooks/ && chmod +x .git/hooks/*"
+    "prepare": "cp scripts/hooks/* .git/hooks/"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
-    "@next/mdx": "^16.3.1",
+    "@next/mdx": "^16.3.3",
     "@radix-ui/react-aspect-ratio": "^1.1.15",
     "@radix-ui/react-dialog": "^1.1.23",
     "@radix-ui/react-navigation-menu": "^1.2.22",
@@ -40,7 +40,7 @@
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20.19.43",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
+    "@types/react-dom": "^19.2.5",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.0.10",
     "tailwindcss": "^4.3.3",

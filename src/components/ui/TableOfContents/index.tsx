@@ -1,4 +1,7 @@
+"use client";
+
 import { Fragment } from "react/jsx-runtime";
+import useTableOfContents from "@/lib/client/hooks/useTableOfContents";
 import TableOfContentsDesktop from "./TableOfContentsDesktop";
 import TableOfContentsMobile from "./TableOfContentsMobile";
 
@@ -22,11 +25,25 @@ export function extractHeadings(exclude?: string[]): Heading[] {
   );
 }
 
-export default function TableOfContents({ exclude }: TableOfContents) {
+export default function TableOfContents({ exclude }: TableOfContentsProps) {
+  const { headings, activeId, visible, scrollTo, scrollToDelayed } = useTableOfContents(exclude);
+
+  if (headings.length === 0) return null;
+
   return (
     <Fragment>
-      <TableOfContentsDesktop exclude={exclude} />
-      <TableOfContentsMobile exclude={exclude} />
+      <TableOfContentsDesktop
+        headings={headings}
+        activeId={activeId}
+        visible={visible}
+        scrollTo={scrollTo}
+      />
+      <TableOfContentsMobile
+        headings={headings}
+        activeId={activeId}
+        visible={visible}
+        scrollToDelayed={scrollToDelayed}
+      />
     </Fragment>
   );
 }
@@ -35,7 +52,7 @@ export default function TableOfContents({ exclude }: TableOfContents) {
 // [SECTION] Types
 //
 
-interface TableOfContents {
+export interface TableOfContentsProps {
   exclude?: string[];
 }
 

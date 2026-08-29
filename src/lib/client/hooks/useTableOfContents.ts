@@ -13,6 +13,8 @@ export default function useTableOfContents(exclude?: string[], pauseScroll?: boo
   const [visible, setVisible] = useState(false);
   const locked = useRef(false);
 
+  const excludeKey = exclude ? exclude.join(",") : "";
+
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
       const items = extractHeadings(exclude);
@@ -21,7 +23,8 @@ export default function useTableOfContents(exclude?: string[], pauseScroll?: boo
     });
 
     return () => window.cancelAnimationFrame(frameId);
-  }, [exclude]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [excludeKey]);
 
   useEffect(() => {
     if (headings.length === 0 || pauseScroll) return;
