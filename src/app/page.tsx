@@ -2,6 +2,7 @@ import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Socials from "@/components/page/Home/Socials";
 import Work from "@/components/page/Home/Work";
+import TexturedContainer from "@/components/ui/TexturedContainer";
 import { getContentMetadata, ContentType } from "@/lib/server/mdx";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,15 +22,17 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 
 export default async function Home() {
   return (
-    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-08-17")}>
-      <Image
-        alt="aXXo banner - Software engineering and cybersecurity"
-        src="/images/banner.webp"
-        width={960}
-        height={224}
-        priority
-        className="mt-5 md:mt-6 rounded-md border-2"
-      />
+    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-08-30")}>
+      <TexturedContainer className="mt-5 md:mt-6">
+        <Image
+          alt="aXXo banner - Software engineering and cybersecurity"
+          src="/images/banner.webp"
+          width={960}
+          height={224}
+          priority
+        />
+      </TexturedContainer>
+
       <Section subtitle="Who am I?" title="In my own words">
         <p>
           Hey! I&apos;m Charles.{" "}

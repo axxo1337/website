@@ -4,6 +4,7 @@ import { cn, formatUTC, postCategoryMap, postStatusObjectMap } from "@/lib/clien
 import Image from "next/image";
 import Link from "next/link";
 import { LucideIcon } from "lucide-react";
+import TexturedContainer from "./TexturedContainer";
 
 //
 // [SECTION] Content
@@ -25,20 +26,27 @@ export default function ContentCard({
   return (
     <Link href={href} className="group">
       <article>
-        <AspectRatio ratio={16 / 9} className="relative overflow-hidden rounded-sm border-2 border-white/20 bg-black">
-          {thumbnailPath ? (
-            <Image
-              src={thumbnailPath}
-              fill={true}
-              alt={`${title} thumbnail`}
-              className="group-hover:scale-[98%] transition-all group-hover:blur-sm blur-none duration-250 ease-in-out absolute object-cover"
-            />
-          ) : (
-            <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-lg md:text-xl text-center px-4 w-full select-none text-white/50 group-hover:scale-[98%] transition-all duration-200 ease-in-out opacity-100 group-hover:opacity-0">
-              {fallbackText}
-            </span>
-          )}
+        <div className="relative rounded-md overflow-hidden">
+          <TexturedContainer className="bg-black border-0 rounded-none">
+            <AspectRatio ratio={16 / 9}>
+              {thumbnailPath ? (
+                <Image
+                  src={thumbnailPath}
+                  fill={true}
+                  alt={`${title} thumbnail`}
+                  className="group-hover:scale-[98%] transition-all group-hover:blur-sm blur-none duration-250 ease-in-out absolute object-cover"
+                />
+              ) : (
+                <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-lg md:text-xl text-center px-4 w-full select-none text-white/50 group-hover:scale-[98%] transition-all duration-200 ease-in-out opacity-100 group-hover:opacity-0">
+                  {fallbackText}
+                </span>
+              )}
 
+              <span className="absolute left-1/2 top-1/2 -translate-1/2 opacity-0 transition-opacity group-hover:opacity-100 duration-250 text-center text-xl font-bold underline">
+                Click to open
+              </span>
+            </AspectRatio>
+          </TexturedContainer>
           {statusObject && (
             <div
               className={cn(
@@ -49,11 +57,7 @@ export default function ContentCard({
               <span className={cn("text-xs", statusObject.spanClassName)}>{statusObject.text}</span>
             </div>
           )}
-
-          <span className="absolute left-1/2 top-1/2 -translate-1/2 opacity-0 transition-opacity group-hover:opacity-100 duration-250 text-center text-xl font-bold underline">
-            Click to open
-          </span>
-        </AspectRatio>
+        </div>
         <div className="my-2">
           <span className="text-2xl font-medium group-hover-underline">{title}</span>
           <div className="flex flex-wrap gap-4 items-center text-sm font-medium text-white/75 mt-0.5">

@@ -1,4 +1,6 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import TexturedContainer from "@/components/ui/TexturedContainer";
+import { cn } from "@/lib/client/utils";
 import Image from "next/image";
 
 export default function YouTubeVideo({
@@ -25,7 +27,7 @@ export default function YouTubeVideo({
 
   return (
     <div className={className}>
-      <div className="relative w-full overflow-hidden rounded-md border-2 border-white/20 aspect-video">
+      <TexturedContainer className="relative w-full overflow-hidden aspect-video bg-black">
         {id ? (
           <iframe
             src={embedUrl}
@@ -45,7 +47,7 @@ export default function YouTubeVideo({
             </span>
           </AspectRatio>
         )}
-      </div>
+      </TexturedContainer>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import TexturedContainer from "@/components/ui/TexturedContainer";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,7 +8,7 @@ import Link from "next/link";
 
 export default function SubscribeCTA() {
   return (
-    <div className="relative isolate mt-10 sm:mt-12 group flex flex-col items-center gap-5 overflow-hidden rounded-2xl border border-white/20 px-3 py-7 text-center sm:gap-6 sm:py-10 sm:px-7 blured-bg">
+    <TexturedContainer className="relative isolate mt-10 sm:mt-12 group flex flex-col items-center gap-5 overflow-hidden px-3 py-7 text-center sm:gap-6 sm:py-10 sm:px-7 blured-bg">
       <span className="text-2xl md:text-4xl font-semibold">Enjoying my work?</span>
       <p className="text-white/70 md:text-lg md:w-[70%]">Subscribe to my YouTube for high-quality videos and to support me!</p>
       <Link
@@ -25,6 +26,6 @@ export default function SubscribeCTA() {
         height={204.33}
         className="absolute -z-10 -bottom-11.5 -left-7.5 sm:-bottom-15.5 sm:-left-10.5 w-30 sm:w-40 sm:group-hover:-left-9 sm:group-hover:-bottom-13 rotate-45 select-none pointer-events-none brightness-50 transition-all group-hover:brightness-85 ease-in-out"
       />
-    </div>
+    </TexturedContainer>
   );
 }
