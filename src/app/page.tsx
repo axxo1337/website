@@ -26,7 +26,7 @@ export default async function Home() {
       <TexturedContainer className="mt-5 md:mt-6">
         <Image
           alt="aXXo banner - Software engineering and cybersecurity"
-          src="/images/banner.webp"
+          src="/images/banner.png"
           width={960}
           height={224}
           priority

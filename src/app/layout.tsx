@@ -7,6 +7,7 @@ import JsonLd from "@/components/ui/JsonLd";
 import ServiceWorkerRegister from "@/components/layout/ServiceWorkerRegister";
 import { getRootJsonLd } from "@/lib/server/jsonld";
 import "./globals.css";
+import Image from "next/image";
 
 //
 // [SECTION] Defines
@@ -118,7 +119,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden relative min-h-screen before:content-[''] before:fixed before:inset-0 before:-z-50 before:bg-[url('/images/bliss.webp')] before:bg-center before:bg-cover before:bg-no-repeat before:pointer-events-none`}
+        className={`${roboto.variable} antialiased flex flex-col items-center overflow-x-hidden relative min-h-screen before:content-[''] before:fixed before:inset-0 before:-z-50 before:bg-center before:bg-cover before:bg-no-repeat before:pointer-events-none`}
       >
         <JsonLd schema={getRootJsonLd()} />
         <div className="px-2.5 md:px-5 lg:px-0 max-w-240 w-full">
@@ -128,6 +129,14 @@ export default function RootLayout({
         </div>
         <Toaster />
         <ServiceWorkerRegister />
+        <Image
+          alt="Background Windows XP bliss"
+          src="/images/bliss.webp"
+          width={1920}
+          height={1080}
+          className="fixed pointer-events-none -z-10"
+          priority
+        />
       </body>
     </html>
   );
