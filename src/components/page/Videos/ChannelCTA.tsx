@@ -1,3 +1,4 @@
+import TexturedContainer from "@/components/ui/TexturedContainer";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,7 +8,7 @@ import Link from "next/link";
 
 export default function ChannelCTA() {
   return (
-    <div className="relative isolate group flex flex-col items-center gap-5 overflow-hidden rounded-2xl border border-white/20 px-3 py-7 text-center sm:gap-6 sm:py-10 sm:px-7 blured-bg">
+    <TexturedContainer className="relative isolate group flex flex-col items-center gap-5 border px-3 py-7 text-center sm:gap-6 sm:py-10 sm:px-7 blured-bg">
       <span className="text-2xl md:text-4xl font-semibold">I have more!</span>
       <p className="text-white/70 md:text-lg md:w-[70%]">See my full channel page for yourself.</p>
       <Link
@@ -25,6 +26,6 @@ export default function ChannelCTA() {
         height={204.33}
         className="absolute sm:block hidden -z-10 -bottom-10.5 group-hover:-bottom-8 right-3 md:-bottom-15.5 md:right-10 w-30 md:w-40 md:group-hover:-bottom-11.5 select-none pointer-events-none brightness-50 transition-all group-hover:brightness-85 ease-in-out"
       />
-    </div>
+    </TexturedContainer>
   );
 }

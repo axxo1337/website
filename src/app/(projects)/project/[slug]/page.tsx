@@ -11,6 +11,7 @@ import { contentExists, getAdjacentContent, getContentMetadata, getContentSlugs,
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import TexturedContainer from "@/components/ui/TexturedContainer";
 
 //
 // [SECTION] Content
@@ -99,7 +100,7 @@ export default async function ProjectPage({ params }: Props) {
     >
       <JsonLd schema={getProjectJsonLd({ ...metadata, slug })} />
       <PostStatusIndicator status={metadata.status} />
-      <div className="mt-8 md:mt-14 overflow-hidden rounded-md border-2 border-white/20">
+      <TexturedContainer className="mt-8 md:mt-14 overflow-hidden">
         {metadata.thumbnailPath ? (
           <AspectRatio ratio={16 / 9}>
             <Image alt={`${metadata.title} cover image`} className="object-cover" src={metadata.thumbnailPath} fill priority />
@@ -111,7 +112,7 @@ export default async function ProjectPage({ params }: Props) {
             </span>
           </AspectRatio>
         )}
-      </div>
+      </TexturedContainer>
       <Section subtitle="What's this project about?" title="Overview">
         <div>
           <MDXContent />
