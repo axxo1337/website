@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function ChannelCTA() {
   return (
-    <TexturedContainer className="relative isolate group flex flex-col items-center gap-5 border px-3 py-7 text-center sm:gap-6 sm:py-10 sm:px-7 blured-bg">
+    <TexturedContainer className="relative isolate group flex flex-col items-center gap-5 px-3 py-7 text-center sm:gap-6 sm:py-10 sm:px-7 blured-bg">
       <span className="text-2xl md:text-4xl font-semibold">I have more!</span>
       <p className="text-white/70 md:text-lg md:w-[70%]">See my full channel page for yourself.</p>
       <Link
