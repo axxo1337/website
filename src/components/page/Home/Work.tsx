@@ -27,7 +27,18 @@ const workTypesMap = new Map<"video" | "project", { title: string; icon: typeof 
 // [SECTION] Content
 //
 
-export default function Work({ title, type, description, href, createdAt, thumbnailPath, status, categories }: WorkProps) {
+export default function Work({
+  title,
+  type,
+  description,
+  href,
+  createdAt,
+  thumbnailPath,
+  animationPath,
+  animationBackground,
+  status,
+  categories,
+}: WorkProps) {
   const workTypesEntry = workTypesMap.get(type);
 
   return (
@@ -37,6 +48,8 @@ export default function Work({ title, type, description, href, createdAt, thumbn
       href={href}
       createdAt={createdAt}
       thumbnailPath={thumbnailPath}
+      animationPath={animationPath}
+      animationBackground={animationBackground}
       status={status}
       categories={categories}
       typeBadge={workTypesEntry}
@@ -56,6 +69,8 @@ export interface WorkProps {
   href: string;
   createdAt: Date;
   thumbnailPath?: string | null;
+  animationPath?: string | null;
+  animationBackground?: string | null;
   status: TPostStatus;
   categories?: TPostCategory[];
 }

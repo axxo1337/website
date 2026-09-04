@@ -18,6 +18,9 @@ export interface VideoProps {
   description: string;
   createdAt: Date;
   thumbnailPath?: string | null;
+  animationPath?: string | null;
+  animationPreview?: string | null;
+  animationBackground?: string | null;
   href: string;
   status: TPostStatus;
   categories?: TPostCategory[];

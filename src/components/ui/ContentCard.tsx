@@ -1,10 +1,10 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { TPostCategory, TPostStatus } from "@/lib/client/types/post";
 import { cn, formatUTC, postCategoryMap, postStatusObjectMap } from "@/lib/client/utils";
-import Image from "next/image";
 import Link from "next/link";
 import { LucideIcon } from "lucide-react";
 import TexturedContainer from "./TexturedContainer";
+import ContentCardThumbnail from "./ContentCardThumbnail";
 
 //
 // [SECTION] Content
@@ -15,6 +15,9 @@ export default function ContentCard({
   description,
   createdAt,
   thumbnailPath,
+  animationPath,
+  animationBackground,
+  animationPreview,
   href,
   status,
   categories,
@@ -29,20 +32,15 @@ export default function ContentCard({
         <div className="relative rounded-md overflow-hidden">
           <TexturedContainer className="bg-black border-0 rounded-none">
             <AspectRatio ratio={16 / 9}>
-              {thumbnailPath ? (
-                <Image
-                  src={thumbnailPath}
-                  fill={true}
-                  alt={`${title} thumbnail`}
-                  className="group-hover:scale-[98%] transition-all group-hover:blur-sm blur-none duration-250 ease-in-out absolute object-cover"
-                />
-              ) : (
-                <span className="absolute left-1/2 top-1/2 -translate-1/2 font-medium text-lg md:text-xl text-center px-4 w-full select-none text-white/50 group-hover:scale-[98%] transition-all duration-200 ease-in-out opacity-100 group-hover:opacity-0">
-                  {fallbackText}
-                </span>
-              )}
-
-              <span className="absolute left-1/2 top-1/2 -translate-1/2 opacity-0 transition-opacity group-hover:opacity-100 duration-250 text-center text-xl font-bold underline">
+              <ContentCardThumbnail
+                thumbnailPath={thumbnailPath}
+                animationPath={animationPath}
+                animationBackground={animationBackground}
+                animationPreview={animationPreview}
+                title={title}
+                fallbackText={fallbackText}
+              />
+              <span className="absolute left-1/2 top-1/2 z-15 -translate-1/2 opacity-0 transition-opacity group-hover:opacity-100 duration-250 text-center text-xl font-bold underline">
                 Click to open
               </span>
             </AspectRatio>
@@ -107,6 +105,9 @@ export interface ContentCardProps {
   description: string;
   createdAt: Date;
   thumbnailPath?: string | null;
+  animationPath?: string | null;
+  animationPreview?: string | null;
+  animationBackground?: string | null;
   href: string;
   status: TPostStatus;
   categories?: TPostCategory[];

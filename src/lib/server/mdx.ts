@@ -185,6 +185,10 @@ export interface MDXMetadata {
   youtubeId?: string | null;
   description?: string;
   thumbnailPath?: string;
+  animationPath?: string | null;
+  animationBackground?: string | null;
+  animationPreview?: string | null;
+  preview?: string | null;
   tags?: string[];
   categories?: TPostCategory[];
   status: TPostStatus;
