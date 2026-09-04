@@ -36,6 +36,7 @@ export default function Work({
   thumbnailPath,
   animationPath,
   animationBackground,
+  animationPreview,
   status,
   categories,
 }: WorkProps) {
@@ -50,6 +51,7 @@ export default function Work({
       thumbnailPath={thumbnailPath}
       animationPath={animationPath}
       animationBackground={animationBackground}
+      animationPreview={animationPreview}
       status={status}
       categories={categories}
       typeBadge={workTypesEntry}
@@ -70,6 +72,7 @@ export interface WorkProps {
   createdAt: Date;
   thumbnailPath?: string | null;
   animationPath?: string | null;
+  animationPreview?: string | null;
   animationBackground?: string | null;
   status: TPostStatus;
   categories?: TPostCategory[];
