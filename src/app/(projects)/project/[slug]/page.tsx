@@ -12,6 +12,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import TexturedContainer from "@/components/ui/TexturedContainer";
+import LottiePlayer from "@/components/ui/LottiePlayer";
 
 //
 // [SECTION] Content
@@ -101,7 +102,37 @@ export default async function ProjectPage({ params }: Props) {
       <JsonLd schema={getProjectJsonLd({ ...metadata, slug })} />
       <PostStatusIndicator status={metadata.status} />
       <TexturedContainer className="mt-8 md:mt-14 overflow-hidden">
-        {metadata.thumbnailPath ? (
+        {metadata.animationPath ? (
+          <AspectRatio ratio={16 / 9} className="relative bg-black">
+            <LottiePlayer
+              src={metadata.animationPath}
+              previewAlt={`${metadata.title} animation preview`}
+              autoplay
+              loop
+              containerClassName="absolute inset-0 w-full h-full z-10"
+            />
+            {metadata.animationPreview && (
+              <Image
+                alt={`${metadata.title} animation preview`}
+                width={960}
+                height={540}
+                className="absolute z-5"
+                src={metadata.animationPreview}
+                priority
+              />
+            )}
+            {metadata.animationBackground && (
+              <Image
+                alt={`${metadata.title} animation background`}
+                width={960}
+                height={540}
+                className="absolute"
+                src={metadata.animationBackground}
+                priority
+              />
+            )}
+          </AspectRatio>
+        ) : metadata.thumbnailPath ? (
           <AspectRatio ratio={16 / 9}>
             <Image alt={`${metadata.title} cover image`} className="object-cover" src={metadata.thumbnailPath} fill priority />
           </AspectRatio>

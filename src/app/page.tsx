@@ -15,6 +15,7 @@ import Link from "next/link";
 
 const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
   { contentType: "video", slug: "windows-internals-explained" },
+  { contentType: "project", slug: "antidebug" },
   { contentType: "project", slug: "haxo-games" },
 ];
 
