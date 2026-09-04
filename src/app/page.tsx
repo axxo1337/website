@@ -2,6 +2,8 @@ import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Socials from "@/components/page/Home/Socials";
 import Work from "@/components/page/Home/Work";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import LottiePlayer from "@/components/ui/LottiePlayer";
 import TexturedContainer from "@/components/ui/TexturedContainer";
 import { getContentMetadata, ContentType } from "@/lib/server/mdx";
 import Image from "next/image";
@@ -24,13 +26,16 @@ export default async function Home() {
   return (
     <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-09-04")}>
       <TexturedContainer className="mt-5 md:mt-6">
-        <Image
-          alt="aXXo banner - Software engineering and cybersecurity"
-          src="/images/banner.png"
-          width={960}
-          height={224}
-          priority
-        />
+        <AspectRatio ratio={960 / 224} className="relative">
+          <LottiePlayer
+            src="/animations/banner/data.lottie"
+            containerClassName="absolute inset-0 w-full h-full"
+            previewAlt="Banner animation preview"
+            autoplay
+            loop={false}
+          />
+          <Image alt="Banner background" width={960} height={240} src="/animations/banner/background.webp" />
+        </AspectRatio>
       </TexturedContainer>
 
       <Section subtitle="Who am I?" title="In my own words">
