@@ -20,6 +20,8 @@ export interface ProjectProps {
   thumbnailPath?: string | null;
   animationPath?: string | null;
   animationBackground?: string | null;
+  animationBackgroundColor?: string | null;
+  animationPreview?: string | null;
   href: string;
   status: TPostStatus;
   categories?: TPostCategory[];

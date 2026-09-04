@@ -187,6 +187,7 @@ export interface MDXMetadata {
   thumbnailPath?: string;
   animationPath?: string | null;
   animationBackground?: string | null;
+  animationBackgroundColor?: string | null;
   animationPreview?: string | null;
   preview?: string | null;
   tags?: string[];

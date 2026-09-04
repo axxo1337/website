@@ -15,6 +15,7 @@ import Link from "next/link";
 
 const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
   { contentType: "video", slug: "windows-internals-explained" },
+  { contentType: "project", slug: "antidebug" },
   { contentType: "project", slug: "haxo-games" },
 ];
 
@@ -75,6 +76,7 @@ export default async function Home() {
                 animationPath={metadata.animationPath || null}
                 animationPreview={metadata.animationPreview || null}
                 animationBackground={metadata.animationBackground || null}
+                animationBackgroundColor={metadata.animationBackgroundColor || null}
                 categories={metadata.categories}
               />
             );

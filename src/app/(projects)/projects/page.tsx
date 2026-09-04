@@ -53,6 +53,8 @@ export default async function Projects() {
               thumbnailPath={project.thumbnailPath}
               animationPath={project.animationPath}
               animationBackground={project.animationBackground}
+              animationBackgroundColor={project.animationBackgroundColor}
+              animationPreview={project.animationPreview}
               href={`/project/${project.slug}`}
               status={project.status}
               categories={project.categories}
