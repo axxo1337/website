@@ -17,6 +17,7 @@ export default function ContentCard({
   thumbnailPath,
   animationPath,
   animationBackground,
+  animationBackgroundColor,
   animationPreview,
   href,
   status,
@@ -36,6 +37,7 @@ export default function ContentCard({
                 thumbnailPath={thumbnailPath}
                 animationPath={animationPath}
                 animationBackground={animationBackground}
+                animationBackgroundColor={animationBackgroundColor}
                 animationPreview={animationPreview}
                 title={title}
                 fallbackText={fallbackText}
@@ -108,6 +110,7 @@ export interface ContentCardProps {
   animationPath?: string | null;
   animationPreview?: string | null;
   animationBackground?: string | null;
+  animationBackgroundColor?: string | null;
   href: string;
   status: TPostStatus;
   categories?: TPostCategory[];

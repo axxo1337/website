@@ -76,6 +76,7 @@ export default async function Home() {
                 animationPath={metadata.animationPath || null}
                 animationPreview={metadata.animationPreview || null}
                 animationBackground={metadata.animationBackground || null}
+                animationBackgroundColor={metadata.animationBackgroundColor || null}
                 categories={metadata.categories}
               />
             );

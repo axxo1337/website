@@ -21,6 +21,7 @@ export interface VideoProps {
   animationPath?: string | null;
   animationPreview?: string | null;
   animationBackground?: string | null;
+  animationBackgroundColor?: string | null;
   href: string;
   status: TPostStatus;
   categories?: TPostCategory[];

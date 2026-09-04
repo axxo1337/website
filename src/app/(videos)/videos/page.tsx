@@ -62,6 +62,7 @@ export default async function Videos() {
               thumbnailPath={video.thumbnailPath}
               animationPath={video.animationPath}
               animationBackground={video.animationBackground}
+              animationBackgroundColor={video.animationBackgroundColor}
               animationPreview={video.animationPreview}
               href={`/video/${video.slug}`}
               status={video.status}

@@ -14,6 +14,7 @@ export default function ContentCardThumbnail({
   thumbnailPath,
   animationPath,
   animationBackground,
+  animationBackgroundColor,
   animationPreview,
   title,
   fallbackText,
@@ -22,7 +23,8 @@ export default function ContentCardThumbnail({
 
   const hasAnimationBg = Boolean(animationBackground && animationPath);
   const hasAnimationPreview = Boolean(animationPreview && animationPath);
-  const hasAnimationVisual = hasAnimationBg || hasAnimationPreview;
+  const hasAnimationBgColor = Boolean(animationBackgroundColor && animationPath);
+  const hasAnimationVisual = hasAnimationBg || hasAnimationPreview || hasAnimationBgColor;
   const showThumbnail = thumbnailPath && !hasAnimationVisual && (!animationPath || !isAnimationLoaded);
   const showFallback = !thumbnailPath && !hasAnimationVisual && (!animationPath || !isAnimationLoaded);
 
@@ -44,7 +46,10 @@ export default function ContentCardThumbnail({
       )}
 
       {animationPath && (
-        <div className="group-hover:scale-[98%] transition-all group-hover:blur-sm blur-none duration-250 ease-in-out relative w-full h-full">
+        <div
+          className="group-hover:scale-[98%] transition-all group-hover:blur-sm blur-none duration-250 ease-in-out relative w-full h-full"
+          style={{ backgroundColor: animationBackgroundColor || undefined }}
+        >
           <LottiePlayer
             src={animationPath}
             previewAlt={`${title} animation preview`}
@@ -82,6 +87,7 @@ export interface ContentCardThumbnailProps {
   thumbnailPath?: string | null;
   animationPath?: string | null;
   animationBackground?: string | null;
+  animationBackgroundColor?: string | null;
   animationPreview?: string | null;
   title: string;
   fallbackText: string;

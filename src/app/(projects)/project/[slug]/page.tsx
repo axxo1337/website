@@ -103,7 +103,11 @@ export default async function ProjectPage({ params }: Props) {
       <PostStatusIndicator status={metadata.status} />
       <TexturedContainer className="mt-8 md:mt-14 overflow-hidden">
         {metadata.animationPath ? (
-          <AspectRatio ratio={16 / 9} className="relative bg-black">
+          <AspectRatio
+            ratio={16 / 9}
+            className="relative bg-black"
+            style={{ backgroundColor: metadata.animationBackgroundColor || undefined }}
+          >
             <LottiePlayer
               src={metadata.animationPath}
               previewAlt={`${metadata.title} animation preview`}
