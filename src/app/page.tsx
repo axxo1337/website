@@ -68,6 +68,7 @@ export default async function Home() {
                 createdAt={new Date(metadata.createdAt)}
                 thumbnailPath={metadata.thumbnailPath || null}
                 animationPath={metadata.animationPath || null}
+                animationPreview={metadata.animationPreview || null}
                 animationBackground={metadata.animationBackground || null}
                 categories={metadata.categories}
               />

@@ -15,15 +15,13 @@ export default function ContentCardThumbnail({
   animationPath,
   animationBackground,
   animationPreview,
-  preview,
   title,
   fallbackText,
 }: ContentCardThumbnailProps) {
   const [isAnimationLoaded, setIsAnimationLoaded] = useState(false);
 
-  const previewSrc = animationPreview ?? preview;
   const hasAnimationBg = Boolean(animationBackground && animationPath);
-  const hasAnimationPreview = Boolean(previewSrc && animationPath);
+  const hasAnimationPreview = Boolean(animationPreview && animationPath);
   const hasAnimationVisual = hasAnimationBg || hasAnimationPreview;
   const showThumbnail = thumbnailPath && !hasAnimationVisual && (!animationPath || !isAnimationLoaded);
   const showFallback = !thumbnailPath && !hasAnimationVisual && (!animationPath || !isAnimationLoaded);
@@ -85,7 +83,6 @@ export interface ContentCardThumbnailProps {
   animationPath?: string | null;
   animationBackground?: string | null;
   animationPreview?: string | null;
-  preview?: string | null;
   title: string;
   fallbackText: string;
 }
