@@ -18,6 +18,8 @@ export interface ProjectProps {
   description: string;
   createdAt: Date;
   thumbnailPath?: string | null;
+  animationPath?: string | null;
+  animationBackground?: string | null;
   href: string;
   status: TPostStatus;
   categories?: TPostCategory[];

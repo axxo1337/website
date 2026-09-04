@@ -6,6 +6,7 @@ import MicrosoftLearnQuote from "./components/ui/MicrosoftLearnQuote";
 import UndocumentedStruct from "./components/ui/UndocumentedStruct";
 import YouTubeVideo from "./components/page/Video/YouTubeVideo";
 import GithubRepo from "./components/ui/GithubRepo";
+import LottiePlayer from "./components/ui/LottiePlayer";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -90,6 +91,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     UndocumentedStruct: (props) => <UndocumentedStruct {...props} />,
     YouTubeVideo: (props) => <YouTubeVideo className="[&>div]:border [&>div]:border-white/10 mt-3" {...props} />,
     GithubRepo: (props) => <GithubRepo {...props} />,
+    LottiePlayer: (props) => <LottiePlayer {...props} />,
     ...components,
   };
 }

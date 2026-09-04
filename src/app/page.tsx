@@ -22,7 +22,7 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 
 export default async function Home() {
   return (
-    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-08-30")}>
+    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-09-04")}>
       <TexturedContainer className="mt-5 md:mt-6">
         <Image
           alt="aXXo banner - Software engineering and cybersecurity"
@@ -67,6 +67,8 @@ export default async function Home() {
                 href={`/${contentType}/${slug}`}
                 createdAt={new Date(metadata.createdAt)}
                 thumbnailPath={metadata.thumbnailPath || null}
+                animationPath={metadata.animationPath || null}
+                animationBackground={metadata.animationBackground || null}
                 categories={metadata.categories}
               />
             );

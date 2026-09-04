@@ -60,6 +60,9 @@ export default async function Videos() {
               description={video.description as string}
               createdAt={new Date(video.createdAt)}
               thumbnailPath={video.thumbnailPath}
+              animationPath={video.animationPath}
+              animationBackground={video.animationBackground}
+              animationPreview={video.animationPreview}
               href={`/video/${video.slug}`}
               status={video.status}
               categories={video.categories}

@@ -51,6 +51,8 @@ export default async function Projects() {
               description={project.description as string}
               createdAt={new Date(project.createdAt)}
               thumbnailPath={project.thumbnailPath}
+              animationPath={project.animationPath}
+              animationBackground={project.animationBackground}
               href={`/project/${project.slug}`}
               status={project.status}
               categories={project.categories}
