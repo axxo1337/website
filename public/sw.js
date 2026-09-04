@@ -2,7 +2,7 @@
 // [SECTION] Defines
 //
 
-const CACHE_NAME = "axxo-pwa-v1";
+const CACHE_NAME = "axxo-pwa-v2";
 
 const PRECACHE_ASSETS = [
   "/",
@@ -54,6 +54,10 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
 
   if (request.method !== "GET" || !url.protocol.startsWith("http")) {
+    return;
+  }
+
+  if (url.origin !== self.location.origin) {
     return;
   }
 
