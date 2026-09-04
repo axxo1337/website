@@ -30,7 +30,7 @@ export default function Social({ copyContent, copyTitle, href, iconPath, title }
         alt=""
         aria-hidden="true"
       />
-      <span className="font-medium text-lg md:text-xl group-hover:text-white/80 transition-colors duration-250 group-hover-underline flex items-center gap-2">
+      <span className="font-medium -top-[1px] text-lg md:text-xl group-hover:text-white/80 transition-colors duration-250 group-hover-underline flex items-center gap-2">
         {title}
       </span>
     </Fragment>
