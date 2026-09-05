@@ -130,7 +130,7 @@ export default async function Home() {
           </div>
         </div>
         <p className="mt-3">
-          As you can see, my team wasn&apos;t necessarily great xD Also I won&apos;t lie, I was doing C++ programming most of
+          As you can see, my team wasn&apos;t necessarily great 😂 Also I won&apos;t lie, I was doing C++ programming most of
           the time, but it didn&apos;t stop me from growing an interest and learning about other things.
         </p>
         <p className="mt-3">Hopefully, as my career progresses I'll be able to add more interesting things to this section.</p>
