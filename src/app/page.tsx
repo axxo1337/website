@@ -27,7 +27,7 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 
 export default async function Home() {
   return (
-    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-09-04")}>
+    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-09-05")}>
       <TexturedContainer className="mt-5 md:mt-6">
         <AspectRatio ratio={960 / 224} className="relative">
           <LottiePlayer
@@ -105,7 +105,19 @@ export default async function Home() {
         </p>
         <p className="mt-3">
           This may seem random, but I did have some previous exposure to robotics when I was younger. Our HS offered a
-          parascholar program which allowed us to take part in Vex, FRC and FTC competitions.
+          parascholar program which allowed us to take part in{" "}
+          <a className="inline-anchor" href="https://www.vexrobotics.com/">
+            Vex
+          </a>
+          ,{" "}
+          <a className="inline-anchor" href="https://firstroboticscanada.org/">
+            FRC
+          </a>{" "}
+          and{" "}
+          <a className="inline-anchor" href="https://www.firstinspires.org/programs/ftc/">
+            FTC
+          </a>{" "}
+          competitions.
         </p>
         <div className="mt-4 flex gap-6 md:gap-8 md:flex-row flex-col">
           <div className="flex flex-col items-center shrink-0">
