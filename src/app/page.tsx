@@ -107,7 +107,7 @@ export default async function Home() {
           This may seem random, but I did have some previous exposure to robotics when I was younger. Our HS offered a
           parascholar program which allowed us to take part in Vex, FRC and FTC competitions.
         </p>
-        <div className="mt-4 flex gap-6 md:flex-row flex-col">
+        <div className="mt-4 flex gap-6 md:gap-8 md:flex-row flex-col">
           <div className="flex flex-col items-center shrink-0">
             <ImageViewer src="/images/vex.png" alt="Vex 2023 competition robot">
               <TexturedContainer className="relative">
