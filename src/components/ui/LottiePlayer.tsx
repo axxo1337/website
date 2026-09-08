@@ -21,17 +21,12 @@ export default function LottiePlayer({
   dotLottieRefCallback,
   ...props
 }: LottiePlayerProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
-
   const handleDotLottieRef = useCallback(
     (dotLottie: DotLottie | null) => {
       dotLottieRefCallback?.(dotLottie);
       if (!dotLottie) return;
-      if (dotLottie.isLoaded) {
-        setIsLoaded(true);
-      } else {
+      if (!dotLottie.isLoaded) {
         const onLoad = () => {
-          setIsLoaded(true);
           dotLottie.removeEventListener("load", onLoad);
         };
         dotLottie.addEventListener("load", onLoad);
