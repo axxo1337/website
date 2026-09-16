@@ -1,8 +1,8 @@
-import { Lightbulb, OctagonAlert, TriangleAlert } from "lucide-react";
+import { Lightbulb, LucideProps, OctagonAlert, TriangleAlert } from "lucide-react";
 import TexturedContainer from "./TexturedContainer";
 import { cn } from "@/lib/client/utils";
 
-const calloutObjectMap: Record<string, { icon: React.ReactNode, iconColor: string, containerClassName: string | null}> = {
+const calloutObjectMap: Record<string, { Icon: React.ComponentType<LucideProps>, iconColor: string, containerClassName: string | null}> = {
   info: { Icon: Lightbulb, iconColor: "#FFF", containerClassName: null },
   warning: { Icon: TriangleAlert, iconColor: "#FBDD31", containerClassName: "bg-[#FBDD31]/20" },
   danger: { Icon: OctagonAlert, iconColor: "#FB3131", containerClassName: "bg-[#FB3131]/20" },
