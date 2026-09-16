@@ -7,6 +7,7 @@ import UndocumentedStruct from "./components/ui/UndocumentedStruct";
 import YouTubeVideo from "./components/page/Video/YouTubeVideo";
 import GithubRepo from "./components/ui/GithubRepo";
 import LottiePlayer from "./components/ui/LottiePlayer";
+import Callout from "./components/ui/Callout";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -92,6 +93,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     YouTubeVideo: (props) => <YouTubeVideo className="[&>div]:border [&>div]:border-white/10 mt-3" {...props} />,
     GithubRepo: (props) => <GithubRepo {...props} />,
     LottiePlayer: (props) => <LottiePlayer {...props} />,
+    Callout: (props) => <Callout {...props} />,
     ...components,
   };
 }

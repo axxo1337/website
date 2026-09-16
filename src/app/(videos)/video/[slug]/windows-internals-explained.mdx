@@ -2,51 +2,52 @@ export const metadata = {
     title: "Windows Internals Explained",
     description: "Windows internals is a very important subject that's sadly very poorly documented. In this video I'll do my best to give you a great guide to trampoline from.",
     createdAt: "2026-02-20",
-    updatedAt: "2026-09-07",
+    updatedAt: "2026-09-16",
     youtubeId: "AjzXGaH5VPY",
     thumbnailPath: "/images/thumbnails/windows-internals-explained.webp",
     animationPath: "/animations/win_interns_explained/data.lottie",
     animationBackground: "/animations/win_interns_explained/background.webp",
     animationPreview: "/animations/win_interns_explained/preview.webp",
     categories: ["COMPUTER_SCIENCE", "CYBERSECURITY"],
-    status: "WIP"
+    status: "COMPLETED",
 };
 
-Windows internals is a very important subject that's sadly poorly documented. While there are good reference out there, they are all lacking in one way or another which can be 
-irritating for beginners. In this video I did my best to give you a great guide to trampoline from. You should find all of my sources and collaborators 
+Windows internals is a very important subject that's sadly poorly documented. While there are good reference out there, they are all lacking in one way or another which can be
+irritating for beginners. In this video I did my best to give you a great guide to trampoline from. You should find all of my sources and collaborators
 [at the end of this document](#sources-and-credits).
 
 ### A brief history
 
-In 1975, a 21 year old [Paul Allen](https://en.wikipedia.org/wiki/Paul_Allen) (Microsoft's co-founder) was walking through the 
-[Harvard square](https://en.wikipedia.org/wiki/Harvard_Square) when something caught his attention. It was an issue of the magazine <i>Popular Electronics</i>. 
-The cover stared a computer called the [Altair 8800](https://en.wikipedia.org/wiki/Altair_8800). A personal computer released just the year before by Micro 
+In 1975, a 21 year old [Paul Allen](https://en.wikipedia.org/wiki/Paul_Allen) (Microsoft's co-founder) was walking through the
+[Harvard square](https://en.wikipedia.org/wiki/Harvard_Square) when something caught his attention. It was an issue of the magazine <i>Popular Electronics</i>.
+The cover stared a computer called the [Altair 8800](https://en.wikipedia.org/wiki/Altair_8800). A personal computer released just the year before by Micro
 Instrumentation and Telemetry Systems Inc., let's just call them MITS. Allen bought the magazine and headed back to his best friend's dorm.
 
 ![Popular Electronics|center|300px|The Popular Electronics magazine Allen bought](/images/documents/windows-internals-explained/popular_electronics.webp)
 
-That friend was [Bill Gates](https://en.wikipedia.org/wiki/Bill_Gates). The two had been considering starting a software development company for years. The problem was 
+That friend was [Bill Gates](https://en.wikipedia.org/wiki/Bill_Gates). The two had been considering starting a software development company for years. The problem was
 that, at the time, consumer-grade computers didn't exist. Manufacturers only produced systems for large companies and research labs at astronomical prices.
 
 ![Xerox Alto|center|400px|The Xerox Alto, a PC which cost 140k$ on release (in 2025's US dollar value)](/images/documents/windows-internals-explained/xerox_alto.webp)
 
-So when Allen saw that MITS managed to release a computer system at a price the consumer market could afford, he knew they had an opportunity at hand. 
+So when Allen saw that MITS managed to release a computer system at a price the consumer market could afford, he knew they had an opportunity at hand.
 The two decided they should land a deal with the company for the development of an implementation of [BASIC](https://en.wikipedia.org/wiki/BASIC) for the system.
 
 ![Altair 8800|center|400px|The Altair 8800 by MITS, released in 1974](/images/documents/windows-internals-explained/Altair_8800_Computer_upscaled.webp)
 
-Gates called Ed Roberts, the CEO of MITS, to tell him they already had a working interpreter, <u>which they actually didn't</u>. Roberts had already received other 
-calls from people with the same claim so he knew it was likely a bluff. He told them that the first group to show up in Albuquerque with a working demo on the 
+Gates called Ed Roberts, the CEO of MITS, to tell him they already had a working interpreter, <u>which they actually didn't</u>. Roberts had already received other
+calls from people with the same claim so he knew it was likely a bluff. He told them that the first group to show up in Albuquerque with a working demo on the
 Altair would get the contract.
 
 Two months later, Paul Allen went alone to the meeting with the completed software and the presentation was successful. They were the first to show a demo.
-A month later, Allen and Gates founded Micro-Soft. Over the years they secured many more contracts, and in 1980, their revenue was of 
+A month later, Allen and Gates founded Micro-Soft. Over the years they secured many more contracts, and in 1980, their revenue was of
 [8 million dollars](https://learn.microsoft.com/en-us/shows/history/history-of-microsoft-1980), or about 31 million in today's currency. At this point, a few IBM employees approached
 them with a deal to code an operating system for their next personal computer.
 
 To save themselves a lot of time they ended up buying an already existing system called [86-DOS](https://en.wikipedia.org/wiki/86-DOS). They modified and licensed it
-to IBM as MS-DOS. Microsoft ended up releasing Windows in 1985. It was a graphical interface running on top of DOS. This later evolved into Windows 95, Windows XP and
-eventually all modern versions of Windows.
+to IBM as MS-DOS. Microsoft ended up releasing Windows in 1985. It was a graphical interface running on top of DOS.
+
+They then dropped the DOS kernel and replaced it with NT instead at the release of Windows 3.1 in 1993. Then came Windows 95 and eventually all modern versions of Windows.
 
 ### Fundamentals
 
@@ -61,6 +62,8 @@ I'll assume that you at least understand number systems such as binary and hexad
 
 When dealing with larger chunks of data we have other measurements. The more common unit we use is the byte. It represents 8 bits. A less common, but popular measure in
 Microsoft's software is the word. It represents 16 bits. Other variants of it are the double and quadruple word, these being two and four times the size of a word respectively.
+
+<Callout type="info">Note that the a word can also refer to the size of a pointer in other contexts.</Callout>
 
 Running programs like Notepad and Chrome are called processes. Processes are how the system isolates the resources of each running application.
 
@@ -95,7 +98,7 @@ as whether or not the described pages should be executable and or writable. Whil
 their page tables to point to the same physical pages if they need to share memory. In fact, the system uses this to share dynamic libraries between programs and save on
 physical memory (in reality it uses something called prototype page table entries, but the concept is the same).
 
-By the way, I made a video about virtual memory with a [post](/video/virtual-memory-explained). It is not very advanced, and this explanation covers things 
+By the way, I made a video about virtual memory with a [post](/video/virtual-memory-explained). It is not very advanced, and this explanation covers things
 it hasn't, but if you are slightly lost I'd recommend watching the video.
 
 <YouTubeVideo id="ultz9m0n0GE" thumbnailPath="/images/thumbnails/virtual-memory-explained.webp" />
@@ -177,17 +180,17 @@ addresses.
 
 #### Threads
 
-Every process contains threads. These are execution contexts meaning they each represent a state of the CPU. They are associated to the specific register values present in the 
+Every process contains threads. These are execution contexts meaning they each represent a state of the CPU. They are associated to the specific register values present in the
 CPU when executing the instructions associated to them. Threads can be executed simultaneously on a multi-core processor.
 
-Let's cover the thread stack. It's a fixed-size read and writable chunk of memory every thread has dedicated to it. They use it to handle local variables and arguments that 
-functions are using. In a data structures class you'd be told that a stack is a last in first out data structure, meaning the last element to be added would be the first one to 
+Let's cover the thread stack. It's a fixed-size read and writable chunk of memory every thread has dedicated to it. They use it to handle local variables and arguments that
+functions are using. In a data structures class you'd be told that a stack is a last in first out data structure, meaning the last element to be added would be the first one to
 be removed.
 
-Although on modern systems, the thread stack doesn't have to be accessed in this order, but typically each function reserves its own portion of it which only it uses. We call 
+Although on modern systems, the thread stack doesn't have to be accessed in this order, but typically each function reserves its own portion of it which only it uses. We call
 this portion a stack frame.
 
-Two registers are associated to the stack. `RSP`, the stack pointer and `RBP`, the base pointer. The stack pointer simply points to the top of the stack while the base pointer 
+Two registers are associated to the stack. `RSP`, the stack pointer and `RBP`, the base pointer. The stack pointer simply points to the top of the stack while the base pointer
 points to the base of the current stack frame.
 
 ```cpp
@@ -205,41 +208,41 @@ int main()
 }
 ```
 
-For example, after calling foo, this code would first push the address where the code must return to after running foo, then the base pointer of the previous function's stack 
+For example, after calling foo, this code would first push the address where the code must return to after running foo, then the base pointer of the previous function's stack
 frame, set the base pointer to the current stack pointer, use 4 bytes to make space for the integer, and finally add the value 5 to that location after zeroing it out.
 
-Zeroing out stack values is important because there could be unexpected data left there from previous stack frames. Once the code is done it simply pops the old base pointer, 
-thus setting it back to the old stack frame's value, now the stack pointer would point to the return address and thus when executing a return instruction the code would pop 
+Zeroing out stack values is important because there could be unexpected data left there from previous stack frames. Once the code is done it simply pops the old base pointer,
+thus setting it back to the old stack frame's value, now the stack pointer would point to the return address and thus when executing a return instruction the code would pop
 this value into the instruction pointer thus going back after the call to `foo`.
 
 Because a stack is fixed in size you wouldn't use it to store large data such as an image. Instead, you'd use something called the heap, but we won't cover this now.
 
 ### Executables (PE)
 
-Imagine you have some program on your desktop. Say... notepad. The executable file stored on your disk representing that application uses a format called 
+Imagine you have some program on your desktop. Say... notepad. The executable file stored on your disk representing that application uses a format called
 [portable executable](https://en.wikipedia.org/wiki/Portable_Executable), or PE for short. We call it portable because it supports multiple architectures.
 
-If you were to analyze it with some specialized tool, close to its beginning, you'd find a header called the DOS stub. It's a small 16-bit program that would be run when 
+If you were to analyze it with some specialized tool, close to its beginning, you'd find a header called the DOS stub. It's a small 16-bit program that would be run when
 executing the file on an old DOS system. Usually its code simply prints the following message:
 
 > This program cannot be run in DOS mode.
 
-Most of your applications hold this old piece of history. Microsoft decided to put it there for backwards compatibility. These two words are something you'll hear a lot when 
+Most of your applications hold this old piece of history. Microsoft decided to put it there for backwards compatibility. These two words are something you'll hear a lot when
 working with Windows.
 
-Right before the DOS stub is the DOS header. It's the very first chunk of information in PE files. It contains a value specifying how far we need to go to avoid the DOS stub 
+Right before the DOS stub is the DOS header. It's the very first chunk of information in PE files. It contains a value specifying how far we need to go to avoid the DOS stub
 and find the NT headers.
 
-These consist of two very important headers called the file header and the optional header. The file header holds information such as the architecture the executable is for 
+These consist of two very important headers called the file header and the optional header. The file header holds information such as the architecture the executable is for
 and when the file was created. As for the optional header, don't be mislead by its name, it's actually pretty important as it stores information such as where the code begins.
 
-After all these headers is the section table. A section is a portion of an executable dedicated to storing some data. This can be executable code, information about the 
+After all these headers is the section table. A section is a portion of an executable dedicated to storing some data. This can be executable code, information about the
 functions the program needs to import from libraries or even resources such as images.
 
-The purpose of the section table is to list all these sections using entries which specifies their name, sizes and attributes. The attributes specify whether the data should 
+The purpose of the section table is to list all these sections using entries which specifies their name, sizes and attributes. The attributes specify whether the data should
 be readable, writable and or executable. This is for security reasons. By default, you wouldn't want the code section to be writable.
 
-When you execute an application, the system will make sure to setup the address space accordingly. Then say some executed code tried to write into a non-writable section like 
+When you execute an application, the system will make sure to setup the address space accordingly. Then say some executed code tried to write into a non-writable section like
 the code section, an access violation exception would occur and the program would crash.
 
 Some sections with specific names are almost always present in any executable. Some examples are the:
@@ -250,62 +253,62 @@ Some sections with specific names are almost always present in any executable. S
 
 There's a handful more examples I could give, but most of them will only be relevant to us later in this video.
 
-So what happens when you double click that notepad application? The program that will handle this action is `explorer.exe`. That's what displays your desktop, taskbar and file 
+So what happens when you double click that notepad application? The program that will handle this action is `explorer.exe`. That's what displays your desktop, taskbar and file
 explorer. If you were to terminate this program, your desktop, taskbar and any explorer window you had open would vanish.
 
-When you execute notepad, under the hood `explorer.exe` will call the function 
-[`CreateProcess`](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessw). It's a utility that's part of the 
+When you execute notepad, under the hood `explorer.exe` will call the function
+[`CreateProcess`](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessw). It's a utility that's part of the
 [Windows API](https://en.wikipedia.org/wiki/Windows_API), a massive set of utilities that programmers can use to interact with the operating system in a very simple way.
 
-The Windows API is not all stored in one big library. It's instead fragmented in different files that programs can either statically or dynamically link. Statically linking a 
+The Windows API is not all stored in one big library. It's instead fragmented in different files that programs can either statically or dynamically link. Statically linking a
 library is just slapping all of its contents straight into your executable. Dynamic linking exists to avoid wasting space when multiple programs require the same library.
 
-To make this possible, files called dynamically linked libraries, or for short DLLs, are stored on the disk. When running an executable the system will make sure to make these 
+To make this possible, files called dynamically linked libraries, or for short DLLs, are stored on the disk. When running an executable the system will make sure to make these
 libraries available in memory and map them into the processes which require them.
 
-The three most important DLLs associated to the Windows API are `kernel32.dll`, `kernelbase.dll` and `ntdll.dll`. `kernel32.dll` is the legacy version of 
-`kernelbase.dll`. `kernelbase` is intended to be the modern replacement for `kernel32`, but it was kept for backwards compatibility. Nowadays its functions mostly are just 
+The three most important DLLs associated to the Windows API are `kernel32.dll`, `kernelbase.dll` and `ntdll.dll`. `kernel32.dll` is the legacy version of
+`kernelbase.dll`. `kernelbase` is intended to be the modern replacement for `kernel32`, but it was kept for backwards compatibility. Nowadays its functions mostly are just
 forwards to the functions in `kernelbase` so we'll ignore it.
 
 ### Overview of Windows
 
-Before we dive deeper in `CreateProcess`, I think we should get a small overview of Windows. Threads are scheduled by Windows, meaning the system makes decisions for when and 
+Before we dive deeper in `CreateProcess`, I think we should get a small overview of Windows. Threads are scheduled by Windows, meaning the system makes decisions for when and
 for how long each should run. The thing that handles this scheduling is intuitively called the scheduler. It's part of a bigger group of Windows components called the kernel.
 
 ![Windows architecture simplified|center|800px|User mode and kernel mode components of Windows](/images/documents/windows-internals-explained/win_arch_simple.webp)
 
-What you see here is an illustration of the Windows architecture. This red bar divides the user and kernel mode parts of Windows. In user mode you find user processes which 
-depend on subsystem DLLs. These are libraries like `kernel32` and `kernelbase`. We call them subsystems because they each expose some subset of the Windows API. For instance, 
+What you see here is an illustration of the Windows architecture. This red bar divides the user and kernel mode parts of Windows. In user mode you find user processes which
+depend on subsystem DLLs. These are libraries like `kernel32` and `kernelbase`. We call them subsystems because they each expose some subset of the Windows API. For instance,
 the subsystem DLL `user32` provides functions to manage graphical interfaces and user inputs.
 
 Down the line almost all these functions end up invoking some function in NTDLL. NTDLL holds three variants of functions each having a specific prefix:
 
 - The `Nt`, or native functions are essentially system call wrappers.
-- The `Zw` functions implement the same system calls as their `Nt` equivalent, but for kernel code to use in certain cases. In user-mode `Zw` functions are just aliases of 
+- The `Zw` functions implement the same system calls as their `Nt` equivalent, but for kernel code to use in certain cases. In user-mode `Zw` functions are just aliases of
 `Nt` ones.
 - The `Rtl`, or runtime library functions are helper functions that may or may not perform system calls.
 
-The reason programs rarely directly invoke NTDLL routines is for simplicity. The wrappers provided by the other DLLs often include additional features such as argument parsing, 
+The reason programs rarely directly invoke NTDLL routines is for simplicity. The wrappers provided by the other DLLs often include additional features such as argument parsing,
 validation or error handling.
 
-Service processes are processes which generally aren't executing within the context of some logged in user. An example of a service process is Windows Defender, the anti-virus. 
+Service processes are processes which generally aren't executing within the context of some logged in user. An example of a service process is Windows Defender, the anti-virus.
 System processes are fixed processes with a specific system-related purpose. An example of this is the logon manager which handles logins and logouts.
 
-As for the kernel mode side of Windows, the executive is its higher level. It contains components such as the memory manager and the object manager. We'll discuss these further 
+As for the kernel mode side of Windows, the executive is its higher level. It contains components such as the memory manager and the object manager. We'll discuss these further
 later on. The kernel includes lower-level features such as the scheduler. Device drivers include drivers like your graphics card driver.
 
-And finally, the hardware abstraction layer or for short HAL is the lowest part of Windows. It's the actual hardware-specific implementation of the system and will vary 
+And finally, the hardware abstraction layer or for short HAL is the lowest part of Windows. It's the actual hardware-specific implementation of the system and will vary
 significantly between architectures. It's also the one we worry the least about as users.
 
 ### CreateProcess part 1
 
-With this overview out of the way we can go back to what `CreateProcess` does. Quick recap, we saw that `explorer.exe` was responsible for displaying your desktop and executing 
+With this overview out of the way we can go back to what `CreateProcess` does. Quick recap, we saw that `explorer.exe` was responsible for displaying your desktop and executing
 the programs you double click.
 
-To do so it will invoke the `CreateProcess` function from `kernelbase.dll`. This function on its own doesn't really do much. Instead, it's another function that it calls named 
+To do so it will invoke the `CreateProcess` function from `kernelbase.dll`. This function on its own doesn't really do much. Instead, it's another function that it calls named
 `CreateProcessInternalW` that sets things into motion. This function will gather and format all the required arguments to then invoke `NtCreateUserProcess` from NTDLL.
 
-That's the system call which will hand control to the system so it can create the process. The system call handler and the functions which process the specific operations are 
+That's the system call which will hand control to the system so it can create the process. The system call handler and the functions which process the specific operations are
 all stored in the file `ntoskrnl.exe`. This file stores most of the Windows executive and kernel.
 
 ### System call handler
@@ -314,52 +317,52 @@ You can find in it a function with the same name as the one invoked from NTDLL, 
 
 ![Binary Ninja symbols NtCreateUserProcess|416px|center|NtCreateUserProcess in ntoskrnl.exe](/images/documents/windows-internals-explained/create_user_proc_symbols.webp)
 
-As a matter of fact you can even find said dispatcher under the name `KiSystemCall64`. The shadow in this one's name is to differentiate it from the original version. It 
+As a matter of fact you can even find said dispatcher under the name `KiSystemCall64`. The shadow in this one's name is to differentiate it from the original version. It
 mitigates the [Meltdown](<https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability)>) hardware vulnerability, but that's a subject for another video.
 
 ![Binary Ninja symbols KiSystemCall64|416px|center|KiSystemCall64Shadow, the system call dispatcher](/images/documents/windows-internals-explained/ki_syscall64.webp)
 
 ![Binary Ninja decompilation KiSystemCall64|center|800px|Decompilation of KiSystemCall64Shadow](/images/documents/windows-internals-explained/ki_syscall64_decomp.webp)
 
-`KiSystemCall64`'s code first executes the [`swapgs`](https://www.felixcloutier.com/x86/swapgs) assembly instruction. This swaps the current value of the `GS` segment register 
-with the value of the `IA32_KERNEL_GS_BASE` MSR. This points to a per-processor kernel structure known as the processor control region or `KPCR`. Per-processor means that each 
-core inside of your CPU has one associated to it. It contains important core-specific data which we'll explore later, and contains another structure known as the processor 
+`KiSystemCall64`'s code first executes the [`swapgs`](https://www.felixcloutier.com/x86/swapgs) assembly instruction. This swaps the current value of the `GS` segment register
+with the value of the `IA32_KERNEL_GS_BASE` MSR. This points to a per-processor kernel structure known as the processor control region or `KPCR`. Per-processor means that each
+core inside of your CPU has one associated to it. It contains important core-specific data which we'll explore later, and contains another structure known as the processor
 control block or `KPRCB`.
 
-Next up the code backs up the old stack pointer and makes it point to the kernel stack associated to the current processor. Indeed, to isolate kernel mode from user mode, even 
+Next up the code backs up the old stack pointer and makes it point to the kernel stack associated to the current processor. Indeed, to isolate kernel mode from user mode, even
 a special kernel stack is used. Afterwards it also store the original value of the base pointer and makes it point into the stack.
 
 ![Binary Ninja decompilation KiSystemServiceStart|center|800px|Decompilation of KiSystemServiceStart](/images/documents/windows-internals-explained/ki_systemservice_start_decomp.webp)
 
-Down the line the handler falls into another function called `KiSystemServiceStart`. This is the part that will actually invoke the appropriate system call. It first accesses 
+Down the line the handler falls into another function called `KiSystemServiceStart`. This is the part that will actually invoke the appropriate system call. It first accesses
 the service descriptor table, a structure containing information regarding the system service dispatch table, or SSDT.
 
-The SSDT contains offsets to the actual system call functions. It is simply indexed using the system call number specified from user mode. The specific function is then 
+The SSDT contains offsets to the actual system call functions. It is simply indexed using the system call number specified from user mode. The specific function is then
 invoked. Based on certain flags, some logging routines may also be executed with the system call.
 
-Once the operation completed a count for the amount of executed syscalls inside of the processor control block is incremented, the registers that were saved on the stack are 
+Once the operation completed a count for the amount of executed syscalls inside of the processor control block is incremented, the registers that were saved on the stack are
 loaded back into their original value, the `gs` segment is swapped back and finally the [`sysret`](https://www.felixcloutier.com/x86/sysret) instruction is executed.
 
-Most code of `ntoskrnl.exe` is undocumented. This makes understanding it hard. Thanks to community efforts and some reverse engineering I'm able to provide you with a decent 
+Most code of `ntoskrnl.exe` is undocumented. This makes understanding it hard. Thanks to community efforts and some reverse engineering I'm able to provide you with a decent
 overview of its contents. Any external help or information I may have used will be mentioned and credited at the end of this document.
 
 ### CreateProcess part 2
 
-Back to the syscall `NtCreateUserProcess`, simplifying its code is not as straightforward as it was with the system call handler. While all process creations end up calling the 
+Back to the syscall `NtCreateUserProcess`, simplifying its code is not as straightforward as it was with the system call handler. While all process creations end up calling the
 same mandatory functions, it's far complex and contains many more conditions. All to say: don't take everything I say for granted.
 
-In my case I hooked the system call handler so it would break only when a system call with the service number of `NtCreateUserProcess` is triggered, and the process owning the 
+In my case I hooked the system call handler so it would break only when a system call with the service number of `NtCreateUserProcess` is triggered, and the process owning the
 thread is `explorer.exe`.
 
 ![Binary Ninja decompilation KiSystemCall64_Hook|center|800px|Hook to break on NtCreateUserProcess's syscall implementation when issued from explorer.exe](/images/documents/windows-internals-explained/ki_syscall64_hook_decomp.webp)
 
-Then I simply opened the file explorer and executed `notepad.exe` so I could trace what the system call does. It begins by opening the executable file by calling 
+Then I simply opened the file explorer and executed `notepad.exe` so I could trace what the system call does. It begins by opening the executable file by calling
 `IoCreateFileEx`. Then it creates a section object to map the file into memory by calling `MmCreateSpecialImageSection`.
 
 ### Object manager
 
-Before I explain what a section object is, I need to explain what even are Windows objects. They are a representation of resources currently in use that the system needs to 
-keep track of such as processes, files, threads etc. Different types of objects contain different information specific to the kind of resource they represent, but they all are 
+Before I explain what a section object is, I need to explain what even are Windows objects. They are a representation of resources currently in use that the system needs to
+keep track of such as processes, files, threads etc. Different types of objects contain different information specific to the kind of resource they represent, but they all are
 prefixed by an object header.
 
 <UndocumentedStruct title="_OBJECT_HEADER" source="https://www.vergiliusproject.com/kernels/x64/windows-11/25h2/_OBJECT_HEADER">
@@ -388,16 +391,16 @@ prefixed by an object header.
 `}
 </UndocumentedStruct>
 
-Essentially there's an executive component known as the object manager. It's responsible for managing the lifetime of Windows objects. Object headers contains details such as 
+Essentially there's an executive component known as the object manager. It's responsible for managing the lifetime of Windows objects. Object headers contains details such as
 the reference count and handle count. When such counts reach 0 the object manager will get rid of concerned object, unless it's specified as permanent through the flags member.
 
-Windows objects are not directly accessible from user mode for security reasons. If a process wants to interact with another process for example, it will need to open a handle 
+Windows objects are not directly accessible from user mode for security reasons. If a process wants to interact with another process for example, it will need to open a handle
 to it. This handle has permissions and behaves as a key for the using process to interact with the target process through the Windows API.
 
-All the handles a process has open are stored in a table associated to it. Every time some code is done with using a handle it must close it so the object manager can be aware 
+All the handles a process has open are stored in a table associated to it. Every time some code is done with using a handle it must close it so the object manager can be aware
 when objects are not needed anymore using the [`CloseHandle`](https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle) function.
 
-When working from kernel mode although, since objects are directly accessible, handles are not necessary. As an alternative to still be able to specify that an object is needed, 
+When working from kernel mode although, since objects are directly accessible, handles are not necessary. As an alternative to still be able to specify that an object is needed,
 the reference count is used. Kernel mode code will invoke the function `ObReferenceObject` to increase the object's reference count, and `ObDereferenceObject` to decrease it.
 
 <UndocumentedStruct
@@ -417,9 +420,9 @@ the reference count is used. Kernel mode code will invoke the function `ObRefere
 `}
 </UndocumentedStruct>
 
-Windows objects have a security descriptor associated to them. This is a structure that describes security information such as the owner of said object. It also points to two 
-access control lists, or ACLs. These are structures followed by zero or more access control entries, or ACEs for short. Both of these ACLs have a different purpose. The system 
-access control list, or SACL describes what operations and by who should generate audit logs. On the other hand, the discretionary access control list, or DACL describes who 
+Windows objects have a security descriptor associated to them. This is a structure that describes security information such as the owner of said object. It also points to two
+access control lists, or ACLs. These are structures followed by zero or more access control entries, or ACEs for short. Both of these ACLs have a different purpose. The system
+access control list, or SACL describes what operations and by who should generate audit logs. On the other hand, the discretionary access control list, or DACL describes who
 has what permissions over the object.
 
 The structure for ACEs looks something like this:
@@ -445,24 +448,24 @@ The type of an ACE can range between many different values. The more interesting
 
 ![_ACE mask|center|800px|Layout of an access control entry's permission mask](/images/documents/windows-internals-explained/ace_mask.webp)
 
-The [mask](https://learn.microsoft.com/en-us/windows/win32/secauthz/access-mask) is what specifies the permissions the ACE grants or denies. Each bit within the mask specifies 
+The [mask](https://learn.microsoft.com/en-us/windows/win32/secauthz/access-mask) is what specifies the permissions the ACE grants or denies. Each bit within the mask specifies
 a different permission. The first 16 bits are object-specific permissions, the next 8 bits are for [standard access rights](https://learn.microsoft.com/en-us/windows/win32/secauthz/standard-access-rights) (delete, modify access descriptors, change owner etc), the 4 bits after that we can ignore, and the final 4 bits are for [generic rights](https://learn.microsoft.com/en-us/windows/win32/secauthz/generic-access-rights) (read, write, execute or all).
 
-The SID or security identifier is used to specify which user is affected by the ACE. This is a unique identifier Windows uses to identify any entity which the system can 
+The SID or security identifier is used to specify which user is affected by the ACE. This is a unique identifier Windows uses to identify any entity which the system can
 authenticate. When displayed as a string an SID looks like so:
 
 `S-1-5-21-3272137373-1459051141-3360945348-1001`
 
-While this is the standard format in which SIDs are displayed as strings, the `S` indicating that this indeed is an SID, and the hyphens separating the different parts of it are 
+While this is the standard format in which SIDs are displayed as strings, the `S` indicating that this indeed is an SID, and the hyphens separating the different parts of it are
 only present for readability. SIDs aren't stored as strings.
 
-In the string format, the first part is the revision number. It's supposed to specify the version of SID being used. As of 2026 this number can only be 1. Next is the authority. 
-It is a number stored over 48 bits which specifies the component that issued the SID. An authority of 5 means that it was created by the Windows security subsystem. 
+In the string format, the first part is the revision number. It's supposed to specify the version of SID being used. As of 2026 this number can only be 1. Next is the authority.
+It is a number stored over 48 bits which specifies the component that issued the SID. An authority of 5 means that it was created by the Windows security subsystem.
 This number is present for parsing purposes so that code can identify the format of the remainder of the SID.
 
-Afterwards comes the subauthorities. While all of these are considered to be subauthorities, some subauthorities like the 21 in this case, are followed by a specific 
-kind of values. In this case it is a domain ID and an RID. On standalone computer like yours probably is, the domain ID is just a unique identifier associated with your device. 
-But on a network using active directory, this will be the ID of the domain that handles the security information of the entity identified by the SID. If you have no clue 
+Afterwards comes the subauthorities. While all of these are considered to be subauthorities, some subauthorities like the 21 in this case, are followed by a specific
+kind of values. In this case it is a domain ID and an RID. On standalone computer like yours probably is, the domain ID is just a unique identifier associated with your device.
+But on a network using active directory, this will be the ID of the domain that handles the security information of the entity identified by the SID. If you have no clue
 what I'm talking about when I mention active directory, then don't worry, this is not important for this lesson.
 
 The RID I mentioned stands for relative identifier. It usually comes last and identifies the specific entity that's part of the subauthority.
@@ -509,13 +512,13 @@ int main()
 }
 ```
 
-Almost all the function calls here such as `CreateFileA`, `GetFileSize` or `CreateFileMappingA` are Windows API functions. The first thing I'd like to point out are these two 
+Almost all the function calls here such as `CreateFileA`, `GetFileSize` or `CreateFileMappingA` are Windows API functions. The first thing I'd like to point out are these two
 conditions. Their purpose is to verify that the functions executed successfully by checking the value of the handle they returned.
 
-What I want to specifically highlight is that both check for a different value. On one hand with `CreateFile` we compare the handle with the value `INVALID_HANDLE_VALUE` which 
+What I want to specifically highlight is that both check for a different value. On one hand with `CreateFile` we compare the handle with the value `INVALID_HANDLE_VALUE` which
 is defined as negative one. On the other with `CreateFileMappingA` the handle is compared with `nullptr` which is just 0.
 
-This is just one of the inconsistencies in the Windows API, and it's why you should always carefully read the documentation for such functions. You can find it through simple 
+This is just one of the inconsistencies in the Windows API, and it's why you should always carefully read the documentation for such functions. You can find it through simple
 google searches and specifically on [Microsoft's learn website](https://learn.microsoft.com/en-us/).
 
 <MicrosoftLearnQuote
@@ -535,7 +538,7 @@ google searches and specifically on [Microsoft's learn website](https://learn.mi
 `}
 </MicrosoftLearnQuote>
 
-The second thing I want to mention is the reason for the suffix `A` at the end of some functions. Every time a Windows API routine takes in a string as an argument, Microsoft 
+The second thing I want to mention is the reason for the suffix `A` at the end of some functions. Every time a Windows API routine takes in a string as an argument, Microsoft
 makes available at least two variants of said function: one with an `A` as a suffix and one with a `W`. The difference has to do with character encoding. The `W` variants use
 wide strings which is actually now the standard in Windows. But for simplicity and backwards compatibility reasons they maintain the `A` variant for regular string.
 
@@ -556,10 +559,10 @@ wide strings which is actually now the standard in Windows. But for simplicity a
 `}
 </MicrosoftLearnQuote>
 
-These `A` variants usually convert the strings you input into wide-string before working with them or issuing a system call. They also make sure to convert the outputs as well 
+These `A` variants usually convert the strings you input into wide-string before working with them or issuing a system call. They also make sure to convert the outputs as well
 if they contain strings.
 
-With this out of the way, the `CreateFile` can be used to open or create files and get a handle to them. In this case the code is intended to open an existing file called 
+With this out of the way, the `CreateFile` can be used to open or create files and get a handle to them. In this case the code is intended to open an existing file called
 "example.txt" with read and write permissions.
 
 <MicrosoftLearnQuote
@@ -578,18 +581,18 @@ With this out of the way, the `CreateFile` can be used to open or create files a
 `}
 </MicrosoftLearnQuote>
 
-After making sure the returned handle is valid it gets the size of said file and creates the file-backed section object using `CreateFileMapping`. Don't be deceived by its name 
+After making sure the returned handle is valid it gets the size of said file and creates the file-backed section object using `CreateFileMapping`. Don't be deceived by its name
 or description, under the hood it calls `NtCreateSection` and returns its handle.
 
 ![Binary Ninja CreateFileMappingW decompilation|center|800px|Decompilation of CreateFileMappingW](/images/documents/windows-internals-explained/createfilemappingw_decomp.webp)
 
-After a check that the section object was successfully created, the code calls `MapViewOfFile`. This will tell the system to map the pages of memory representing the file into 
+After a check that the section object was successfully created, the code calls `MapViewOfFile`. This will tell the system to map the pages of memory representing the file into
 the process's address space. It can now directly interact with it.
 
-The contents of the `example.txt` was a simple "Hello, World!" which gets printed in the console. Before ending everything the code writes back "Goodbye World!" and calls 
+The contents of the `example.txt` was a simple "Hello, World!" which gets printed in the console. Before ending everything the code writes back "Goodbye World!" and calls
 `FlushViewOfFile`. This will write the modified pages back into the file. Finally it unmaps the memory and closes the handles that were opened.
 
-On the other hand page-backed section objects don't represent any particular file. They're just useful to share memory between different processes. I've got some code to show 
+On the other hand page-backed section objects don't represent any particular file. They're just useful to share memory between different processes. I've got some code to show
 you, but in this example it consists of two different applications.
 
 ```cpp
@@ -617,8 +620,8 @@ int main()
 }
 ```
 
-This code creates a section, only this time it doesn't provide it a file handle thus making it page-backed. So we can find said section from the other process, a name is 
-specified. While the object header structure doesn't hold a variable for the name of objects, when one is specified, an additional header is placed before this header called 
+This code creates a section, only this time it doesn't provide it a file handle thus making it page-backed. So we can find said section from the other process, a name is
+specified. While the object header structure doesn't hold a variable for the name of objects, when one is specified, an additional header is placed before this header called
 the object name info header. The code then maps a view of the page and writes the string "Hello, World!" to it.
 
 ```cpp
@@ -646,94 +649,103 @@ int main()
 }
 ```
 
-The second code opens a handle to the existing section by specifying its name, maps a view of the page and then prints its contents. Executing both programs results in the 
+The second code opens a handle to the existing section by specifying its name, maps a view of the page and then prints its contents. Executing both programs results in the
 second one printing "Hello, World!".
 
 ### CreateProcess part 3
 
-Back to `NtCreateUserProcess`, after creating the section object it calls `PspAllocateProcess`. This function is responsible for creating the executive process object, or 
-`EPROCESS`. This might be one of the most important kernel objects to know as it represents existing processes. It points to data such as the handles table and the 
+Back to `NtCreateUserProcess`, after creating the section object it calls `PspAllocateProcess`. This function is responsible for creating the executive process object, or
+`EPROCESS`. This might be one of the most important kernel objects to know as it represents existing processes. It points to data such as the handles table and the
 process ID. At its very top is a structure called `KPROCESS`. It exists to separate the data that is specifically used by the kernel from the rest that the executive cares about.
 
-`PspAllocateProcess` creates it by invoking `ObCreateObjectEx`. That's the object manager function to create objects. It will then fills its values and assigns an access token. 
-Access tokens are like keys with permissions associated to them. When you log into your account the `LSASS` process assigns one to your session, and processes which you 
+`PspAllocateProcess` creates it by invoking `ObCreateObjectEx`. That's the object manager function to create objects. It will then fills its values and assigns an access token.
+Access tokens are like keys with permissions associated to them. When you log into your account the `LSASS` process assigns one to your session, and processes which you
 subsequently execute are given a copy of it.
 
-After assigning the token, among other things, `PspAllocateProcess` creates the process' address space by calling `MmCreateProcessAddressSpace`. This function first 
-initializes the working set list for the process (by calling `MiInitializeWorkingSetList`). A working set is a set of all the memory pages which the process currently has loaded 
+After assigning the token, among other things, `PspAllocateProcess` creates the process' address space by calling `MmCreateProcessAddressSpace`. This function first
+initializes the working set list for the process (by calling `MiInitializeWorkingSetList`). A working set is a set of all the memory pages which the process currently has loaded
 into physical memory. Every process has a minimum amount of pages Windows guarantees will be in the working set (aka in memory) and a maximum.
 
-While processes have a working set, the kernel also has one for its own memory called the system working set and there is also one for every session called the 
-session working set. Sessions aren't a super important topic to understand so I'll be brief about it. Essentially every time you log into your desktop, or even 
+While processes have a working set, the kernel also has one for its own memory called the system working set and there is also one for every session called the
+session working set. Sessions aren't a super important topic to understand so I'll be brief about it. Essentially every time you log into your desktop, or even
 remote connect to it, a session is created and associated to this logon. Actually, before you even actually login and are in the lock screen, a session is already created.
 
-Within a session there are Window stations. Each of those holds desktops and the state of your clipboard. Each desktop contains windows, menus and hooks. 
+Within a session there are Window stations. Each of those holds desktops and the state of your clipboard. Each desktop contains windows, menus and hooks.
 The system has a session 0 existent at all times for system processes. The primary purpose for sessions is to provide an isolation for the different graphical interfaces.
 
-Next up it allocates its virtual address descriptors, or VADs (by calling `MiAllocateProcessVads`). VADs are trees in which each node describes a region of memory that 
-was allocated. To allocate memory from an application, you can invoke the `VirtualAlloc` function from the Windows API. You optionally specifies at which virtual address 
+Next up it allocates its virtual address descriptors, or VADs (by calling `MiAllocateProcessVads`). VADs are trees in which each node describes a region of memory that
+was allocated. To allocate memory from an application, you can invoke the `VirtualAlloc` function from the Windows API. You optionally specifies at which virtual address
 you'd like said allocation to reside, its size, its type and its protection.
 
-The allocation type is actually a set bit flag to which the two main options you can set are `MEM_COMMIT` and `MEM_RESERVE`. When applying `MEM_RESERVE` alone the 
-memory region you're allocating will be reserved, but the memory won't be actually be charged to the system. Trying to write to this region will lead to a 
+The allocation type is actually a set bit flag to which the two main options you can set are `MEM_COMMIT` and `MEM_RESERVE`. When applying `MEM_RESERVE` alone the
+memory region you're allocating will be reserved, but the memory won't be actually be charged to the system. Trying to write to this region will lead to a
 memory access violation unless you then apply `MEM_COMMIT`. You can apply both at once which will reserve and charge the region.
 
-In both cases, a node describing the region will be inserted into some VAD, but no page table entry will be created yet. When the region is accessed a page fault 
-will occur and the system will walk through the appropriate VAD to look for the entry. If it finds one and the page is committed, then the entry is created. 
+In both cases, a node describing the region will be inserted into some VAD, but no page table entry will be created yet. When the region is accessed a page fault
+will occur and the system will walk through the appropriate VAD to look for the entry. If it finds one and the page is committed, then the entry is created.
 If an entry already existed then the VAD is not walked of course.
 
-Back to `MmCreateProcessAddressSpace`, after creating the VADs, the section created earlier in `NtCreateUserProcess` to read the executable is mapped into the address space. 
+Back to `MmCreateProcessAddressSpace`, after creating the VADs, the section created earlier in `NtCreateUserProcess` to read the executable is mapped into the address space.
 `MmCreateProcessAddressSpace` also maps `NTDLL` into the process.
 
-Back into `PspAllocateProcess`, a structure called the process environment block, or `PEB`, is created and initialized in this same address space (by calling 
-`MmCreatePeb` -> `MiCreatePebOrTeb`). Its purpose is similar to that of the `EPROCESS` in terms of its contents, except it's for the user-mode routines. It holds information 
+Back into `PspAllocateProcess`, a structure called the process environment block, or `PEB`, is created and initialized in this same address space (by calling
+`MmCreatePeb` -> `MiCreatePebOrTeb`). Its purpose is similar to that of the `EPROCESS` in terms of its contents, except it's for the user-mode routines. It holds information
 such as a list of the loaded DLLs, the base address of the image and flags such as whether the program is being debugged.
 
-The final step (at least in the kernel) is to create the initial thread to run the application. First `PspAllocateThread` is called. Similar to the process equivalent, 
-it will create the executive object for the new thread, the `ETHREAD`. It sets up the user stack for this new thread (using `PspSetupUserStack`), and allocates its 
-thread environment block, the `TEB` (using `MmCreateTeb`). Just like the `PEB`, it is used to store information about the thread for the user-mode code to use. 
+The final step (at least in the kernel) is to create the initial thread to run the application. First `PspAllocateThread` is called. Similar to the process equivalent,
+it will create the executive object for the new thread, the `ETHREAD`. It sets up the user stack for this new thread (using `PspSetupUserStack`), and allocates its
+thread environment block, the `TEB` (using `MmCreateTeb`). Just like the `PEB`, it is used to store information about the thread for the user-mode code to use.
 Every thread has its own `TEB`.
 
-Then `KeInitThread` is called. This will setup the `KTHREAD` structure that part of the `ETHREAD` object, create a kernel stack and initialize the thread context 
-(it also initializes the APC list and sets the thread entry to `KxStartUserThread` through `KiInitializeContextThread`). We'll explore further the thread context 
+Then `KeInitThread` is called. This will setup the `KTHREAD` structure that part of the `ETHREAD` object, create a kernel stack and initialize the thread context
+(it also initializes the APC list and sets the thread entry to `KxStartUserThread` through `KiInitializeContextThread`). We'll explore further the thread context
 when discussing the scheduler, but for now just know it is stored on the kernel stack.
 
-Back into `NtCreateUserProcess`, `PspInsertProcess` is invoked to create and return a handle to the new process (using `ObInsertObject`), followed by `PspInsertThread`. 
-This performs further scheduling-related initialization and calls `KeStartThread`. `KeStartThread` also does some scheduling initialization along with incrementing 
+Back into `NtCreateUserProcess`, `PspInsertProcess` is invoked to create and return a handle to the new process (using `ObInsertObject`), followed by `PspInsertThread`.
+This performs further scheduling-related initialization and calls `KeStartThread`. `KeStartThread` also does some scheduling initialization along with incrementing
 the thread count inside of the `EPROCESS` object and inserting the new thread into its list.
 
-Back into `PspInsertThread`, a handle to the new thread is created for the process, and finally, `KeReadyThread` is invoked. This will simply put the thread 
+Back into `PspInsertThread`, a handle to the new thread is created for the process, and finally, `KeReadyThread` is invoked. This will simply put the thread
 in a deferred ready state. This makes the thread ready to run on a specific core, but not yet running. We'll discuss thread states when we get to scheduling.
 
-At this point, `NtCreateUserProcess` will return to `CreateProcessInternalW`. The function now sends a message to `Csrss` for it to register the process by 
-invoking `CsrClientCallServer`. This message contains information such as the process and thread handles, the address of the `PEB` and the section object handle. 
-`Csrss`, or the client-server-runtime-subsystem is a system process that's constantly running on your system. It keeps a list of all the processes and 
+At this point, `NtCreateUserProcess` will return to `CreateProcessInternalW`. The function now sends a message to `Csrss` for it to register the process by
+invoking `CsrClientCallServer`. This message contains information such as the process and thread handles, the address of the `PEB` and the section object handle.
+`Csrss`, or the client-server-runtime-subsystem is a system process that's constantly running on your system. It keeps a list of all the processes and
 their threads running within its session with handles open to them.
 
-In order to send the message, the function uses something called an advanced local procedure call, or ALPC. It is an undocumented inter-process communication protocol. 
-As I won't dive into how it works, if you want, I made a fork of DownWithUp's POC repository which gives a very clear example of a client and server using the 
+In order to send the message, the function uses something called an advanced local procedure call, or ALPC. It is an undocumented inter-process communication protocol.
+As I won't dive into how it works, if you want, I made a fork of DownWithUp's POC repository which gives a very clear example of a client and server using the
 protocol to send and receive an ALPC message.
 
-The final step of the of the `CreateProcessInternalW` function is to resume the thread which has been in a suspended state until this point. The thread begins into 
-the kernel function `KxStartUserThread`. This name is aliased as `KiStartUserThread` in Microsoft's documentation, but the actual symbol is prefixed with `Kx`. 
+The final step of the of the `CreateProcessInternalW` function is to resume the thread which has been in a suspended state until this point. The thread begins into
+the kernel function `KxStartUserThread`. This name is aliased as `KiStartUserThread` in Microsoft's documentation, but the actual symbol is prefixed with `Kx`.
 To put it simply, functions prefixed with `Kx` are processor architecture-specific. This means their implementation will vary from one architecture to another.
 
-This then invokes `PspUserThreadStartup`. To wrap up, this will create a trap frame which will be executed by the `iretq` instruction after returning 
-into `KxStartUserThread`. Usually, a trap frame would already have been constructed on the kernel stack after a thread transitioned from user to 
-kernel mode using a system call for example. In this case, the function manually builds one as the thread has never gone through this process. 
+This then invokes `PspUserThreadStartup`. To wrap up, this will create a trap frame which will be executed by the `iretq` instruction after returning
+into `KxStartUserThread`. Usually, a trap frame would already have been constructed on the kernel stack after a thread transitioned from user to
+kernel mode using a system call for example. In this case, the function manually builds one as the thread has never gone through this process.
 Essentially a trap frame is just a structure describing the state of the CPU at the moment of switching.
 
 ### Image loader
 
-The trap frame is set to begin execution into the `NTDLL` function `LdrInitializeThunk`, also known as the image loader. One of the major things the loader 
-does is creating and initializing the loader database, which is pointed to by the `Ldr` field of the `PEB`. This database essentially stores a list of 
+The trap frame is set to begin execution into the `NTDLL` function `LdrInitializeThunk`, also known as the image loader. One of the major things the loader
+does is creating and initializing the loader database, which is pointed to by the `Ldr` field of the `PEB`. This database essentially stores a list of
 all the DLLs loaded into the process' address space.
 
-In order to know which modules to load, the loader parses a table stored inside of the process' PE structure known as the IDT, or import directory table. 
-You can find the IDT of a program by going into its optional header, into the data directories, taking the value stored under the field of the same name 
-and adding it to the base address of the program as it acts as an offset. This will lead you to either a dedicated section called `.idata` or a part of 
-some `.rdata` section where a sequence of `IMAGE_IMPORT_DESCRIPTOR` structures will be available to be parsed. The count of descriptors in the table 
-is stored right after the offset in the data directories.
+In order to know which modules to load, the loader parses a table stored inside of the process' PE structure known as the IDT, or import directory table.
+You can find the IDT of a program by going into its optional header, into the data directories, taking the value stored under the field of the same name
+and adding it to the base address of the program as it acts as an offset.
+
+```cpp
+struct IMAGE_DATA_DIRECTORY
+{
+    DWORD   VirtualAddress; 
+    DWORD   Size;
+};
+```
+
+This will lead you to either a dedicated section called `.idata` or a part of some `.rdata` section where a sequence of `IMAGE_IMPORT_DESCRIPTOR` structures will be
+available to be parsed. The count of descriptors in the table is stored right after the offset in the data directories.
 
 ```cpp
 struct IMAGE_IMPORT_DESCRIPTOR
@@ -746,8 +758,8 @@ struct IMAGE_IMPORT_DESCRIPTOR
 };
 ```
 
-The important fields in this structure are “Name”, “OriginalFirstThunk” and “FirstThunk”. “Name” is the name of the library which needs to be loaded and 
-from which functions are imported. “OriginalFirstThunk” is an offset to the import name table (INT) and “FirstThunk” to the import address table (IAT). 
+The important fields in this structure are “Name”, “OriginalFirstThunk” and “FirstThunk”. “Name” is the name of the library which needs to be loaded and
+from which functions are imported. “OriginalFirstThunk” is an offset to the import name table (INT) and “FirstThunk” to the import address table (IAT).
 Both of these tables store a sequence of `IMAGE_THUNK_DATA` structures.
 
 ```cpp
@@ -760,24 +772,24 @@ union IMAGE_THUNK_DATA
 };
 ```
 
-These tables describe functions imported from the loaded library, meaning functions which the current program's code calls. Since DLLs are dynamically loaded, 
-their location in memory is mostly unpredictable, and so the code must use the tables to find the required functions using their name and specify their address. 
+These tables describe functions imported from the loaded library, meaning functions which the current program's code calls. Since DLLs are dynamically loaded,
+their location in memory is mostly unpredictable, and so the code must use the tables to find the required functions using their name and specify their address.
 The address of each of those imported functions is set into the `Function` field of the `IMAGE_THUNK_DATA` structure of the IAT.
 
-The INT is used to get these functions' name which can be a string or an ordinal. An ordinal is a number representing the specific function. 
-Note that initially both of these tables are equal, meaning you could use the IAT to get those names, but once the resolving is done, all the 
+The INT is used to get these functions' name which can be a string or an ordinal. An ordinal is a number representing the specific function.
+Note that initially both of these tables are equal, meaning you could use the IAT to get those names, but once the resolving is done, all the
 IAT's entries will point to the appropriate functions' address.
 
-In order to find an imported function's address using its name, the code needs to parse the concerned loaded library's export table, but we won't dive into 
-this process as it's fairly alike. This is what resolving an import table looks like into code. Although don't be mislead into thinking it's exactly 
+In order to find an imported function's address using its name, the code needs to parse the concerned loaded library's export table, but we won't dive into
+this process as it's fairly alike. This is what resolving an import table looks like into code. Although don't be mislead into thinking it's exactly
 how the image loader does it. Ironically, this code uses the image loader to load the libraries which completely bypasses a lot of steps it otherwise handles.
 
-One of these steps is resolving the imports of the loaded libraries. Because they, indeed, may themselves import functions from other libraries. 
-The image loader using worker threads to concurrently spread out the resolving process and maximize its efficiency. Of course, while doing all of this, 
+One of these steps is resolving the imports of the loaded libraries. Because they, indeed, may themselves import functions from other libraries.
+The image loader using worker threads to concurrently spread out the resolving process and maximize its efficiency. Of course, while doing all of this,
 the loader also fills up the `Ldr` database mentioned earlier.
 
-Because this video is already stretching too long, I'll avoid going into details for today, but know that there's a lot more that the loader does, such as 
-initializing the heap, handling shims, relocating images and much more. But, we'll keep all of this for a potential part 2. The loader finalizes its 
+Because this video is already stretching too long, I'll avoid going into details for today, but know that there's a lot more that the loader does, such as
+initializing the heap, handling shims, relocating images and much more. But, we'll keep all of this for a potential part 2. The loader finalizes its
 work by calling the entry point of our application.
 
 ### Conclusion
@@ -798,10 +810,10 @@ Here's a list of all of the concepts that are left to cover:
 12. Notifications.
 13. Useful tools and how to use them (Windbg, sysinternals suite, etc).
 
-If you're looking forward to a second part, then please let me know in the comments. So with all of this aside, 
+If you're looking forward to a second part, then please let me know in the comments. So with all of this aside,
 never give up on learning, and I'll be seeing you in the next one!
 
-### Sources 
+### Sources
 
 * Windows Internals, 7th Edition (Part 1)
 * Intel Software Developer's Manual (SDM)
