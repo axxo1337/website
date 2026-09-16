@@ -734,9 +734,18 @@ all the DLLs loaded into the process' address space.
 
 In order to know which modules to load, the loader parses a table stored inside of the process' PE structure known as the IDT, or import directory table.
 You can find the IDT of a program by going into its optional header, into the data directories, taking the value stored under the field of the same name
-and adding it to the base address of the program as it acts as an offset. This will lead you to either a dedicated section called `.idata` or a part of
-some `.rdata` section where a sequence of `IMAGE_IMPORT_DESCRIPTOR` structures will be available to be parsed. The count of descriptors in the table
-is stored right after the offset in the data directories.
+and adding it to the base address of the program as it acts as an offset.
+
+```cpp
+struct IMAGE_DATA_DIRECTORY
+{
+    DWORD   VirtualAddress; 
+    DWORD   Size;
+};
+```
+
+This will lead you to either a dedicated section called `.idata` or a part of some `.rdata` section where a sequence of `IMAGE_IMPORT_DESCRIPTOR` structures will be
+available to be parsed. The count of descriptors in the table is stored right after the offset in the data directories.
 
 ```cpp
 struct IMAGE_IMPORT_DESCRIPTOR
