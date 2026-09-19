@@ -58,7 +58,7 @@ export function getBreadcrumbJsonLd(items: { name: string; url: string }[]) {
 
 export function getProjectJsonLd(metadata: MDXMetadata) {
   const imageUrl = metadata.thumbnailPath
-    ? `${siteUrl}${metadata.thumbnailPath}`
+    ? `${siteUrl}${metadata.thumbnailPath.replace(/\.avif$/, ".webp")}`
     : `${siteUrl}/images/seo/og-image.webp`;
 
   return {

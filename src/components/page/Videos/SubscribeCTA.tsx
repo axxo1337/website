@@ -19,7 +19,7 @@ export default function SubscribeCTA() {
         Subscribe
       </Link>
       <Image
-        src="/images/axxo_blue.webp"
+        src="/images/axxo_blue.avif"
         alt=""
         aria-hidden="true"
         width={160}

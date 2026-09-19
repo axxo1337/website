@@ -2,7 +2,7 @@
 // [SECTION] Defines
 //
 
-const CACHE_NAME = "axxo-pwa-v2";
+const CACHE_NAME = "axxo-pwa-v3";
 
 const PRECACHE_ASSETS = [
   "/",
@@ -11,8 +11,8 @@ const PRECACHE_ASSETS = [
   "/images/icons/icon-192x192.png",
   "/images/icons/icon-512x512.png",
   "/images/icons/apple-touch-icon.png",
-  "/images/bliss.webp",
-  "/images/axxo_blue.webp",
+  "/images/bliss.avif",
+  "/images/axxo_blue.avif",
 ];
 
 //

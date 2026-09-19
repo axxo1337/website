@@ -2,9 +2,9 @@ export const metadata = {
     title: "Windows Internals Explained",
     description: "Windows internals is a very important subject that's sadly very poorly documented. In this video I'll do my best to give you a great guide to trampoline from.",
     createdAt: "2026-02-20",
-    updatedAt: "2026-09-16",
+    updatedAt: "2026-09-19",
     youtubeId: "AjzXGaH5VPY",
-    thumbnailPath: "/images/thumbnails/windows-internals-explained.webp",
+    thumbnailPath: "/images/thumbnails/windows-internals-explained.avif",
     animationPath: "/animations/win_interns_explained/data.lottie",
     animationBackground: "/animations/win_interns_explained/background.webp",
     animationPreview: "/animations/win_interns_explained/preview.webp",
@@ -23,7 +23,7 @@ In 1975, a 21 year old [Paul Allen](https://en.wikipedia.org/wiki/Paul_Allen) (M
 The cover stared a computer called the [Altair 8800](https://en.wikipedia.org/wiki/Altair_8800). A personal computer released just the year before by Micro
 Instrumentation and Telemetry Systems Inc., let's just call them MITS. Allen bought the magazine and headed back to his best friend's dorm.
 
-![Popular Electronics|center|300px|The Popular Electronics magazine Allen bought](/images/documents/windows-internals-explained/popular_electronics.webp)
+![Popular Electronics|center|300px|The Popular Electronics magazine Allen bought](/images/documents/windows-internals-explained/popular_electronics.avif)
 
 That friend was [Bill Gates](https://en.wikipedia.org/wiki/Bill_Gates). The two had been considering starting a software development company for years. The problem was
 that, at the time, consumer-grade computers didn't exist. Manufacturers only produced systems for large companies and research labs at astronomical prices.
@@ -33,7 +33,7 @@ that, at the time, consumer-grade computers didn't exist. Manufacturers only pro
 So when Allen saw that MITS managed to release a computer system at a price the consumer market could afford, he knew they had an opportunity at hand.
 The two decided they should land a deal with the company for the development of an implementation of [BASIC](https://en.wikipedia.org/wiki/BASIC) for the system.
 
-![Altair 8800|center|400px|The Altair 8800 by MITS, released in 1974](/images/documents/windows-internals-explained/Altair_8800_Computer_upscaled.webp)
+![Altair 8800|center|400px|The Altair 8800 by MITS, released in 1974](/images/documents/windows-internals-explained/Altair_8800_Computer_upscaled.avif)
 
 Gates called Ed Roberts, the CEO of MITS, to tell him they already had a working interpreter, <u>which they actually didn't</u>. Roberts had already received other
 calls from people with the same claim so he knew it was likely a bluff. He told them that the first group to show up in Albuquerque with a working demo on the
@@ -101,7 +101,7 @@ physical memory (in reality it uses something called prototype page table entrie
 By the way, I made a video about virtual memory with a [post](/video/virtual-memory-explained). It is not very advanced, and this explanation covers things
 it hasn't, but if you are slightly lost I'd recommend watching the video.
 
-<YouTubeVideo id="ultz9m0n0GE" thumbnailPath="/images/thumbnails/virtual-memory-explained.webp" />
+<YouTubeVideo id="ultz9m0n0GE" thumbnailPath="/images/thumbnails/virtual-memory-explained.avif" />
 
 To ensure that one program may not modify the code of a shared library, a bit in page table entries is set to specify that the concerned pages use the copy on write
 mechanism. When a program writes to such a page, the system will copy its contents into a fresh physical page and change the page table entry of the writing program
@@ -111,7 +111,7 @@ Now the writer process has its own copy of the code it modified and won't affect
 later in this video. Windows even maps most of its system code into the upper portion of every application's virtual memory. Although the mapped pages have the kernel
 bit set, making them only accessible when the CPU is in privileged mode.
 
-![Protection rings|center|400px|Privilege levels illustrated as protection rings](/images/documents/windows-internals-explained/protection_rings.webp)
+![Protection rings|center|400px|Privilege levels illustrated as protection rings](/images/documents/windows-internals-explained/protection_rings.avif)
 
 The idea is that the system runs in permission levels. The lower the level, the more permissions the running code will have. This is often illustrated as protection rings
 like above. In modern systems rings 1 and 2 are not used. The main property of protection rings is that they lock sensitive instructions and data behind the appropriate levels.
@@ -138,7 +138,7 @@ processor-related features I only consider the x86_64 architecture.
 
 At a high level you can understand a CPU as one big component composed of many units.
 
-![Overview of a CPU architecture|center|1920px|Simplified overview of a CPU's internal units](/images/documents/windows-internals-explained/cpu_overview.webp)
+![Overview of a CPU architecture|center|1920px|Simplified overview of a CPU's internal units](/images/documents/windows-internals-explained/cpu_overview.avif)
 
 What you're seeing here is a very simplified overview of these units. I'm only showing the most relevant parts.
 
@@ -156,7 +156,7 @@ The MMU or memory management unit is the component responsible for handling memo
 Registers are small storage units used to store data needed within the current execution context. In 64-bit
 computers their size goes from 64 bits up to 512 bits. They are the fastest way a CPU can handle memory.
 
-![A very few registers|center|1200px|A very few registers](/images/documents/windows-internals-explained/very_few_registers.webp)
+![A very few registers|center|1200px|A very few registers](/images/documents/windows-internals-explained/very_few_registers.avif)
 
 What you see here are only the most commonly used ones. These are the labels we refer to them as. RIP or the instruction
 pointer points to the instruction that the CPU is currently executing.
@@ -275,7 +275,7 @@ forwards to the functions in `kernelbase` so we'll ignore it.
 Before we dive deeper in `CreateProcess`, I think we should get a small overview of Windows. Threads are scheduled by Windows, meaning the system makes decisions for when and
 for how long each should run. The thing that handles this scheduling is intuitively called the scheduler. It's part of a bigger group of Windows components called the kernel.
 
-![Windows architecture simplified|center|800px|User mode and kernel mode components of Windows](/images/documents/windows-internals-explained/win_arch_simple.webp)
+![Windows architecture simplified|center|800px|User mode and kernel mode components of Windows](/images/documents/windows-internals-explained/win_arch_simple.avif)
 
 What you see here is an illustration of the Windows architecture. This red bar divides the user and kernel mode parts of Windows. In user mode you find user processes which
 depend on subsystem DLLs. These are libraries like `kernel32` and `kernelbase`. We call them subsystems because they each expose some subset of the Windows API. For instance,
@@ -315,14 +315,14 @@ all stored in the file `ntoskrnl.exe`. This file stores most of the Windows exec
 
 You can find in it a function with the same name as the one invoked from NTDLL, which the dispatcher will invoke.
 
-![Binary Ninja symbols NtCreateUserProcess|416px|center|NtCreateUserProcess in ntoskrnl.exe](/images/documents/windows-internals-explained/create_user_proc_symbols.webp)
+![Binary Ninja symbols NtCreateUserProcess|416px|center|NtCreateUserProcess in ntoskrnl.exe](/images/documents/windows-internals-explained/create_user_proc_symbols.avif)
 
 As a matter of fact you can even find said dispatcher under the name `KiSystemCall64`. The shadow in this one's name is to differentiate it from the original version. It
 mitigates the [Meltdown](<https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability)>) hardware vulnerability, but that's a subject for another video.
 
-![Binary Ninja symbols KiSystemCall64|416px|center|KiSystemCall64Shadow, the system call dispatcher](/images/documents/windows-internals-explained/ki_syscall64.webp)
+![Binary Ninja symbols KiSystemCall64|416px|center|KiSystemCall64Shadow, the system call dispatcher](/images/documents/windows-internals-explained/ki_syscall64.avif)
 
-![Binary Ninja decompilation KiSystemCall64|center|800px|Decompilation of KiSystemCall64Shadow](/images/documents/windows-internals-explained/ki_syscall64_decomp.webp)
+![Binary Ninja decompilation KiSystemCall64|center|800px|Decompilation of KiSystemCall64Shadow](/images/documents/windows-internals-explained/ki_syscall64_decomp.avif)
 
 `KiSystemCall64`'s code first executes the [`swapgs`](https://www.felixcloutier.com/x86/swapgs) assembly instruction. This swaps the current value of the `GS` segment register
 with the value of the `IA32_KERNEL_GS_BASE` MSR. This points to a per-processor kernel structure known as the processor control region or `KPCR`. Per-processor means that each
@@ -332,7 +332,7 @@ control block or `KPRCB`.
 Next up the code backs up the old stack pointer and makes it point to the kernel stack associated to the current processor. Indeed, to isolate kernel mode from user mode, even
 a special kernel stack is used. Afterwards it also store the original value of the base pointer and makes it point into the stack.
 
-![Binary Ninja decompilation KiSystemServiceStart|center|800px|Decompilation of KiSystemServiceStart](/images/documents/windows-internals-explained/ki_systemservice_start_decomp.webp)
+![Binary Ninja decompilation KiSystemServiceStart|center|800px|Decompilation of KiSystemServiceStart](/images/documents/windows-internals-explained/ki_systemservice_start_decomp.avif)
 
 Down the line the handler falls into another function called `KiSystemServiceStart`. This is the part that will actually invoke the appropriate system call. It first accesses
 the service descriptor table, a structure containing information regarding the system service dispatch table, or SSDT.
@@ -354,7 +354,7 @@ same mandatory functions, it's far complex and contains many more conditions. Al
 In my case I hooked the system call handler so it would break only when a system call with the service number of `NtCreateUserProcess` is triggered, and the process owning the
 thread is `explorer.exe`.
 
-![Binary Ninja decompilation KiSystemCall64_Hook|center|800px|Hook to break on NtCreateUserProcess's syscall implementation when issued from explorer.exe](/images/documents/windows-internals-explained/ki_syscall64_hook_decomp.webp)
+![Binary Ninja decompilation KiSystemCall64_Hook|center|800px|Hook to break on NtCreateUserProcess's syscall implementation when issued from explorer.exe](/images/documents/windows-internals-explained/ki_syscall64_hook_decomp.avif)
 
 Then I simply opened the file explorer and executed `notepad.exe` so I could trace what the system call does. It begins by opening the executable file by calling
 `IoCreateFileEx`. Then it creates a section object to map the file into memory by calling `MmCreateSpecialImageSection`.
@@ -584,7 +584,7 @@ With this out of the way, the `CreateFile` can be used to open or create files a
 After making sure the returned handle is valid it gets the size of said file and creates the file-backed section object using `CreateFileMapping`. Don't be deceived by its name
 or description, under the hood it calls `NtCreateSection` and returns its handle.
 
-![Binary Ninja CreateFileMappingW decompilation|center|800px|Decompilation of CreateFileMappingW](/images/documents/windows-internals-explained/createfilemappingw_decomp.webp)
+![Binary Ninja CreateFileMappingW decompilation|center|800px|Decompilation of CreateFileMappingW](/images/documents/windows-internals-explained/createfilemappingw_decomp.avif)
 
 After a check that the section object was successfully created, the code calls `MapViewOfFile`. This will tell the system to map the pages of memory representing the file into
 the process's address space. It can now directly interact with it.
