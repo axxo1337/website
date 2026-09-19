@@ -131,7 +131,7 @@ export default function RootLayout({
         <ServiceWorkerRegister />
         <Image
           alt="Background Windows XP bliss"
-          src="/images/bliss.webp"
+          src="/images/bliss.avif"
           width={1920}
           height={1080}
           className="fixed pointer-events-none -z-10"

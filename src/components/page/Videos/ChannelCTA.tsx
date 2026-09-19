@@ -19,7 +19,7 @@ export default function ChannelCTA() {
         Go to YouTube
       </Link>
       <Image
-        src="/images/timmy.webp"
+        src="/images/timmy.avif"
         alt=""
         aria-hidden="true"
         width={160}

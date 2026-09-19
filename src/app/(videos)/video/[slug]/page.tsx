@@ -34,7 +34,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {};
   }
 
-  const thumbnailUrl = metadata.thumbnailPath || "/images/seo/og-image.webp";
+  const thumbnailUrl = metadata.thumbnailPath
+    ? metadata.thumbnailPath.replace(/\.avif$/, ".webp")
+    : "/images/seo/og-image.webp";
 
   return {
     title: metadata.title,
