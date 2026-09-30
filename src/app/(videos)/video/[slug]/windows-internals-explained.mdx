@@ -193,6 +193,8 @@ this portion a stack frame.
 Two registers are associated to the stack. `RSP`, the stack pointer and `RBP`, the base pointer. The stack pointer simply points to the top of the stack while the base pointer
 points to the base of the current stack frame.
 
+Take this code for example:
+
 ```cpp
 void foo()
 {
@@ -208,9 +210,28 @@ int main()
 }
 ```
 
-<Callout type="info">Note that this description applies when compiled for a Linux system. On Windows, there are a few more details I want to avoid for now.</Callout>
+Here is its generated assembly:
+```asm
+foo():
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-4], 0
+        add     DWORD PTR [rbp-4], 5
+        nop
+        pop     rbp
+        ret
+main:
+        push    rbp
+        mov     rbp, rsp
+        call    foo()
+        mov     eax, 0
+        pop     rbp
+        ret
+```
 
-For example, after calling foo, this code would first push the address where the code must return to after running foo, then the base pointer of the previous function's stack
+<Callout type="info">Note that this code was compiled with GCC for Linux. On Windows, there are a few more details such as the shadow space which I want to avoid for now.</Callout>
+
+After calling foo, this code would first push the address where the code must return to after running foo, then the base pointer of the previous function's stack
 frame, set the base pointer to the current stack pointer, use 4 bytes to make space for the integer, and finally add the value 5 to that location after zeroing it out.
 
 Zeroing out stack values is important because there could be unexpected data left there from previous stack frames. Once the code is done it simply pops the old base pointer,
