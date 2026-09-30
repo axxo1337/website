@@ -2,7 +2,7 @@ export const metadata = {
     title: "Windows Internals Explained",
     description: "Windows internals is a very important subject that's sadly very poorly documented. In this video I'll do my best to give you a great guide to trampoline from.",
     createdAt: "2026-02-20",
-    updatedAt: "2026-09-19",
+    updatedAt: "2026-09-30",
     youtubeId: "AjzXGaH5VPY",
     thumbnailPath: "/images/thumbnails/windows-internals-explained.avif",
     animationPath: "/animations/win_interns_explained/data.lottie",
@@ -193,6 +193,8 @@ this portion a stack frame.
 Two registers are associated to the stack. `RSP`, the stack pointer and `RBP`, the base pointer. The stack pointer simply points to the top of the stack while the base pointer
 points to the base of the current stack frame.
 
+Take this code for example:
+
 ```cpp
 void foo()
 {
@@ -208,7 +210,28 @@ int main()
 }
 ```
 
-For example, after calling foo, this code would first push the address where the code must return to after running foo, then the base pointer of the previous function's stack
+Here is its generated assembly:
+```asm
+foo():
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-4], 0
+        add     DWORD PTR [rbp-4], 5
+        nop
+        pop     rbp
+        ret
+main:
+        push    rbp
+        mov     rbp, rsp
+        call    foo()
+        mov     eax, 0
+        pop     rbp
+        ret
+```
+
+<Callout type="info">Note that this code was compiled with GCC for Linux. On Windows, there are a few more details such as the shadow space which I want to avoid for now.</Callout>
+
+After calling foo, this code would first push the address where the code must return to after running foo, then the base pointer of the previous function's stack
 frame, set the base pointer to the current stack pointer, use 4 bytes to make space for the integer, and finally add the value 5 to that location after zeroing it out.
 
 Zeroing out stack values is important because there could be unexpected data left there from previous stack frames. Once the code is done it simply pops the old base pointer,
