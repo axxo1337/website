@@ -12,7 +12,7 @@ export default function Callout({ children, type = "info" }: CalloutProps) {
   const { Icon, iconColor, containerClassName } = calloutObjectMap[type];
 
   return (
-    <TexturedContainer className={cn("my-4 p-3.5 py-4.5 flex gap-2 items-start", containerClassName)}>
+    <TexturedContainer className={cn("my-4 p-3.5 py-4.5 flex gap-2 items-start blured-bg", containerClassName)}>
       <Icon style={{ color: iconColor }} className="shrink-0" size={20} />
       <p className="leading-4.5">
         {children}
