@@ -2,7 +2,7 @@ export const metadata = {
     title: "Windows Internals Explained",
     description: "Windows internals is a very important subject that's sadly very poorly documented. In this video I'll do my best to give you a great guide to trampoline from.",
     createdAt: "2026-02-20",
-    updatedAt: "2026-09-19",
+    updatedAt: "2026-09-30",
     youtubeId: "AjzXGaH5VPY",
     thumbnailPath: "/images/thumbnails/windows-internals-explained.avif",
     animationPath: "/animations/win_interns_explained/data.lottie",
@@ -207,6 +207,8 @@ int main()
     return 0;
 }
 ```
+
+<Callout type="info">Note that this description applies when compiled for a Linux system. On Windows, there are a few more details I want to avoid for now.</Callout>
 
 For example, after calling foo, this code would first push the address where the code must return to after running foo, then the base pointer of the previous function's stack
 frame, set the base pointer to the current stack pointer, use 4 bytes to make space for the integer, and finally add the value 5 to that location after zeroing it out.
