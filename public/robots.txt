@@ -29,6 +29,7 @@
 User-agent: *
 Content-Signal: search=yes,ai-train=no,use=reference
 Allow: /
+Disallow: /_next/
 
 User-agent: Amazonbot
 Disallow: /
@@ -61,9 +62,5 @@ Disallow: /
 
 User-agent: PerplexityBot
 Disallow: /
-
-User-agent: *
-Allow: /
-Disallow: /_next/
 
 Sitemap: https://axxowastaken.me/sitemap.xml

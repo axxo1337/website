@@ -84,7 +84,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "aXXo's website",
-    description: "Charles (aXXo) — Computer science, cybersecurity, and software engineering projects.",
+    description:
+      "Charles (aXXo) — Computer science, cybersecurity, and software engineering projects.",
     images: ["/images/seo/og-image.webp"],
     creator: "@axxo1337",
   },
@@ -93,7 +94,8 @@ export const metadata: Metadata = {
     siteName: "aXXo's website",
     url: siteUrl,
     title: "aXXo's website",
-    description: "Charles (aXXo) — Computer science, cybersecurity, and software engineering projects and tutorials.",
+    description:
+      "Charles (aXXo) — Computer science, cybersecurity, and software engineering projects and tutorials.",
     images: [
       {
         url: "/images/seo/og-image.webp",
@@ -134,7 +136,7 @@ export default function RootLayout({
           src="/images/bliss.avif"
           width={1920}
           height={1080}
-          className="fixed pointer-events-none -z-10"
+          className="fixed pointer-events-none -z-10 w-full"
           priority
         />
       </body>

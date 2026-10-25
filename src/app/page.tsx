@@ -27,7 +27,11 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 
 export default async function Home() {
   return (
-    <Main title="About me" createdAt={new Date("2025-12-19")} updatedAt={new Date("2026-09-05")}>
+    <Main
+      title="About me"
+      createdAt={new Date("2025-12-19")}
+      updatedAt={new Date("2026-10-25")}
+    >
       <TexturedContainer className="mt-5 md:mt-6">
         <AspectRatio ratio={960 / 224} className="relative">
           <LottiePlayer
@@ -37,7 +41,12 @@ export default async function Home() {
             autoplay
             loop={false}
           />
-          <Image alt="Banner background" width={960} height={240} src="/animations/banner/background.webp" />
+          <Image
+            alt="Banner background"
+            width={960}
+            height={240}
+            src="/animations/banner/background.webp"
+          />
         </AspectRatio>
       </TexturedContainer>
 
@@ -46,17 +55,26 @@ export default async function Home() {
           Hey! I&apos;m Charles.{" "}
           <i>
             Although you may know me as{" "}
-            <Link href="https://www.youtube.com/@axxo1337" className="inline-anchor">
+            <Link
+              href="https://www.youtube.com/@axxo1337"
+              className="inline-anchor"
+            >
               aXXo
             </Link>
             .
           </i>{" "}
-          As of writing this, I&apos;m a 20 year old living in the French province of{" "}
-          <Link href="https://en.wikipedia.org/wiki/Quebec" className="inline-anchor">
+          As of writing this, I&apos;m a 20 year old living in the French
+          province of{" "}
+          <Link
+            href="https://en.wikipedia.org/wiki/Quebec"
+            className="inline-anchor"
+          >
             Quebec
           </Link>{" "}
-          (Canada). I&apos;ve been doing independent software engineering and cybersecurity for almost 7 years now, although,
-          nowadays, I spend most of my time in this space working on video projects and studying for university.
+          (Canada). I&apos;ve been doing independent software engineering and
+          cybersecurity for almost 7 years now, although, nowadays, I spend most
+          of my time in this space working on video projects and studying for
+          university.
         </p>
       </Section>
       <Section subtitle="What have I made?" title="Some of my work">
@@ -78,7 +96,9 @@ export default async function Home() {
                 animationPath={metadata.animationPath || null}
                 animationPreview={metadata.animationPreview || null}
                 animationBackground={metadata.animationBackground || null}
-                animationBackgroundColor={metadata.animationBackgroundColor || null}
+                animationBackgroundColor={
+                  metadata.animationBackgroundColor || null
+                }
                 categories={metadata.categories}
               />
             );
@@ -101,11 +121,13 @@ export default async function Home() {
       </Section>
       <Section subtitle="What am I up to?" title="Beyond the character">
         <p>
-          At the moment, I'm doing mandatory prerequisite courses to enroll into a mechanical engineering program in university.
+          At the moment, I&apos;m doing mandatory prerequisite courses to enroll
+          into a mechanical engineering program in university.
         </p>
         <p className="mt-3">
-          This may seem random, but I did have some previous exposure to robotics when I was younger. Our HS offered a
-          parascholar program which allowed us to take part in{" "}
+          This may seem random, but I did have some previous exposure to
+          robotics when I was younger. Our HS offered a parascholar program
+          which allowed us to take part in{" "}
           <a className="inline-anchor" href="https://www.vexrobotics.com/">
             Vex
           </a>
@@ -114,7 +136,10 @@ export default async function Home() {
             FRC
           </a>{" "}
           and{" "}
-          <a className="inline-anchor" href="https://www.firstinspires.org/programs/ftc/">
+          <a
+            className="inline-anchor"
+            href="https://www.firstinspires.org/programs/ftc/"
+          >
             FTC
           </a>{" "}
           competitions.
@@ -132,20 +157,29 @@ export default async function Home() {
                 />
               </TexturedContainer>
             </ImageViewer>
-            <span className="text-sm text-white/50 mt-1.5 italic">Vex 2023 competition robot</span>
+            <span className="text-sm text-white/50 mt-1.5 italic">
+              Vex 2023 competition robot
+            </span>
           </div>
           <div className="w-full h-full flex flex-col items-center">
             <TexturedContainer className="w-full h-[329.33px] bg-[#171717] flex items-center justify-center">
               <i className="text-white/70">Image coming soon...</i>
             </TexturedContainer>
-            <span className="text-sm text-white/50 mt-1.5 italic">FRC shooter</span>
+            <span className="text-sm text-white/50 mt-1.5 italic">
+              FRC shooter
+            </span>
           </div>
         </div>
         <p className="mt-3">
-          As you can see, my team wasn&apos;t necessarily great 😂 Also I won&apos;t lie, I was doing C++ programming most of
-          the time, but it didn&apos;t stop me from growing an interest and learning about other things.
+          As you can see, my team wasn&apos;t necessarily great 😂 Also I
+          won&apos;t lie, I was doing C++ programming most of the time, but it
+          didn&apos;t stop me from growing an interest and learning about other
+          things.
         </p>
-        <p className="mt-3">Hopefully, as my career progresses I'll be able to add more interesting things to this section.</p>
+        <p className="mt-3">
+          Hopefully, as my career progresses I&apos;ll be able to add more
+          interesting things to this section.
+        </p>
       </Section>
       <Socials />
     </Main>

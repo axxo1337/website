@@ -8,14 +8,24 @@ import Link from "next/link";
 
 export default function GithubCTA() {
   return (
-    <TexturedContainer className="relative isolate mt-10 sm:mt-12 group flex flex-col items-center gap-5 overflow-hidden px-3 py-7 text-center sm:gap-6 sm:py-10 sm:px-7 blured-bg">
-      <span className="text-2xl md:text-4xl font-semibold">Checkout my Github!</span>
-      <p className="text-white/70 md:text-lg md:w-[70%]">You may find more of what I make in my Github repositories.</p>
+    <TexturedContainer className="relative isolate group flex flex-col items-center gap-5 overflow-hidden px-3 py-7 text-center sm:gap-6 sm:py-10 sm:px-7 blured-bg">
+      <span className="text-2xl md:text-4xl font-semibold">
+        Checkout my Github!
+      </span>
+      <p className="text-white/70 md:text-lg md:w-[70%]">
+        You may find more of what I make in my Github repositories.
+      </p>
       <Link
         href="https://github.com/axxo1337"
         className="flex items-center gap-2.5 rounded-lg bg-blue-600 px-5 py-3 font-semibold text-sm hover:bg-blue-500 transition-colors"
       >
-        <Image src="/images/socials/github.webp" alt="" width={20} height={20} aria-hidden="true" />
+        <Image
+          src="/images/socials/github.webp"
+          alt=""
+          width={20}
+          height={20}
+          aria-hidden="true"
+        />
         Go to Github
       </Link>
       <Image
