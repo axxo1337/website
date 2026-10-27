@@ -31,7 +31,7 @@ export function Reddit({ className }: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <g clip-path="url(#clip0_8837_146)">
+      <g clipPath="url(#clip0_8837_146)">
         <path d="M32 0H0V32H32V0Z" fill="#317FFB" />
         <path
           d="M25.0749 19.2001C27.1391 19.2001 28.8124 17.5268 28.8124 15.4626C28.8124 13.3984 27.1391 11.7251 25.0749 11.7251C23.0107 11.7251 21.3374 13.3984 21.3374 15.4626C21.3374 17.5268 23.0107 19.2001 25.0749 19.2001Z"
@@ -107,18 +107,18 @@ export function Reddit({ className }: IconProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(24.914 13.4448) scale(7.48769 6.53181)"
         >
-          <stop stop-color="#FEFFFF" />
-          <stop offset="0.4" stop-color="#FEFFFF" />
-          <stop offset="0.51" stop-color="#F9FCFC" />
-          <stop offset="0.62" stop-color="#EDF3F5" />
-          <stop offset="0.7" stop-color="#DEE9EC" />
-          <stop offset="0.72" stop-color="#D8E4E8" />
-          <stop offset="0.76" stop-color="#CCD8DF" />
-          <stop offset="0.8" stop-color="#C8D5DD" />
-          <stop offset="0.83" stop-color="#CCD6DE" />
-          <stop offset="0.85" stop-color="#D8DBE2" />
-          <stop offset="0.88" stop-color="#EDE3E9" />
-          <stop offset="0.9" stop-color="#FFEBEF" />
+          <stop stopColor="#FEFFFF" />
+          <stop offset="0.4" stopColor="#FEFFFF" />
+          <stop offset="0.51" stopColor="#F9FCFC" />
+          <stop offset="0.62" stopColor="#EDF3F5" />
+          <stop offset="0.7" stopColor="#DEE9EC" />
+          <stop offset="0.72" stopColor="#D8E4E8" />
+          <stop offset="0.76" stopColor="#CCD8DF" />
+          <stop offset="0.8" stopColor="#C8D5DD" />
+          <stop offset="0.83" stopColor="#CCD6DE" />
+          <stop offset="0.85" stopColor="#D8DBE2" />
+          <stop offset="0.88" stopColor="#EDE3E9" />
+          <stop offset="0.9" stopColor="#FFEBEF" />
         </radialGradient>
         <radialGradient
           id="paint1_radial_8837_146"
@@ -128,18 +128,18 @@ export function Reddit({ className }: IconProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(6.77412 13.4448) scale(7.48769 6.53181)"
         >
-          <stop stop-color="#FEFFFF" />
-          <stop offset="0.4" stop-color="#FEFFFF" />
-          <stop offset="0.51" stop-color="#F9FCFC" />
-          <stop offset="0.62" stop-color="#EDF3F5" />
-          <stop offset="0.7" stop-color="#DEE9EC" />
-          <stop offset="0.72" stop-color="#D8E4E8" />
-          <stop offset="0.76" stop-color="#CCD8DF" />
-          <stop offset="0.8" stop-color="#C8D5DD" />
-          <stop offset="0.83" stop-color="#CCD6DE" />
-          <stop offset="0.85" stop-color="#D8DBE2" />
-          <stop offset="0.88" stop-color="#EDE3E9" />
-          <stop offset="0.9" stop-color="#FFEBEF" />
+          <stop stopColor="#FEFFFF" />
+          <stop offset="0.4" stopColor="#FEFFFF" />
+          <stop offset="0.51" stopColor="#F9FCFC" />
+          <stop offset="0.62" stopColor="#EDF3F5" />
+          <stop offset="0.7" stopColor="#DEE9EC" />
+          <stop offset="0.72" stopColor="#D8E4E8" />
+          <stop offset="0.76" stopColor="#CCD8DF" />
+          <stop offset="0.8" stopColor="#C8D5DD" />
+          <stop offset="0.83" stopColor="#CCD6DE" />
+          <stop offset="0.85" stopColor="#D8DBE2" />
+          <stop offset="0.88" stopColor="#EDE3E9" />
+          <stop offset="0.9" stopColor="#FFEBEF" />
         </radialGradient>
         <radialGradient
           id="paint2_radial_8837_146"
@@ -149,18 +149,18 @@ export function Reddit({ className }: IconProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(16.0811 12.3971) scale(22.5858 15.8582)"
         >
-          <stop stop-color="#FEFFFF" />
-          <stop offset="0.4" stop-color="#FEFFFF" />
-          <stop offset="0.51" stop-color="#F9FCFC" />
-          <stop offset="0.62" stop-color="#EDF3F5" />
-          <stop offset="0.7" stop-color="#DEE9EC" />
-          <stop offset="0.72" stop-color="#D8E4E8" />
-          <stop offset="0.76" stop-color="#CCD8DF" />
-          <stop offset="0.8" stop-color="#C8D5DD" />
-          <stop offset="0.83" stop-color="#CCD6DE" />
-          <stop offset="0.85" stop-color="#D8DBE2" />
-          <stop offset="0.88" stop-color="#EDE3E9" />
-          <stop offset="0.9" stop-color="#FFEBEF" />
+          <stop stopColor="#FEFFFF" />
+          <stop offset="0.4" stopColor="#FEFFFF" />
+          <stop offset="0.51" stopColor="#F9FCFC" />
+          <stop offset="0.62" stopColor="#EDF3F5" />
+          <stop offset="0.7" stopColor="#DEE9EC" />
+          <stop offset="0.72" stopColor="#D8E4E8" />
+          <stop offset="0.76" stopColor="#CCD8DF" />
+          <stop offset="0.8" stopColor="#C8D5DD" />
+          <stop offset="0.83" stopColor="#CCD6DE" />
+          <stop offset="0.85" stopColor="#D8DBE2" />
+          <stop offset="0.88" stopColor="#EDE3E9" />
+          <stop offset="0.9" stopColor="#FFEBEF" />
         </radialGradient>
         <radialGradient
           id="paint3_radial_8837_146"
@@ -170,12 +170,12 @@ export function Reddit({ className }: IconProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(20.9165 18.8715) scale(1.89299 2.77035)"
         >
-          <stop stop-color="#317FFB" />
-          <stop offset="0.5" stop-color="#317FFB" />
-          <stop offset="0.7" stop-color="#317FFB" />
-          <stop offset="0.82" stop-color="#317FFB" />
-          <stop offset="0.92" stop-color="#317FFB" />
-          <stop offset="1" stop-color="#317FFB" />
+          <stop stopColor="#317FFB" />
+          <stop offset="0.5" stopColor="#317FFB" />
+          <stop offset="0.7" stopColor="#317FFB" />
+          <stop offset="0.82" stopColor="#317FFB" />
+          <stop offset="0.92" stopColor="#317FFB" />
+          <stop offset="1" stopColor="#317FFB" />
         </radialGradient>
         <radialGradient
           id="paint4_radial_8837_146"
@@ -185,12 +185,12 @@ export function Reddit({ className }: IconProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(11.0608 18.8715) scale(1.88705 2.77035)"
         >
-          <stop stop-color="#317FFB" />
-          <stop offset="0.5" stop-color="#317FFB" />
-          <stop offset="0.7" stop-color="#317FFB" />
-          <stop offset="0.82" stop-color="#317FFB" />
-          <stop offset="0.92" stop-color="#317FFB" />
-          <stop offset="1" stop-color="#317FFB" />
+          <stop stopColor="#317FFB" />
+          <stop offset="0.5" stopColor="#317FFB" />
+          <stop offset="0.7" stopColor="#317FFB" />
+          <stop offset="0.82" stopColor="#317FFB" />
+          <stop offset="0.92" stopColor="#317FFB" />
+          <stop offset="1" stopColor="#317FFB" />
         </radialGradient>
         <radialGradient
           id="paint5_radial_8837_146"
@@ -200,9 +200,9 @@ export function Reddit({ className }: IconProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(15.8331 24.3634) scale(6.65403 4.38883)"
         >
-          <stop stop-color="#172E35" />
-          <stop offset="0.29" stop-color="#0E1C21" />
-          <stop offset="0.73" stop-color="#030708" />
+          <stop stopColor="#172E35" />
+          <stop offset="0.29" stopColor="#0E1C21" />
+          <stop offset="0.73" stopColor="#030708" />
           <stop offset="1" />
         </radialGradient>
         <radialGradient
@@ -213,18 +213,18 @@ export function Reddit({ className }: IconProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(21.7016 4.26336) scale(5.84092)"
         >
-          <stop stop-color="#FEFFFF" />
-          <stop offset="0.4" stop-color="#FEFFFF" />
-          <stop offset="0.51" stop-color="#F9FCFC" />
-          <stop offset="0.62" stop-color="#EDF3F5" />
-          <stop offset="0.7" stop-color="#DEE9EC" />
-          <stop offset="0.72" stop-color="#D8E4E8" />
-          <stop offset="0.76" stop-color="#CCD8DF" />
-          <stop offset="0.8" stop-color="#C8D5DD" />
-          <stop offset="0.83" stop-color="#CCD6DE" />
-          <stop offset="0.85" stop-color="#D8DBE2" />
-          <stop offset="0.88" stop-color="#EDE3E9" />
-          <stop offset="0.9" stop-color="#FFEBEF" />
+          <stop stopColor="#FEFFFF" />
+          <stop offset="0.4" stopColor="#FEFFFF" />
+          <stop offset="0.51" stopColor="#F9FCFC" />
+          <stop offset="0.62" stopColor="#EDF3F5" />
+          <stop offset="0.7" stopColor="#DEE9EC" />
+          <stop offset="0.72" stopColor="#D8E4E8" />
+          <stop offset="0.76" stopColor="#CCD8DF" />
+          <stop offset="0.8" stopColor="#C8D5DD" />
+          <stop offset="0.83" stopColor="#CCD6DE" />
+          <stop offset="0.85" stopColor="#D8DBE2" />
+          <stop offset="0.88" stopColor="#EDE3E9" />
+          <stop offset="0.9" stopColor="#FFEBEF" />
         </radialGradient>
         <radialGradient
           id="paint7_radial_8837_146"
@@ -234,10 +234,10 @@ export function Reddit({ className }: IconProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(19.267 10.6308) scale(4.78754)"
         >
-          <stop offset="0.48" stop-color="#7A9299" />
-          <stop offset="0.67" stop-color="#172E35" />
+          <stop offset="0.48" stopColor="#7A9299" />
+          <stop offset="0.67" stopColor="#172E35" />
           <stop offset="0.75" />
-          <stop offset="0.82" stop-color="#172E35" />
+          <stop offset="0.82" stopColor="#172E35" />
         </radialGradient>
         <clipPath id="clip0_8837_146">
           <rect width="32" height="32" rx="16" fill="white" />
@@ -258,7 +258,7 @@ export function Discord({ className }: IconProps) {
       className={className}
     >
       <rect width="32" height="32" rx="16" fill="#317FFB" />
-      <g clip-path="url(#clip0_8837_165)">
+      <g clipPath="url(#clip0_8837_165)">
         <path
           d="M19.097 8C18.882 8.3817 18.689 8.77658 18.5135 9.18022C16.8462 8.93014 15.1483 8.93014 13.4767 9.18022C13.3056 8.77658 13.1081 8.3817 12.8932 8C11.3268 8.26764 9.8 8.73709 8.35215 9.39959C5.48276 13.651 4.70618 17.7928 5.09228 21.8775C6.77266 23.1191 8.65488 24.0668 10.6599 24.6723C11.1118 24.0668 11.5111 23.4219 11.8533 22.7506C11.204 22.5093 10.5766 22.2065 9.9755 21.8555C10.1334 21.7415 10.287 21.623 10.4362 21.5089C13.9593 23.1674 18.0396 23.1674 21.5671 21.5089C21.7163 21.6318 21.8699 21.7502 22.0278 21.8555C21.4267 22.2109 20.7993 22.5093 20.1456 22.755C20.4878 23.4262 20.8871 24.0712 21.339 24.6767C23.344 24.0712 25.2262 23.1279 26.9067 21.8863C27.3629 17.1478 26.1257 13.0412 23.6379 9.40398C22.1945 8.74149 20.6677 8.27202 19.1014 8.00877L19.097 8ZM12.3447 19.3635C11.261 19.3635 10.3616 18.3807 10.3616 17.1654C10.3616 15.9501 11.2259 14.9629 12.3403 14.9629C13.4548 14.9629 14.341 15.9544 14.3235 17.1654C14.3059 18.3763 13.4504 19.3635 12.3447 19.3635ZM19.6542 19.3635C18.5661 19.3635 17.6755 18.3807 17.6755 17.1654C17.6755 15.9501 18.5398 14.9629 19.6542 14.9629C20.7686 14.9629 21.6505 15.9544 21.6329 17.1654C21.6154 18.3763 20.7598 19.3635 19.6542 19.3635Z"
           fill="white"
@@ -291,16 +291,16 @@ export function Email({ className }: IconProps) {
       <rect width="32" height="32" rx="16" fill="#317FFB" />
       <path
         d="M25.1668 11.4165L16.9251 16.6663C16.6454 16.8287 16.3277 16.9143 16.0043 16.9143C15.6809 16.9143 15.3632 16.8287 15.0835 16.6663L6.8335 11.4165"
-        stroke-width="1.83333"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.83333"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         stroke="white"
       />
       <path
         d="M8.66683 8.6665H23.3335C24.346 8.6665 25.1668 9.48732 25.1668 10.4998V21.4998C25.1668 22.5124 24.346 23.3332 23.3335 23.3332H8.66683C7.65431 23.3332 6.8335 22.5124 6.8335 21.4998V10.4998C6.8335 9.48732 7.65431 8.6665 8.66683 8.6665Z"
-        stroke-width="1.83333"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.83333"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         stroke="white"
       />
     </svg>
@@ -317,9 +317,9 @@ export function YouTube({ className }: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <g clip-path="url(#clip0_10114_26)">
-        <g clip-path="url(#clip1_10114_26)">
-          <g clip-path="url(#clip2_10114_26)">
+      <g clipPath="url(#clip0_10114_26)">
+        <g clipPath="url(#clip1_10114_26)">
+          <g clipPath="url(#clip2_10114_26)">
             <path
               d="M37.7563 4.99718C37.2296 3.02917 35.6829 1.4826 33.7149 0.955786C30.1515 2.86102e-07 15.856 0 15.856 0C15.856 0 1.56067 2.86102e-07 -2.00283 0.955786C-3.97083 1.4826 -5.5174 3.02917 -6.04421 4.99718C-7 8.56067 -7 16 -7 16C-7 16 -7 23.4394 -6.04421 27.0029C-5.5174 28.9709 -3.97083 30.5174 -2.00283 31.0442C1.56067 32 15.856 32 15.856 32C15.856 32 30.1515 32 33.7149 31.0442C35.6829 30.5174 37.2296 28.9709 37.7563 27.0029C38.7122 23.4394 38.7122 16 38.7122 16C38.7122 16 38.7083 8.56067 37.7563 4.99718Z"
               fill="#317FFB"
