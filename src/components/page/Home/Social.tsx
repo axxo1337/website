@@ -1,13 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useCopyToClipboard } from "@/lib/client/hooks/useCopyToClipboard";
 import { toast } from "sonner";
-import { Fragment } from "react";
+import { Fragment, type ComponentType } from "react";
 import { cn } from "@/lib/client/utils";
+import type { IconProps } from "@/components/ui/SocialIcons";
 
-export default function Social({ copyContent, copyTitle, href, iconPath, title }: SocialProps) {
+export default function Social({ copyContent, copyTitle, href, icon: Icon, title }: SocialProps) {
   const { copyToClipboard } = useCopyToClipboard();
 
   const handleCopy = () => {
@@ -22,14 +22,7 @@ export default function Social({ copyContent, copyTitle, href, iconPath, title }
 
   const renderContent = () => (
     <Fragment>
-      <Image
-        src={iconPath}
-        className="size-6 md:size-8 group-hover:brightness-85 duration-250 transition-all shrink-0"
-        width={32}
-        height={32}
-        alt=""
-        aria-hidden="true"
-      />
+      <Icon className="size-6 md:size-8 group-hover:brightness-85 duration-250 transition-all shrink-0" />
       <span className="font-medium -top-px text-lg md:text-xl group-hover:text-white/80 transition-colors duration-250 group-hover-underline flex items-center gap-2">
         {title}
       </span>
@@ -72,6 +65,6 @@ export interface SocialProps {
   copyContent?: string;
   copyTitle?: string;
   href?: string | null;
-  iconPath: string;
+  icon: ComponentType<IconProps>;
   title: string;
 }

@@ -1,5 +1,8 @@
+"use client";
+
 import Section from "@/components/layout/Section";
 import Social from "./Social";
+import { Discord, Email, Github, Instagram, Reddit, YouTube } from "@/components/ui/SocialIcons";
 
 //
 // [SECTION] Defines
@@ -9,33 +12,33 @@ export const socials = [
   {
     href: "https://www.youtube.com/@axxo1337",
     title: "YouTube",
-    iconPath: "/images/socials/youtube.webp",
+    icon: YouTube,
   },
   {
     href: "https://www.instagram.com/axxo1337",
     title: "Instagram",
-    iconPath: "/images/socials/instagram.webp",
+    icon: Instagram,
   },
   {
     href: "https://www.reddit.com/r/aXXo",
     title: "Reddit",
-    iconPath: "/images/socials/reddit.webp",
+    icon: Reddit,
   },
   {
     href: "https://discord.gg/tdEAJU2XwZ",
     title: "Discord (apply to join)",
-    iconPath: "/images/socials/discord.webp",
+    icon: Discord,
   },
   {
     href: "https://github.com/axxo1337",
     title: "Github",
-    iconPath: "/images/socials/github.webp",
+    icon: Github,
   },
   {
     copyTitle: "E-Mail",
     copyContent: "axxo1337@proton.me",
     title: "axxo1337 [at] proton [dot] me",
-    iconPath: "/images/socials/email.webp",
+    icon: Email,
   },
 ];
 

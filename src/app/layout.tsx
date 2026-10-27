@@ -136,7 +136,7 @@ export default function RootLayout({
           src="/images/bliss.avif"
           width={1920}
           height={1080}
-          className="fixed pointer-events-none -z-10 w-full"
+          className="fixed pointer-events-none -z-10 object-cover inset-0 w-full h-full"
           priority
         />
       </body>
