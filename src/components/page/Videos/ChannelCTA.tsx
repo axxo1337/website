@@ -1,6 +1,7 @@
 import TexturedContainer from "@/components/ui/TexturedContainer";
 import Image from "next/image";
 import Link from "next/link";
+import { YouTube } from "@/components/ui/SocialIcons";
 
 //
 // [SECTION] Content
@@ -15,7 +16,7 @@ export default function ChannelCTA() {
         href="https://www.youtube.com/@axxo1337/videos"
         className="flex items-center gap-2.5 rounded-lg bg-blue-600 px-5 py-3 font-semibold text-sm hover:bg-blue-500 transition-colors"
       >
-        <Image src="/images/socials/youtube.webp" alt="" width={20} height={20} aria-hidden="true" />
+        <YouTube className="size-5" />
         Go to YouTube
       </Link>
       <Image

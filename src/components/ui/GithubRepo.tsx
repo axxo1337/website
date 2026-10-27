@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import { Github } from "@/components/ui/SocialIcons";
 
 export default function GithubRepo({ link }: GithubRepoProps) {
   let owner = "";
@@ -23,7 +23,7 @@ export default function GithubRepo({ link }: GithubRepoProps) {
   return (
     <Link href={link} className="rounded-lg my-4 border border-white/20 p-3 justify-between blured-bg flex items-center group">
       <div className="flex items-center gap-3">
-        <Image alt="" aria-hidden="true" src="/images/socials/github.webp" className="size-6 md:size-8" width={32} height={32} />
+        <Github className="size-6 md:size-8" />
         <div className="flex flex-col">
           <span className="font-medium">{repo}</span>
           {owner && <span className="text-xs text-white/80">{owner}</span>}

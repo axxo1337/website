@@ -379,6 +379,6 @@ export function Github({ className }: IconProps) {
 // [SECTION] Types
 //
 
-interface IconProps {
+export interface IconProps {
   className?: string;
 }
