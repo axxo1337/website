@@ -53,6 +53,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly' as const,
       priority: 0.5,
     },
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: 'yearly' as const,
+      priority: 0.5,
+    },
   ];
 
   return [...staticRoutes, ...projectRoutes, ...videoRoutes];

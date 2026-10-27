@@ -13,30 +13,48 @@ export default function Footer() {
         <nav>
           <ul className="flex items-center gap-6 md:text-base text-sm">
             <li>
-              <Link href="/" className="hover:text-white/80 font-medium transition-colors hover-underline">
+              <Link
+                href="/"
+                className="hover:text-white/80 font-medium transition-colors hover-underline"
+              >
                 About me
               </Link>
             </li>
             <li>
-              <Link href="/videos" className="hover:text-white/80 font-medium transition-colors hover-underline">
+              <Link
+                href="/videos"
+                className="hover:text-white/80 font-medium transition-colors hover-underline"
+              >
                 Videos
               </Link>
             </li>
             <li>
-              <Link href="/projects" className="hover:text-white/80 font-medium transition-colors hover-underline">
+              <Link
+                href="/projects"
+                className="hover:text-white/80 font-medium transition-colors hover-underline"
+              >
                 Projects
               </Link>
             </li>
           </ul>
         </nav>
       </div>
-      <div className="mt-6 md:mt-8">
+      <div className="mt-6 md:mt-8 flex sm:flex-row flex-col gap-1.5 justify-between">
         <span className="text-white/50 text-sm md:text-base">
           © {getYear(new Date())} aXXo.{" "}
-          <Link href="/license" className="hover:text-white/80 font-medium transition-colors hover-underline">
+          <Link
+            href="/license"
+            className="hover:text-white/80 font-medium transition-colors hover-underline"
+          >
             CC BY-NC-SA 4.0
           </Link>
         </span>
+        <Link
+          href="/privacy"
+          className="hover:text-white/80 font-medium transition-colors hover-underline text-white/50 text-sm md:text-base"
+        >
+          Privacy Policy
+        </Link>
       </div>
     </footer>
   );
