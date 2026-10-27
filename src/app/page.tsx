@@ -30,7 +30,7 @@ export default async function Home() {
     <Main
       title="About me"
       createdAt={new Date("2025-12-19")}
-      updatedAt={new Date("2026-10-25")}
+      updatedAt={new Date("2026-10-27")}
     >
       <TexturedContainer className="mt-5 md:mt-6">
         <AspectRatio ratio={960 / 224} className="relative">
@@ -171,10 +171,10 @@ export default async function Home() {
           </div>
         </div>
         <p className="mt-3">
-          As you can see, my team wasn&apos;t necessarily great 😂 Also I
-          won&apos;t lie, I was doing C++ programming most of the time, but it
-          didn&apos;t stop me from growing an interest and learning about other
-          things.
+          As you can see, my team wasn&apos;t necessarily great the best, but we
+          were decent. Also I won&apos;t lie, I was doing C++ programming most
+          of the time, but it didn&apos;t stop me from growing an interest and
+          learning about other things.
         </p>
         <p className="mt-3">
           Hopefully, as my career progresses I&apos;ll be able to add more
