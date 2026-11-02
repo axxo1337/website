@@ -1,15 +1,23 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { cn } from "@/lib/client/utils";
+import wasmUrl from "@lottiefiles/dotlottie-web/dotlottie-player.wasm";
 import type { DotLottie, DotLottieReactProps } from "@lottiefiles/dotlottie-react";
 
 //
 // [SECTION] Content
 //
 
-const DotLottieReact = dynamic(() => import("@lottiefiles/dotlottie-react").then((mod) => mod.DotLottieReact), { ssr: false });
+const DotLottieReact = dynamic(
+  () =>
+    import("@lottiefiles/dotlottie-react").then((mod) => {
+      mod.setWasmUrl(wasmUrl);
+      return mod.DotLottieReact;
+    }),
+  { ssr: false },
+);
 
 export default function LottiePlayer({
   className,
