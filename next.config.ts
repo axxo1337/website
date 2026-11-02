@@ -9,8 +9,14 @@ const nextConfig: NextConfig = {
   },
   images: {
     unoptimized: true,
-    minimumCacheTTL: 604800,
-    formats: ["image/avif", "image/webp"],
+  },
+  turbopack: {
+    rules: {
+      "*.wasm": {
+        loaders: ["./scripts/wasm-url-loader.cjs"],
+        as: "*.js",
+      },
+    },
   },
 };
 

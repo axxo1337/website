@@ -22,6 +22,8 @@
 # production
 /build
 
+/public/wasm/
+
 # misc
 .DS_Store
 *.pem
