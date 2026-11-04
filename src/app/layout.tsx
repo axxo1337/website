@@ -4,7 +4,6 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import JsonLd from "@/components/ui/JsonLd";
-import ServiceWorkerRegister from "@/components/layout/ServiceWorkerRegister";
 import { getRootJsonLd } from "@/lib/server/jsonld";
 import "./globals.css";
 import Image from "next/image";
@@ -39,12 +38,6 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
     apple: "/images/icons/apple-touch-icon.png",
-  },
-  manifest: "/manifest.json",
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "black-translucent",
-    title: "aXXo",
   },
   applicationName: "aXXo's website",
   alternates: {
@@ -130,7 +123,6 @@ export default function RootLayout({
           <Footer />
         </div>
         <Toaster />
-        <ServiceWorkerRegister />
         <Image
           alt="Background Windows XP bliss"
           src="/images/bliss.avif"
