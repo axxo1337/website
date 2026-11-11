@@ -1,8 +1,6 @@
 "use client";
 
 import { X } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
-import type { Transition } from "motion/react";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/client/utils";
@@ -14,7 +12,8 @@ import { cn } from "@/lib/client/utils";
 const ZOOM_MARGIN = 40;
 const SWIPE_THRESHOLD = 10;
 const EXIT_FALLBACK_MS = 250;
-const ZOOM_TRANSITION: Transition = { duration: 0.25, ease: [0.25, 0.1, 0.25, 1] };
+const ZOOM_TRANSITION_CLASS =
+  "transition-[opacity,transform] duration-[250ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] motion-reduce:transition-none";
 
 //
 // [SECTION] Functions
@@ -112,10 +111,9 @@ function ImageViewerDialog({ src, alt, origin, natural, visible, onUnzoom, onExi
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const touchYRef = useRef<number | undefined>(undefined);
-  const reducedMotion = useReducedMotion();
+  const [entered, setEntered] = useState(false);
   const zoom = computeZoomStyle(origin, natural);
-  const unzoomedPose = { x: 0, y: 0, scale: 1 / zoom.scale };
-  const transition = reducedMotion ? { duration: 0 } : ZOOM_TRANSITION;
+  const zoomed = entered && visible;
 
   useEffect(() => {
     const { style: bodyStyle } = document.body;
@@ -132,6 +130,18 @@ function ImageViewerDialog({ src, alt, origin, natural, visible, onUnzoom, onExi
       bodyStyle.overflow = prevOverflow;
       previousActive?.focus({ preventScroll: true });
       dialog?.close();
+    };
+  }, []);
+  // CSS transitions only fire on a style change after a painted frame, so render the
+  // unzoomed pose first and flip to the zoomed pose one frame later.
+  useEffect(() => {
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
     };
   }, []);
 
@@ -184,23 +194,19 @@ function ImageViewerDialog({ src, alt, origin, natural, visible, onUnzoom, onExi
       }}
       className="fixed inset-0 m-0 h-dvh w-dvw max-h-none max-w-none overflow-hidden overscroll-none border-0 bg-transparent p-0 [&::backdrop]:hidden"
     >
-      <motion.div
+      <div
         aria-hidden="true"
         onClick={onUnzoom}
-        className="absolute inset-0 bg-background"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: visible ? 1 : 0 }}
-        transition={transition}
+        className={cn("absolute inset-0 bg-background", ZOOM_TRANSITION_CLASS)}
+        style={{ opacity: zoomed ? 1 : 0 }}
       />
-      <motion.img
+        {/* eslint-disable-next-line @next/next/no-img-element -- cloned for the zoom overlay; next/image adds nothing here */}
+      <img
         src={src}
         alt={alt || ""}
         onClick={onUnzoom}
-        initial={unzoomedPose}
-        animate={visible ? { x: zoom.x, y: zoom.y, scale: 1 } : unzoomedPose}
-        transition={transition}
-        onAnimationComplete={() => {
-          if (!visible) onExited();
+        onTransitionEnd={(e) => {
+          if (!visible && e.target === e.currentTarget && e.propertyName === "transform") onExited();
         }}
         style={{
           left: origin.left,
@@ -208,21 +214,24 @@ function ImageViewerDialog({ src, alt, origin, natural, visible, onUnzoom, onExi
           width: zoom.width,
           height: zoom.height,
           transformOrigin: "top left",
+          transform: zoomed ? `translate3d(${zoom.x}px, ${zoom.y}px, 0)` : `scale(${1 / zoom.scale})`,
         }}
-        className="absolute z-10 cursor-zoom-out rounded-md"
+        className={cn("absolute z-10 cursor-zoom-out rounded-md will-change-transform", ZOOM_TRANSITION_CLASS)}
       />
-      <motion.button
+      <button
         ref={closeRef}
         type="button"
         aria-label="Close image viewer"
         onClick={onUnzoom}
-        className="absolute right-4 top-4 z-20 flex size-9 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/60"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: visible ? 1 : 0 }}
-        transition={transition}
+        className={cn(
+          "absolute right-4 top-4 z-20 flex size-9 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white",
+          "transition-[background-color,opacity] duration-[250ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] motion-reduce:transition-none",
+          "hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/60",
+        )}
+        style={{ opacity: zoomed ? 1 : 0 }}
       >
         <X className="size-5" />
-      </motion.button>
+      </button>
     </dialog>,
     document.body
   );
