@@ -149,6 +149,9 @@ export default function NoAi() {
               "opacity-0 pointer-events-none select-none -bottom-13! -right-13!",
           )}
         >
+          <span className="opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out font-medium">
+            Click to open
+          </span>
           <StyledButton isOpen={isOpen} />
         </DialogTrigger>
         <DialogContent className="min-w-145">
@@ -193,14 +196,22 @@ export default function NoAi() {
       <DrawerTrigger
         ref={triggerRef}
         className={cn(
-          "cursor-pointer fixed z-20 bottom-10 -right-20 md:-bottom-10 md:-right-10 scale-70 md:scale-100 -rotate-20 drop-shadow-2xl group brightness-40 hover:brightness-100 hover:bottom-12 md:hover:-bottom-6 hover:-right-16 md:hover:-right-6 transition-all duration-300 ease-in-out",
+          "cursor-pointer fixed z-20 bottom-10 -right-20 md:-bottom-10 md:-right-10 scale-70 md:scale-100 -rotate-20 drop-shadow-2xl group brightness-40 transition-all duration-300 ease-in-out",
           !revealed && "-right-28",
           isOpen && "bottom-12 -right-16 md:-bottom-6 md:-right-6",
-          revealed && "brightness-80",
+          revealed && "brightness-100",
           hide &&
             "opacity-0 pointer-events-none select-none bottom-10 -right-30",
         )}
       >
+        <span
+          className={cn(
+            "opacity-0 transition duration-300 ease-in-out font-medium bg-red-800 text-lg px-2 rounded-md",
+            revealed && "opacity-100",
+          )}
+        >
+          Click to open
+        </span>
         <StyledButton isOpen={isOpen} />
       </DrawerTrigger>
       <DrawerContent>
