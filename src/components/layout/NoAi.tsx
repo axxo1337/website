@@ -4,7 +4,7 @@ import Shellshock from "@/components/ui/Shellshock.tsx";
 import NoAiSign from "@/components/ui/NoAiSign.tsx";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { cn } from "@/lib/client/utils";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@/lib/client/hooks/useMediaQuery";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 
@@ -32,10 +32,25 @@ export default function NoAi() {
   const [hide, setHide] = useState(true);
   const [isOpen, setOpen] = useState(false);
   const [revealed, setRevealed] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setHide(localStorage.getItem("hideNoAiMessage") !== null);
   }, []);
+
+  useEffect(() => {
+    if (!revealed || isOpen) return;
+    const onClick = (event: MouseEvent) => {
+      if (
+        triggerRef.current &&
+        !triggerRef.current.contains(event.target as Node)
+      ) {
+        setRevealed(false);
+      }
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [revealed, isOpen]);
 
   if (isDesktop) {
     return (
@@ -70,6 +85,7 @@ export default function NoAi() {
       }}
     >
       <DrawerTrigger
+        ref={triggerRef}
         className={cn(
           "cursor-pointer fixed z-20 bottom-10 -right-20 md:-bottom-10 md:-right-10 scale-70 md:scale-100 -rotate-20 drop-shadow-2xl group brightness-40 hover:brightness-100 hover:bottom-12 md:hover:-bottom-6 hover:-right-16 md:hover:-right-6 transition-all duration-300 ease-in-out",
           !revealed && "-right-28",
