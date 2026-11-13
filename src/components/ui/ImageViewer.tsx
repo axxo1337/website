@@ -27,7 +27,11 @@ function computeZoomStyle(origin: Rect, natural: Size | null) {
   // Never upscale past the image's natural resolution; large screens would otherwise
   // stretch low-resolution images to fit and lose quality.
   const scale = natural
-    ? Math.min(fitScale, natural.width / origin.width, natural.height / origin.height)
+    ? Math.min(
+        fitScale,
+        natural.width / origin.width,
+        natural.height / origin.height,
+      )
     : fitScale;
   const width = origin.width * scale;
   const height = origin.height * scale;
@@ -40,7 +44,12 @@ function computeZoomStyle(origin: Rect, natural: Size | null) {
   };
 }
 
-export default function ImageViewer({ src, alt, children, className }: ImageViewerProps) {
+export default function ImageViewer({
+  src,
+  alt,
+  children,
+  className,
+}: ImageViewerProps) {
   const thumbnailRef = useRef<HTMLButtonElement>(null);
   const [origin, setOrigin] = useState<Rect | null>(null);
   const [natural, setNatural] = useState<Size | null>(null);
@@ -55,9 +64,15 @@ export default function ImageViewer({ src, alt, children, className }: ImageView
       setNatural({ width: probe.naturalWidth, height: probe.naturalHeight });
     } else {
       setNatural(null);
-      probe.onload = () => setNatural({ width: probe.naturalWidth, height: probe.naturalHeight });
+      probe.onload = () =>
+        setNatural({ width: probe.naturalWidth, height: probe.naturalHeight });
     }
-    setOrigin({ left: rect.left, top: rect.top, width: rect.width, height: rect.height });
+    setOrigin({
+      left: rect.left,
+      top: rect.top,
+      width: rect.width,
+      height: rect.height,
+    });
     setVisible(true);
   }, [src]);
 
@@ -70,7 +85,12 @@ export default function ImageViewer({ src, alt, children, className }: ImageView
     const onResize = () => {
       const rect = thumbnailRef.current?.getBoundingClientRect();
       if (rect && rect.width > 0 && rect.height > 0) {
-        setOrigin({ left: rect.left, top: rect.top, width: rect.width, height: rect.height });
+        setOrigin({
+          left: rect.left,
+          top: rect.top,
+          width: rect.width,
+          height: rect.height,
+        });
       }
     };
     window.addEventListener("resize", onResize);
@@ -87,7 +107,7 @@ export default function ImageViewer({ src, alt, children, className }: ImageView
         aria-label={alt ? `Zoom image: ${alt}` : "Zoom image"}
         className={cn(
           "inline-block cursor-zoom-in appearance-none border-0 bg-transparent p-0 focus-visible:ring-2 focus-visible:ring-white/60",
-          className
+          className,
         )}
       >
         {children}
@@ -107,7 +127,15 @@ export default function ImageViewer({ src, alt, children, className }: ImageView
   );
 }
 
-function ImageViewerDialog({ src, alt, origin, natural, visible, onUnzoom, onExited }: ImageViewerDialogProps) {
+function ImageViewerDialog({
+  src,
+  alt,
+  origin,
+  natural,
+  visible,
+  onUnzoom,
+  onExited,
+}: ImageViewerDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const touchYRef = useRef<number | undefined>(undefined);
@@ -158,7 +186,11 @@ function ImageViewerDialog({ src, alt, origin, natural, visible, onUnzoom, onExi
     function handleTouchMove(e: TouchEvent) {
       const startY = touchYRef.current;
       const y = e.touches[0]?.screenY;
-      if (startY != null && y != null && Math.abs(y - startY) > SWIPE_THRESHOLD) {
+      if (
+        startY != null &&
+        y != null &&
+        Math.abs(y - startY) > SWIPE_THRESHOLD
+      ) {
         touchYRef.current = undefined;
         onUnzoom();
       }
@@ -200,13 +232,18 @@ function ImageViewerDialog({ src, alt, origin, natural, visible, onUnzoom, onExi
         className={cn("absolute inset-0 bg-background", ZOOM_TRANSITION_CLASS)}
         style={{ opacity: zoomed ? 1 : 0 }}
       />
-        {/* eslint-disable-next-line @next/next/no-img-element -- cloned for the zoom overlay; next/image adds nothing here */}
+      {/* eslint-disable-next-line @next/next/no-img-element -- cloned for the zoom overlay; next/image adds nothing here */}
       <img
         src={src}
         alt={alt || ""}
         onClick={onUnzoom}
         onTransitionEnd={(e) => {
-          if (!visible && e.target === e.currentTarget && e.propertyName === "transform") onExited();
+          if (
+            !visible &&
+            e.target === e.currentTarget &&
+            e.propertyName === "transform"
+          )
+            onExited();
         }}
         style={{
           left: origin.left,
@@ -214,9 +251,14 @@ function ImageViewerDialog({ src, alt, origin, natural, visible, onUnzoom, onExi
           width: zoom.width,
           height: zoom.height,
           transformOrigin: "top left",
-          transform: zoomed ? `translate3d(${zoom.x}px, ${zoom.y}px, 0)` : `scale(${1 / zoom.scale})`,
+          transform: zoomed
+            ? `translate3d(${zoom.x}px, ${zoom.y}px, 0)`
+            : `scale(${1 / zoom.scale})`,
         }}
-        className={cn("absolute z-10 cursor-zoom-out rounded-md will-change-transform", ZOOM_TRANSITION_CLASS)}
+        className={cn(
+          "absolute z-10 cursor-zoom-out rounded-md will-change-transform",
+          ZOOM_TRANSITION_CLASS,
+        )}
       />
       <button
         ref={closeRef}
@@ -233,7 +275,7 @@ function ImageViewerDialog({ src, alt, origin, natural, visible, onUnzoom, onExi
         <X className="size-5" />
       </button>
     </dialog>,
-    document.body
+    document.body,
   );
 }
 

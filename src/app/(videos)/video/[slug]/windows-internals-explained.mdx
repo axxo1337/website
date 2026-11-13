@@ -2,7 +2,7 @@ export const metadata = {
     title: "Windows Internals Explained",
     description: "Windows internals is a very important subject that's sadly very poorly documented. In this video I'll do my best to give you a great guide to trampoline from.",
     createdAt: "2026-02-20",
-    updatedAt: "2026-10-08",
+    updatedAt: "2026-11-13",
     youtubeId: "AjzXGaH5VPY",
     thumbnailPath: "/images/thumbnails/windows-internals-explained.avif",
     animationPath: "/animations/win_interns_explained/data.lottie",
@@ -12,7 +12,7 @@ export const metadata = {
     status: "COMPLETE",
 };
 
-Windows internals is a very important subject that's sadly poorly documented. While there are good reference out there, they are all lacking in one way or another which can be
+Windows internals is a very important subject that's sadly poorly documented. While there are good references out there, they are all lacking in one way or another which can be
 irritating for beginners. In this video I did my best to give you a great guide to trampoline from. You should find all of my sources and collaborators
 [at the end of this document](#sources-and-credits).
 
@@ -20,7 +20,7 @@ irritating for beginners. In this video I did my best to give you a great guide 
 
 In 1975, a 21 year old [Paul Allen](https://en.wikipedia.org/wiki/Paul_Allen) (Microsoft's co-founder) was walking through the
 [Harvard square](https://en.wikipedia.org/wiki/Harvard_Square) when something caught his attention. It was an issue of the magazine <i>Popular Electronics</i>.
-The cover stared a computer called the [Altair 8800](https://en.wikipedia.org/wiki/Altair_8800). A personal computer released just the year before by Micro
+The cover starred a computer called the [Altair 8800](https://en.wikipedia.org/wiki/Altair_8800). A personal computer released just the year before by Micro
 Instrumentation and Telemetry Systems Inc., let's just call them MITS. Allen bought the magazine and headed back to his best friend's dorm.
 
 ![Popular Electronics|center|300px|The Popular Electronics magazine Allen bought](/images/documents/windows-internals-explained/popular_electronics.avif)
@@ -52,7 +52,7 @@ They then dropped the DOS kernel and replaced it with NT instead at the release 
 ### Fundamentals
 
 Before diving into Windows internals there are concepts you must understand. While this chapter covers many fundamental concepts it isn't exactly enough for a complete beginner.
-See it as a refresher. If you struggle too much with these contents I would advice you to start by learning the very basics of computer science (I sadly haven't made such a guide).
+See it as a refresher. If you struggle too much with these contents I would advise you to start by learning the very basics of computer science (I sadly haven't made such a guide).
 
 #### Memory
 
@@ -257,7 +257,7 @@ Right before the DOS stub is the DOS header. It's the very first chunk of inform
 and find the NT headers.
 
 These consist of two very important headers called the file header and the optional header. The file header holds information such as the architecture the executable is for
-and when the file was created. As for the optional header, don't be mislead by its name, it's actually pretty important as it stores information such as where the code begins.
+and when the file was created. As for the optional header, don't be misled by its name, it's actually pretty important as it stores information such as where the code begins.
 
 After all these headers is the section table. A section is a portion of an executable dedicated to storing some data. This can be executable code, information about the
 functions the program needs to import from libraries or even resources such as images.
@@ -804,7 +804,7 @@ Note that initially both of these tables are equal, meaning you could use the IA
 IAT's entries will point to the appropriate functions' address.
 
 In order to find an imported function's address using its name, the code needs to parse the concerned loaded library's export table, but we won't dive into
-this process as it's fairly alike. This is what resolving an import table looks like into code. Although don't be mislead into thinking it's exactly
+this process as it's fairly alike. This is what resolving an import table looks like into code. Although don't be misled into thinking it's exactly
 how the image loader does it. Ironically, this code uses the image loader to load the libraries which completely bypasses a lot of steps it otherwise handles.
 
 One of these steps is resolving the imports of the loaded libraries. Because they, indeed, may themselves import functions from other libraries.
@@ -827,11 +827,11 @@ Here's a list of all of the concepts that are left to cover:
 6. Device drivers.
 7. IOCTL.
 8. Object alertable state.
-9. Syncronization mechanisms (Mutex, Semaphores, etc).
+9. Synchronization mechanisms (Mutex, Semaphores, etc).
 10. IRQL.
 11. APC and DPC.
 12. Notifications.
-13. Useful tools and how to use them (Windbg, sysinternals suite, etc).
+13. Useful tools and how to use them (WinDbg, Sysinternals Suite, etc).
 
 If you're looking forward to a second part, then please let me know in the comments. So with all of this aside,
 never give up on learning, and I'll be seeing you in the next one!
