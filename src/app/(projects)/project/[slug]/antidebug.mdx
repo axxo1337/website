@@ -2,7 +2,7 @@ export const metadata = {
     title: "AntiDebug",
     description: "A simple terminal interface tool to test Windows x86_64 anti-debugging techniques.",
     createdAt: "2025-09-10",
-    updatedAt: "2026-09-19",
+    updatedAt: "2026-11-13",
     thumbnailPath: "/images/thumbnails/antidebug.avif",
     animationPath: "/animations/antidebug/data.lottie",
     animationBackgroundColor: "#171717",
@@ -89,7 +89,7 @@ by functions like `DbgPrint`.
 
 #### `NtGlobalFlag`
 
-`NtGlobalFlag` is a member of the PEB which, when a debugger is attached, has three bit flags set to 1 notably: `0x10: EAP_ENABLE_TAIL_CHECK`, `0x20: HEAP_ENABLE_FREE_CHECK` and `0x40: HEAP_VALIDATE_PARAMETERS`. 
+`NtGlobalFlag` is a member of the PEB which, when a debugger is attached, has three bit flags set to 1 notably: `0x10: HEAP_ENABLE_TAIL_CHECK`, `0x20: HEAP_ENABLE_FREE_CHECK` and `0x40: HEAP_VALIDATE_PARAMETERS`. 
 Bypassing is as simple as setting it to any value that does not match any of those flags (0 will work great). Also it seems these flags are only set when a program is launched with a debugger. When it is attached 
 after startup they aren't.
 

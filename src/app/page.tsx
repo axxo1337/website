@@ -7,7 +7,6 @@ import ImageViewer from "@/components/ui/ImageViewer";
 import LottiePlayer from "@/components/ui/LottiePlayer";
 import TexturedContainer from "@/components/ui/TexturedContainer";
 import { getContentMetadata, ContentType } from "@/lib/server/mdx";
-import Image from "next/image";
 import Link from "next/link";
 
 //
@@ -24,6 +23,60 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 //
 // [SECTION] Content
 //
+
+function BannerBackground() {
+  return (
+    <svg
+      width="960"
+      height="224"
+      viewBox="0 0 960 224"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_10376_1608)">
+        <rect width="960" height="224" fill="#101010" />
+        <g opacity="0.2">
+          <rect
+            width="960"
+            height="224"
+            fill="url(#paint0_linear_10376_1608)"
+          />
+          <path
+            d="M285.5 132.641C207.9 129.041 62.8333 141.475 0 148.141V224.641H960V188.935C366.536 127.662 382.391 137.136 285.5 132.641Z"
+            fill="url(#paint1_linear_10376_1608)"
+          />
+        </g>
+      </g>
+      <defs>
+        <linearGradient
+          id="paint0_linear_10376_1608"
+          x1="388"
+          y1="112"
+          x2="1389.5"
+          y2="-414"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#4C81F1" />
+          <stop offset="1" stopColor="#2C4A8B" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_10376_1608"
+          x1="408"
+          y1="162.141"
+          x2="408"
+          y2="378.141"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#7FA326" />
+          <stop offset="1" stopColor="#303D0E" />
+        </linearGradient>
+        <clipPath id="clip0_10376_1608">
+          <rect width="960" height="224" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
 
 export default async function Home() {
   return (
@@ -48,12 +101,7 @@ export default async function Home() {
             autoplay
             loop={true}
           />
-          <Image
-            alt="Banner background"
-            width={960}
-            height={240}
-            src="/animations/banner/background.svg"
-          />
+          <BannerBackground />
         </AspectRatio>
       </TexturedContainer>
 

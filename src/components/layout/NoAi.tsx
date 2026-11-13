@@ -62,7 +62,7 @@ function Policy() {
       </p>
 
       <p>
-        When it comes to coding, my usage is infinitesimal. For exemple, the
+        When it comes to coding, my usage is infinitesimal. For example, the
         website you see in front of you was fully designed by me in Figma. The
         entire base of the code was also manually written by me. In truth,
         almost the entirety of the code that makes it up was written by... me.
@@ -79,7 +79,7 @@ function Policy() {
 
       <p>
         This notice shouldn&apos;t be too long and I&apos;ll stop here, so keep
-        that in mind. This doesn&apos;t appropriatly discloses my views on AI
+        that in mind. This doesn&apos;t appropriately disclose my views on AI
         and its usage nor does it really clearly tell you when and where I use
         it except for the fact I{" "}
         <span className="font-bold text-red-400">NEVER</span> use it for
@@ -119,7 +119,9 @@ export default function NoAi() {
   };
 
   useEffect(() => {
-    setHide(localStorage.getItem("hideNoAiMessage") !== null);
+    requestAnimationFrame(() => {
+      setHide(localStorage.getItem("hideNoAiMessage") !== null);
+    });
   }, []);
 
   useEffect(() => {
@@ -143,9 +145,8 @@ export default function NoAi() {
           className={cn(
             "cursor-pointer fixed z-20 bottom-10 -right-20 md:-bottom-10 md:-right-10 scale-70 md:scale-100 -rotate-20 drop-shadow-2xl group brightness-30 hover:brightness-100 hover:bottom-12 md:hover:-bottom-6 hover:-right-16 md:hover:-right-6 transition-all duration-300 ease-in-out",
             isOpen && "bottom-12 -right-16 md:-bottom-6 md:-right-6",
-            hide
-              ? "opacity-0 pointer-events-none select-none -bottom-5 -right-5"
-              : "animate-in fade-in",
+            hide &&
+              "opacity-0 pointer-events-none select-none -bottom-13! -right-13!",
           )}
         >
           <StyledButton isOpen={isOpen} />
@@ -196,9 +197,8 @@ export default function NoAi() {
           !revealed && "-right-28",
           isOpen && "bottom-12 -right-16 md:-bottom-6 md:-right-6",
           revealed && "brightness-80",
-          hide
-            ? "opacity-0 pointer-events-none select-none bottom-10 -right-30"
-            : "animate-in fade-in",
+          hide &&
+            "opacity-0 pointer-events-none select-none bottom-10 -right-30",
         )}
       >
         <StyledButton isOpen={isOpen} />

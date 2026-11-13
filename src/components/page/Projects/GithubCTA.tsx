@@ -11,7 +11,7 @@ export default function GithubCTA() {
   return (
     <TexturedContainer className="relative isolate group flex flex-col items-center gap-5 overflow-hidden px-3 py-7 text-center sm:gap-6 sm:py-10 sm:px-7 blured-bg">
       <span className="text-2xl md:text-4xl font-semibold">
-        Checkout my Github!
+        Check out my Github!
       </span>
       <p className="text-white/70 md:text-lg md:w-[70%]">
         You may find more of what I make in my Github repositories.
