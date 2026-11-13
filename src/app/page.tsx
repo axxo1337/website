@@ -201,8 +201,11 @@ export default async function Home() {
         </p>
         <div className="mt-4 flex gap-6 md:gap-8 md:flex-row flex-col">
           <div className="flex flex-col items-center shrink-0">
-            <ImageViewer src="/images/vex.png" alt="Vex 2023 competition robot">
-              <TexturedContainer className="relative">
+            <TexturedContainer className="w-full h-[329.33px] bg-[#171717] flex items-center justify-center">
+              <ImageViewer
+                src="/images/vex.png"
+                alt="Vex 2023 competition robot"
+              >
                 <img
                   src="/images/vex.png"
                   alt="Vex 2023 competition robot"
@@ -210,15 +213,23 @@ export default async function Home() {
                   decoding="async"
                   className="rounded-lg h-auto w-76"
                 />
-              </TexturedContainer>
-            </ImageViewer>
+              </ImageViewer>
+            </TexturedContainer>
             <span className="text-sm text-white/50 mt-1.5 italic">
               Vex 2023 competition robot
             </span>
           </div>
           <div className="w-full h-full flex flex-col items-center">
             <TexturedContainer className="w-full h-[329.33px] bg-[#171717] flex items-center justify-center">
-              <i className="text-white/70">Image coming soon...</i>
+              <ImageViewer src="/images/frc.png" alt="FRC shooter robot">
+                <img
+                  src="/images/frc.png"
+                  alt="FRC shooter robot"
+                  loading="lazy"
+                  decoding="async"
+                  className="rounded-lg max-h-[300px]"
+                />
+              </ImageViewer>
             </TexturedContainer>
             <span className="text-sm text-white/50 mt-1.5 italic">
               FRC shooter
