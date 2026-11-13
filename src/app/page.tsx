@@ -1,4 +1,3 @@
-import { preload } from "react-dom";
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Socials from "@/components/page/Home/Socials";
@@ -15,8 +14,6 @@ import Link from "next/link";
 // [SECTION] Defines
 //
 
-const bannerAnimationUrl = "/animations/banner/data.lottie";
-
 const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
   { contentType: "video", slug: "windows-internals-explained" },
   { contentType: "project", slug: "antidebug" },
@@ -29,8 +26,6 @@ const bestCreationsKeys: { contentType: ContentType; slug: string }[] = [
 //
 
 export default async function Home() {
-  preload(bannerAnimationUrl, { as: "fetch", crossOrigin: "anonymous" });
-
   return (
     <Main
       title="About me"
@@ -47,7 +42,7 @@ export default async function Home() {
             loop={true}
           />
           <LottiePlayer
-            src={bannerAnimationUrl}
+            src="/animations/banner/data.lottie"
             containerClassName="absolute inset-0 w-full h-full"
             previewAlt="Banner animation"
             autoplay
