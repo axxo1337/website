@@ -48,7 +48,7 @@ export default function Header() {
   return (
     <header className="relative z-50 flex items-center justify-between pt-6 lg:pt-10 xl:pt-14">
       <Link href="/" className="flex items-center gap-3.5 group">
-        <Logo className="size-7 group-hover:rotate-5 transition-transform duration-250 ease-in-out" />
+        <Logo className="size-7 transition-transform duration-250 group-hover:rotate-5 ease-in-out" />
         <span className="text-2xl font-semibold">aXXo</span>
       </Link>
       <DesktopNavigation />

@@ -6,8 +6,8 @@ export default function Footer() {
   return (
     <footer className="mt-12 sm:mt-16 pb-16">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-        <Link href="/" className="flex items-center gap-2.5">
-          <Logo className="size-6" />
+        <Link href="/" className="flex items-center gap-2.5 group ease-in-out">
+          <Logo className="size-6 transition-transform duration-250 group-hover:rotate-5" />
           <span className="text-xl font-semibold">aXXo</span>
         </Link>
         <nav>
