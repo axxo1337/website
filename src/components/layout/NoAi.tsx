@@ -1,7 +1,7 @@
 "use client";
 
-import Shellshock from "@/components/ui/Shellshock.tsx";
-import NoAiSign from "@/components/ui/NoAiSign.tsx";
+import Shellshock from "@/components/ui/Shellshock";
+import NoAiSign from "@/components/ui/NoAiSign";
 import {
   Dialog,
   DialogClose,
