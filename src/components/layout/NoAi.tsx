@@ -46,7 +46,7 @@ function Policy() {
 
       <p>
         With that said,{" "}
-        <span className="font-bold text-red-300">
+        <span className="font-bold text-red-400">
           I use absolutely NO LLM to script, record or edit my videos or any
           kind of art you see in my projects.
         </span>{" "}
@@ -69,8 +69,21 @@ function Policy() {
       </p>
 
       <p>
-        But like I said, I DO still use LLMs in some cases for: repetitive
-        tasks, spelling, highlighting issues and fixing some bugs.
+        But like I said, I DO still use LLMs in some coding cases for:
+        repetitive tasks, spelling, highlighting issues and fixing some bugs.
+      </p>
+
+      <span className="text-xl font-medium mb-1 mt-2">
+        &quot;In conclusion&quot;
+      </span>
+
+      <p>
+        This notice shouldn&apos;t be too long and I&apos;ll stop here, so keep
+        that in mind. This doesn&apos;t appropriatly discloses my views on AI
+        and its usage nor does it really clearly tell you when and where I use
+        it except for the fact I{" "}
+        <span className="font-bold text-red-400">NEVER</span> use it for
+        artistic purposes.{" "}
       </p>
     </div>
   );
@@ -197,7 +210,7 @@ export default function NoAi() {
             My views on AI and its usage.
           </DrawerDescription>
         </DrawerHeader>
-        <ScrollArea className="h-95">
+        <ScrollArea className="h-82 px-2">
           <Policy />
         </ScrollArea>
         <DrawerFooter>
