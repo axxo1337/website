@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Roboto } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import NoAi from "@/components/layout/NoAi";
 import { Toaster } from "@/components/ui/sonner";
 import JsonLd from "@/components/ui/JsonLd";
 import { getRootJsonLd } from "@/lib/server/jsonld";
@@ -128,9 +129,10 @@ export default function RootLayout({
           src="/images/bliss.avif"
           width={1920}
           height={1080}
-          className="fixed pointer-events-none -z-10 object-cover inset-0 w-full h-full"
+          className="fixed pointer-events-none select-none -z-10 object-cover inset-0 w-full h-full"
           priority
         />
+        <NoAi />
       </body>
     </html>
   );
