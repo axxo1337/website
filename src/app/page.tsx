@@ -35,22 +35,29 @@ export default async function Home() {
     <Main
       title="About me"
       createdAt={new Date("2025-12-19")}
-      updatedAt={new Date("2026-11-02")}
+      updatedAt={new Date("2026-11-13")}
     >
       <TexturedContainer className="mt-5 md:mt-6">
         <AspectRatio ratio={960 / 224} className="relative">
           <LottiePlayer
+            src="/animations/banner/clouds.lottie"
+            containerClassName="absolute inset-0 w-full h-full"
+            previewAlt="Banner animation clouds"
+            autoplay
+            loop={true}
+          />
+          <LottiePlayer
             src={bannerAnimationUrl}
             containerClassName="absolute inset-0 w-full h-full"
-            previewAlt="Banner animation preview"
+            previewAlt="Banner animation"
             autoplay
-            loop={false}
+            loop={true}
           />
           <Image
             alt="Banner background"
             width={960}
             height={240}
-            src="/animations/banner/background.webp"
+            src="/animations/banner/background.svg"
           />
         </AspectRatio>
       </TexturedContainer>
