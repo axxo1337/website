@@ -221,7 +221,7 @@ export default async function Home() {
           </div>
           <div className="w-full h-full flex flex-col items-center">
             <TexturedContainer className="w-full h-[329.33px] bg-[#171717] flex items-center justify-center">
-              <ImageViewer src="/images/frc.png" alt="FRC shooter robot">
+              <ImageViewer src="/images/frc.webp" alt="FRC shooter robot">
                 <img
                   src="/images/frc.webp"
                   alt="FRC shooter robot"
