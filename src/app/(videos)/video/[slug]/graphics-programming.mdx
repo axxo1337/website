@@ -3,7 +3,7 @@ export const metadata = {
   description:
     "A simple, but practical introduction to graphics programming with shaders and ray marching.",
   createdAt: "2026-11-11",
-  updatedAt: "2026-11-13",
+  updatedAt: "2026-11-14",
   youtubeId: null,
   thumbnailPath: "/images/thumbnails/graphics-programming.avif",
   animationPath: "/animations/graphics/data.lottie",
@@ -264,7 +264,100 @@ You have to normalize the ray's direction vector. This is because we only care a
 
 To understand why the z value really matters to the FOV, you can conceive it as the distance of the projection plane from the camera. The farther it is, the smaller the angle between the center of the camera and the point at which they intersect with the projection plane according to the target pixel will be.
 
-<Callout type="danger">TO CONTINUE, I AM NOT DONE WRITING</Callout>
+When shooting the rays into space, you now need to know where they hit geometry. The way raymarching works is by checking the distance from where the ray is to the geometry, then march in the same direction by this distance.
+
+At some point, either the ray will be very close to the surface of the geometry, or it will will reach a well-defined maximum distance or amount of steps. In both cases the marching will stop.
+
+This means the algorithm will be slowest for rays that are around close corners, because it will have to take more steps.
+
+So how do you actually combine objects into a scene? This is where the min() function comes in, to know how far from the geometry we are.
+
+Check all distances, get the minimum one, then advance the ray by this distance. Once the minimum of the distance is 0, we know we hit something and we can exit the loop.
+
+The resulting image looks flat though. That's because it has no lighting.
+
+#### Adding Lightning
+
+In order to add lighting, we have to find the normal of the geometry at each point we get so we can then compute the direction at which a light source hits the surface.
+
+This will allow us to decide what influence the light has on these points.
+
+##### Finding the Normal
+
+To find the normal, we’ll use the signed distance function and estimate the gradient vector of each point. The gradient vector is a vector defining the rate of change of each component at any given point.
+
+Since the SDF returns the shortest distance from a point to the surface of an object, for each component of the gradient vector, we’ll measure the slope by taking some small change value called epsilon ($\epsilon$), find the upper part of the slope by adding it to our point, find the lower part by subtracting it, and computing the SDF for both cases.
+
+Now by subtracting one from another we get $\Delta{y}$ which we must divide by $\Delta{x}$. In this case $\Delta{x} = 2\epsilon$.
+
+I use this notation to make it obvious that we’re computing a slope, but $\Delta{y}$ simply refers to the change in distance in each slope, and $\Delta{x}$ is the difference between the input of each computed distance. It is twice epsilon since $\epsilon - (-\epsilon) = \epsilon + \epsilon$.
+
+In our code we won’t be doing the division manually and instead we’ll normalize the resulting vector which basically does the same thing since it divides every component by the length of the vector itself.
+
+```glsl
+#define DISTANCE_EPSILON 0.01
+
+// ..
+
+vec3 calculateNormal(vec3 point) {
+  vec2 epsilon = vec2(DISTANCE_EPSILON, 0);
+  return normalize(vec3(
+    getDistance(point + epsilon.xyy) - getDistance(point - epsilon.xyy),
+    getDistance(point + epsilon.yxy) - getDistance(point - epsilon.yxy),
+    getDistance(point + epsilon.yyx) - getDistance(point - epsilon.yyx)
+  ));
+}
+
+// ...
+```
+
+This process results in the normal because the epsilon used is so small that the slope basically gives the direction of the normal.
+
+The code you see uses a neat feature of GLSL by turning our epsilon value into a 2D vector. Basically, this allows us to temporarily turn the value into a 3D vector for which we decide in which component the epsilon value is placed while keeping the others 0.
+
+Now when adding it to a point we can specifically target the slope to compute.
+
+Like in the case of the y component, when adding epsilon to the point, we use `.yxy`. Since x is in the middle, it will be added to the y component of the point even though we defined it to be in the x component of the original 2D vector.
+
+It’s just a fancy syntax to make our lives easier.
+
+##### Computing the Lighting Factor
+
+In order to determine how close the direction of the light is to the direction of the normal, which basically means how exposed the surface is to the light source, we can use the dot product of the normal and the light direction vector.
+
+This light vector is simply the difference between the origin of the light and the point we want to shade.
+
+$$
+\vec{L} = \vec{\text{lightPos}} - \vec{p}
+$$
+
+In case you forgot or simply don’t know what the dot product does, it basically expresses the projection of one vector onto another and multiplies their lengths together.
+
+The resulting value ranges from -1 and 1, where two vectors in the same direction output a value of 1, if in opposite direction, a value of -1, and if perpendicular, a value of 0.
+
+I feel that the formula which expresses this property the best is this one:
+
+$$
+\vec{a} \cdot \vec{b} = \|\vec{a}\|\|\vec{b}\|\cos(\theta)
+$$
+
+Where $\vec{a}$ and $\vec{b}$ are the two vectors involved and $\theta$ is the angle between them.
+
+[ADD CODE SNIPPET HERE]
+
+Since we don’t care about a negative dot product, we apply $\min$ to limit the output to hold a lower bound of 0.
+
+#### Conlusion
+
+Although this video focused on ray marching, there exist other techniques such as ray casting. It’s basically a less general and faster version of raymarching.
+
+Each technique has its own advantages and use cases.
+
+[ADD HOMEWORK HERE]
+
+You can find the solution into a Github gist linked into the description, and if you’d like a video explanation of it, then consider becoming a member of the channel as you’ll find it there.
+
+With all of this aside, never give up on learning, and I will see you in the next one!
 
 ### Sources
 
