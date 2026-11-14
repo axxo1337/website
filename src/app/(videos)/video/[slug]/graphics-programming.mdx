@@ -5,8 +5,274 @@ export const metadata = {
   createdAt: "2026-11-11",
   updatedAt: "2026-11-13",
   youtubeId: null,
+  thumbnailPath: "/images/thumbnails/graphics-programming.avif",
   animationPath: "/animations/graphics/data.lottie",
   animationBackground: "/animations/graphics/background.svg",
   categories: ["COMPUTER_SCIENCE"],
   status: "WIP",
 };
+
+I am not by any means experienced in graphics programming. This is why, for this video, I asked my dear friend Kek to help me out. He was kind enough to contribute with the writing of the script and by providing resources.
+
+Graphics programming is one of the most intricate yet rewarding fields of computer science.
+
+![Black hole|center|auto|Gargantua With HDR Bloom - A shader by sonicether](/images/documents/graphics-programming/black_hole.avif)
+
+Of course, you won't make a black hole like [the one shown above](https://www.shadertoy.com/view/lstSRS) from day one, but that's fine since it has a notion of art built into it. This means that, whatever you make, you can be proud of your achievements no matter your skill level.
+
+### Rendering
+
+So how is an image generated? If you wanted to generate one of the size of a traditional display, say 1920x1080, you’d need to color 2'073'600 pixels… That’s a lot! Of course, you could do so using a trusty for loop like this one:
+
+```c++
+for(int x = 0; x < 1920; x++) {
+	for(int y = 0; y < 1080; y++) {
+		setPixelColor(x, y, color(x / 1920, y / 1080, 0));
+	}
+}
+```
+
+Although, obviously in more advanced cases, like that of a video game, this would be slow.
+
+You may have noticed, but in this technique, every pixel is independent from one another. When some code has this property we call it [“embarrassingly parallel”](https://en.wikipedia.org/wiki/Embarrassingly_parallel).
+
+It’s a way of saying that we could very easily speed things up significantly by just divding the workload over as many threads as our central processing units (CPUs) can handle.
+
+The issue is that, our CPUs don’t have unlimited threads. The potential for improvement is a lot greater than what the amount of threads allows us.
+
+That’s why we invented a little something called graphical processing units, or GPUs.
+
+![A graphical processing unit|center|500px|NVDIA's RTX 5090 GPU; something you'll never afford](/images/documents/graphics-programming/gpu.avif)
+
+They’re designed specifically for multi-threaded programming. On a GPU, you can realistically create the 2'073'600 threads required for a 1080p image, and they could each fill a pixel with a color.
+
+This design is called SIMD, short for [single instruction, multiple data](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data). A single program is run for every pixel, and each one is given a different position as an argument.
+
+The single instruction, or the program which will be run for every pixel on your screen is called a shader. Shaders are the very foundation of graphics programming and are notoriously fast.
+
+In fact, the black hole shown at the beginning is a shader, albeit, a very complicated one.
+
+### Raymarching
+
+#### First Things First
+
+Most games do something known as rasterization in order to display 2D and 3D scenes, but that's too much to begin with, so we'll keep it for another time.
+
+Instead, today we’ll introduce another technique called <u>raymarching</u>.
+
+All you need to get started is a shader editor and some inspiration. I’ll be using [shadertoy](https://www.shadertoy.com). It’s very popular and runs directly in your browser.
+
+![Shadertoy editor|center|auto|Shadertoy's shader editor](/images/documents/graphics-programming/shadertoy.avif)
+
+Head to [shadertoy.com](https://www.shadertoy.com) and click on the “New” button in the navigation bar. If you want to save your creations then you will need to create an account.
+
+In the left window (the one with a "REC" button) is displayed the output of the code which you write in the one on the right.
+
+```glsl
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+  // Normalized pixel coordinates (from 0 to 1)
+  vec2 uv = fragCoord/iResolution.xy;
+
+  // Time varying pixel color
+  vec3 col = 0.5 + 0.5*cos(iTime+uv.xyx+vec3(0,2,4));
+
+  // Output to screen
+  fragColor = vec4(col,1.0);
+}
+```
+
+This code is provided by default when you create a new project. It is written in the OpenGL Shading Language (GLSL) and is akin to the C programming language.
+
+Say you changed this template code to only output the color red, after making the change, in order to apply it, you need to click on this play button down here.
+
+![Shadertoy editor save button|center|auto|The save button](/images/documents/graphics-programming/shadertoy_save_button.avif)
+
+This is the modified code:
+
+```glsl
+void mainImage(out vec4 fragColor, in vec2 fragCoord )
+{
+  // Normalized pixel coordinates (from 0 to 1)
+  vec2 uv = fragCoord/iResolution.xy;
+
+  // Output to screen
+  fragColor = vec4(1.0, 0.0, 0.0, 1.0);
+}
+```
+
+Now the rendered image is all red.
+
+#### Signed Distance Fields
+
+Raymarching is based on signed distance fields, or SDFs for short, and an iterative algorithm. SDFs are a way to represent objects and shapes, whether they are 2D or 3D, in a mathematical way.
+
+Basically you give it a position and it returns how close it is to the border of that shape. This returned value is negative if the point is inside of the shape.
+
+An SDF representing a circle looks like this:
+
+```c++
+float sdCircle(vec2 p, vec2 center, float radius) {
+  return length(p - center) - radius;
+}
+```
+
+Where `p` is the point you want to know the distance to the circle from.
+
+To visualize the result, you can plug the return value of your SDF as the brightness of a pixel for every pixel on the screen:
+
+```glsl
+float sdCircle(vec2 p, vec2 center, float radius) {
+  return length(p - center) - radius;
+}
+
+void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+  // Normalized pixel coordinates (from 0 to 1)
+  vec2 uv = fragCoord/iResolution.xy;
+
+  float d = sdCircle(uv, vec2(0.5), 0.3);
+
+  // Output to screen
+  fragColor = vec4(vec3(d), 1.0);
+}
+```
+
+This generates the following output:
+
+![Shader output 1|center|600px|The output shader](/images/documents/graphics-programming/graphics_output_1.avif)
+
+The deep black pixels are inside the circle, while the others are on the boundary or outside of it.
+
+#### Changing the Coordinate System
+
+That’s great, but why is it stretched like that? That’s because our aspect ratio is not a perfect square.
+
+Firstly, the template code normalizes the coordinate system such that the center is set to $(0.5; 0.5)$ with this line of code:
+
+```glsl
+vec2 uv = fragCoord/iResolution.xy;
+```
+
+That’s because `iResolution.xy` stores the width and height of our output. When you divide any input coordinates by these values, they become ratios of the resolution.
+
+For example, the coordinate $(960; 540)$ on a 1920x1080 screen maps to $(0.5; 0.5)$. This makes sense since they are indeed at half of the screen.
+
+We can make it $(0; 0)$ by simply subtracting 0.5 from it:
+
+```glsl
+vec2 uv = (fragCoord/iResolution.xy) - 0.5;
+```
+
+We’ll also need to adjust the center we pass to the SDF to specify it is now $(0; 0)$:
+
+```glsl
+float d = sdCircle(uv, vec2(0), 0.3);
+```
+
+To actually get rid of the stretch, we multiply the x component of the coordinate by the aspect ratio:
+
+```
+uv.x *= iResolution.x / iResolution.y;
+```
+
+Now our shape is nice and round!
+
+![Shader output 2|center|600px|The output shader](/images/documents/graphics-programming/graphics_output_2.avif)
+
+To render a clearer one, you can simply check whether the output is positive:
+
+```glsl
+vec3 col = vec3(0.0);
+if(d > 0.0) col = vec3(1.f);
+
+// Output to screen
+fragColor = vec4(col, 1.0);
+```
+
+![Shader output 3|center|600px|The output shader](/images/documents/graphics-programming/graphics_output_3.avif)
+
+An SDF exists for basically any shape, and you can usually build them out of raw intuition.
+
+So nice, we can render 2d shapes. But how do we render geometry defined from 3d SDFs?
+
+Using the same approach would obviously fail because our screens unfortunately are 2D and can’t handle objects hiding each other.
+
+#### FOV and Implementation
+
+However, there are easy techniques that can solve this issue, such as raymarching. As its name implies, ray marching works by shooting rays from the camera.
+
+For every pixel, these rays will find what objects they intersect and we can then use that information to choose a color for the pixel.
+
+To obtain a realistic 3D field of view, you typically would launch the rays in a perspective projection. This means that, the rays go from the eye of a camera, intersect a projection plane (the screen) and travel onto the 3D scene.
+
+![Perspective projection|center|600px|Perspective projection](/images/documents/graphics-programming/perspective_projection.avif)
+
+We’ll define the camera as a 3D vector with the position $(0; 1; 0)$. This way it is 1 unit above the origin.
+
+```glsl
+vec3 camera = vec3(0, 1.0, 0);
+```
+
+For every pixel a ray will emerge from the center of the camera and go in their direction. Of course, you need to assign them a z value as well so they are launched towards the scene.
+
+We call this z value the focal length. It essentially determines the angle at which our rays will hit the projection plane and thus, it determines the field of view.
+
+The greater this angle is, the more will be visible to the camera at any position. It can be calculated by dividing half of the height of projection plane by the tangent of half of the desired FOV angle:
+
+$$
+z = \frac{h}{2\tan\left(\frac{\theta}{2}\right)}
+$$
+
+Where $h$ is the height of the projection plane and $\theta$ is the desired FOV angle. In this case the height of the projection plane is two:
+
+$$
+z = \frac{2}{2\tan\left(\frac{\theta}{2}\right)}
+$$
+
+That makes sense since our coordinate space is mapped to be from -1 to 1 on both axes. The formula can thus be simplified as:
+
+$$
+z = \frac{1}{\tan\left(\frac{\theta}{2}\right)}
+$$
+
+In case you forgot your high school trigonometry, the tangent of an angle outputs the ratio of the opposite over the adjacent sides of a right-angle triangle.
+
+In this case, the right angle triangle is formed by half of the desired FOV angle. The opposite side is thus half of the projection plane’s height, and thus by dividing it by the tangent we are essentially isolating the adjacent side which is the required distance.
+
+[ADD AN ILLUSTRATION HERE]
+
+Here’s its code implementation:
+
+```glsl
+#define FOV 100.0
+
+// ...
+
+void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+  // ...
+
+  vec3 camera = vec3(0, 1.0, 0);
+  vec3 rayDirection = normalize(vec3(uv.x, uv.y, 1.0 / tan(radians(FOV) * 0.5)));
+
+  // ...
+}
+```
+
+When working with shaders, so you can find and tweak important values easily, you usually put them into a macro like I just did for the FOV. Since the tangent function requires radians, the FOV is converted before being input.
+
+You have to normalize the ray's direction vector. This is because we only care about the direction it represents.
+
+To understand why the z value really matters to the FOV, you can conceive it as the distance of the projection plane from the camera. The farther it is, the smaller the angle between the center of the camera and the point at which they intersect with the projection plane according to the target pixel will be.
+
+<Callout type="danger">TO CONTINUE, I AM NOT DONE WRITING</Callout>
+
+### Sources
+
+- Inigo Quilez
+  - [Disk - distance 2D](https://www.shadertoy.com/view/3ltSW2)
+  - [Signed distance functions essentials](https://iquilezles.org/articles/distfunctions2d)
+
+### Special Thanks
+
+- **Kek** → For helping me write the script and for providing helpful resources.
+- **Taiphun** → For helping me edit this video and for reviewing the script.
