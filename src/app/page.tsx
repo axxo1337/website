@@ -223,7 +223,7 @@ export default async function Home() {
             <TexturedContainer className="w-full h-[329.33px] bg-[#171717] flex items-center justify-center">
               <ImageViewer src="/images/frc.png" alt="FRC shooter robot">
                 <img
-                  src="/images/frc.png"
+                  src="/images/frc.webp"
                   alt="FRC shooter robot"
                   loading="lazy"
                   decoding="async"
