@@ -10,3 +10,141 @@ export const metadata = {
   categories: ["COMPUTER_SCIENCE"],
   status: "WIP",
 };
+
+I am not by any means experienced in graphics programming. This is why, for this video, I asked my dear friend Kek to help me out. He was kind enough to contribute with the writing of the script and by providing resources.
+
+Graphics programming is one of the most intricate yet rewarding fields of computer science.
+
+![Black hole|center|auto|Gargantua With HDR Bloom - A shader by sonicether](/images/documents/graphics-programming/black_hole.avif)
+
+Of course, you won't make a black hole like [the one shown above](https://www.shadertoy.com/view/lstSRS) from day one, but that's fine since it has a notion of art built into it. This means that, whatever you make, you can be proud of your achievements no matter your skill level.
+
+### Rendering
+
+So how is an image generated? If you wanted to generate one of the size of a traditional display, say 1920x1080, you’d need to color 2'073'600 pixels… That’s a lot! Of course, you could do so using a trusty for loop like this one:
+
+```c++
+for(int x = 0; x < 1920; x++) {
+	for(int y = 0; y < 1080; y++) {
+		setPixelColor(x, y, color(x / 1920, y / 1080, 0));
+	}
+}
+```
+
+Although, obviously in more advanced cases, like that of a video game, this would be slow.
+
+You may have noticed, but in this technique, every pixel is independent from one another. When some code has this property we call it [“embarrassingly parallel”](https://en.wikipedia.org/wiki/Embarrassingly_parallel).
+
+It’s a way of saying that we could very easily speed things up significantly by just divding the workload over as many threads as our central processing units (CPUs) can handle.
+
+The issue is that, our CPUs don’t have unlimited threads. The potential for improvement is a lot greater than what the amount of threads allows us.
+
+That’s why we invented a little something called graphical processing units, or GPUs.
+
+![A graphical processing unit|center|500px|NVDIA's RTX 5090 GPU; something you'll never afford](/images/documents/graphics-programming/gpu.avif)
+
+They’re designed specifically for multi-threaded programming. On a GPU, you can realistically create the 2'073'600 threads required for a 1080p image, and they could each fill a pixel with a color.
+
+This design is called SIMD, short for [single instruction, multiple data](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data). A single program is run for every pixel, and each one is given a different position as an argument.
+
+The single instruction, or the program which will be run for every pixel on your screen is called a shader. Shaders are the very foundation of graphics programming and are notoriously fast.
+
+In fact, the black hole shown at the beginning is a shader, albeit, a very complicated one.
+
+### Raymarching
+
+#### First Things First
+
+Most games do something known as rasterization in order to display 2D and 3D scenes, but that's too much to begin with, so we'll keep it for another time.
+
+Instead, today we’ll introduce another technique called <u>raymarching</u>.
+
+All you need to get started is a shader editor and some inspiration. I’ll be using [shadertoy](https://www.shadertoy.com). It’s very popular and runs directly in your browser.
+
+![Shadertoy editor|center|auto|Shadertoy's shader editor](/images/documents/graphics-programming/shadertoy.avif)
+
+Head to [shadertoy.com](https://www.shadertoy.com) and click on the “New” button in the navigation bar. If you want to save your creations then you will need to create an account.
+
+In the left window (the one with a "REC" button) is displayed the output of the code which you write in the one on the right.
+
+```glsl
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    // Normalized pixel coordinates (from 0 to 1)
+    vec2 uv = fragCoord/iResolution.xy;
+
+    // Time varying pixel color
+    vec3 col = 0.5 + 0.5*cos(iTime+uv.xyx+vec3(0,2,4));
+
+    // Output to screen
+    fragColor = vec4(col,1.0);
+}
+```
+
+This code is provided by default when you create a new project. It is written in the OpenGL Shading Language (GLSL) and is akin to the C programming language.
+
+Say you changed this template code to only output the color red, after making the change, in order to apply it, you need to click on this play button down here.
+
+![Shadertoy editor save button|center|auto|The save button](/images/documents/graphics-programming/shadertoy_save_button.avif)
+
+This is the modified code:
+
+```glsl
+void mainImage(out vec4 fragColor, in vec2 fragCoord )
+{
+	// Normalized pixel coordinates (from 0 to 1)
+	vec2 uv = fragCoord/iResolution.xy;
+
+	// Output to screen
+	fragColor = vec4(1.0, 0.0, 0.0, 1.0);
+}
+```
+
+Now the rendered image is all red.
+
+#### Signed Distance Fields
+
+Raymarching is based on signed distance fields, or SDFs for short, and an iterative algorithm. SDFs are a way to represent objects and shapes, whether they are 2D or 3D, in a mathematical way.
+
+Basically you give it a position and it returns how close it is to the border of that shape. This returned value is negative if the point is inside of the shape.
+
+An SDF representing a circle looks like this:
+
+```c++
+float sdCircle(vec2 p, vec2 center, float radius) {
+  return length(p - center) - radius;
+}
+```
+
+Where `p` is the point you want to know the distance to the circle from.
+
+To visualize the result, you can plug the return value of your SDF as the brightness of a pixel for every pixel on the screen:
+
+```glsl
+float sdCircle(vec2 p, vec2 center, float radius) {
+    return length(p - center) - radius;
+}
+
+void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+	// Normalized pixel coordinates (from 0 to 1)
+	vec2 uv = fragCoord/iResolution.xy;
+
+  float d = sdCircle(uv, vec2(0.5), 0.3);
+
+	// Output to screen
+	fragColor = vec4(vec3(d), 1.0);
+}
+```
+
+![Earth shader|center|auto|Not quite home - A shader by xwize](/images/documents/graphics-programming/earth.avif)
+
+### Sources
+
+- Inigo Quilez
+  - [Disk - distance 2D](https://www.shadertoy.com/view/3ltSW2)
+  - [Signed distance functions essentials](https://iquilezles.org/articles/distfunctions2d)
+
+### Special Thanks
+
+- **Kek** → For helping me write the script and for providing helpful resources.
+- **Taiphun** → For helping me edit this video and for reviewing the script.
