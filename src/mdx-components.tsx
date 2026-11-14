@@ -12,22 +12,47 @@ import Callout from "./components/ui/Callout";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h3: ({ children }) => (
-      <h3 id={slugify(extractText(children))} className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 scroll-mt-24">
+      <h3
+        id={slugify(extractText(children))}
+        className="text-2xl md:text-3xl first:mt-0! mt-5 py-0.5 scroll-mt-24"
+      >
         {children}
       </h3>
     ),
     h4: ({ children }) => (
-      <h4 id={slugify(extractText(children))} className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 scroll-mt-24">
+      <h4
+        id={slugify(extractText(children))}
+        className="text-xl md:text-2xl first:mt-0! mt-5 py-0.5 scroll-mt-24"
+      >
         {children}
       </h4>
     ),
+    h5: ({ children }) => (
+      <h5
+        id={slugify(extractText(children))}
+        className="text-lg md:text-xl first:mt-0! mt-3.5 py-0.5 scroll-mt-24"
+      >
+        {children}
+      </h5>
+    ),
     p: ({ children }) => <p className="mt-3">{children}</p>,
-    a: (props) => <a {...props} className={cn("inline-anchor break-words", props.className)}></a>,
-    ol: ({ children }) => <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">{children}</ol>,
-    ul: ({ children }) => <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">{children}</ul>,
+    a: (props) => (
+      <a
+        {...props}
+        className={cn("inline-anchor break-words", props.className)}
+      ></a>
+    ),
+    ol: ({ children }) => (
+      <ol className="list-decimal pl-5 flex flex-col gap-2 mt-3">{children}</ol>
+    ),
+    ul: ({ children }) => (
+      <ul className="list-disc pl-5 flex flex-col gap-2 mt-3">{children}</ul>
+    ),
     li: ({ children }) => <li className="wrap-break-words">{children}</li>,
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-white/30 pl-4 my-2 italic text-white/70">{children}</blockquote>
+      <blockquote className="border-l-2 border-white/30 pl-4 my-2 italic text-white/70">
+        {children}
+      </blockquote>
     ),
     span: ({ className, children, ...props }) => {
       if (className?.includes("katex-display")) {
@@ -46,7 +71,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
     pre: ({ children, ...props }) => (
-      <pre className="bg-[#181818] p-4 pb-5 rounded-md my-2 border border-white/10 text-[0.9rem] relative group" {...props}>
+      <pre
+        className="bg-[#181818] p-4 pb-5 rounded-md my-2 border border-white/10 text-[0.9rem] relative group"
+        {...props}
+      >
         {children}
       </pre>
     ),
@@ -54,7 +82,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     img: ({ src, alt, ...props }) => {
       const { text, align, width, caption } = parseImageAlt(alt || "");
 
-      const wrapperAlignClass = align === "left" ? "justify-start" : align === "right" ? "justify-end" : "justify-center";
+      const wrapperAlignClass =
+        align === "left"
+          ? "justify-start"
+          : align === "right"
+            ? "justify-end"
+            : "justify-center";
 
       const isAuto = width === "auto";
       const hasExplicitWidth = width && !isAuto;
@@ -63,7 +96,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
       /* eslint-disable @next/next/no-img-element */
       const image = isAuto ? (
-        <img src={src} alt={text} loading="lazy" decoding="async" className="rounded-lg h-auto" {...props} />
+        <img
+          src={src}
+          alt={text}
+          loading="lazy"
+          decoding="async"
+          className="rounded-lg h-auto"
+          {...props}
+        />
       ) : (
         <img
           src={src}
@@ -83,14 +123,23 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             <ImageViewer src={src || ""} alt={text}>
               {image}
             </ImageViewer>
-            {caption && <span className="text-sm text-white/50 mt-1.5 italic">{caption}</span>}
+            {caption && (
+              <span className="text-sm text-white/50 mt-1.5 italic">
+                {caption}
+              </span>
+            )}
           </span>
         </span>
       );
     },
     MicrosoftLearnQuote: (props) => <MicrosoftLearnQuote {...props} />,
     UndocumentedStruct: (props) => <UndocumentedStruct {...props} />,
-    YouTubeVideo: (props) => <YouTubeVideo className="[&>div]:border [&>div]:border-white/10 mt-3" {...props} />,
+    YouTubeVideo: (props) => (
+      <YouTubeVideo
+        className="[&>div]:border [&>div]:border-white/10 mt-3"
+        {...props}
+      />
+    ),
     GithubRepo: (props) => <GithubRepo {...props} />,
     LottiePlayer: (props) => <LottiePlayer {...props} />,
     Callout: (props) => <Callout {...props} />,
