@@ -71,14 +71,14 @@ In the left window (the one with a "REC" button) is displayed the output of the 
 ```glsl
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-    // Normalized pixel coordinates (from 0 to 1)
-    vec2 uv = fragCoord/iResolution.xy;
+  // Normalized pixel coordinates (from 0 to 1)
+  vec2 uv = fragCoord/iResolution.xy;
 
-    // Time varying pixel color
-    vec3 col = 0.5 + 0.5*cos(iTime+uv.xyx+vec3(0,2,4));
+  // Time varying pixel color
+  vec3 col = 0.5 + 0.5*cos(iTime+uv.xyx+vec3(0,2,4));
 
-    // Output to screen
-    fragColor = vec4(col,1.0);
+  // Output to screen
+  fragColor = vec4(col,1.0);
 }
 ```
 
@@ -93,11 +93,11 @@ This is the modified code:
 ```glsl
 void mainImage(out vec4 fragColor, in vec2 fragCoord )
 {
-	// Normalized pixel coordinates (from 0 to 1)
-	vec2 uv = fragCoord/iResolution.xy;
+  // Normalized pixel coordinates (from 0 to 1)
+  vec2 uv = fragCoord/iResolution.xy;
 
-	// Output to screen
-	fragColor = vec4(1.0, 0.0, 0.0, 1.0);
+  // Output to screen
+  fragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }
 ```
 
@@ -123,17 +123,17 @@ To visualize the result, you can plug the return value of your SDF as the bright
 
 ```glsl
 float sdCircle(vec2 p, vec2 center, float radius) {
-    return length(p - center) - radius;
+  return length(p - center) - radius;
 }
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
-	// Normalized pixel coordinates (from 0 to 1)
-	vec2 uv = fragCoord/iResolution.xy;
+  // Normalized pixel coordinates (from 0 to 1)
+  vec2 uv = fragCoord/iResolution.xy;
 
   float d = sdCircle(uv, vec2(0.5), 0.3);
 
-	// Output to screen
-	fragColor = vec4(vec3(d), 1.0);
+  // Output to screen
+  fragColor = vec4(vec3(d), 1.0);
 }
 ```
 
@@ -142,6 +142,127 @@ This generates the following output:
 ![Shader output 1|center|600px|The output shader](/images/documents/graphics-programming/graphics_output_1.avif)
 
 The deep black pixels are inside the circle, while the others are on the boundary or outside of it.
+
+#### Changing the Coordinate System
+
+That’s great, but why is it stretched like that? That’s because our aspect ratio is not a perfect square.
+
+Firstly, the template code normalizes the coordinate system such that the center is set to $(0.5; 0.5)$ with this line of code:
+
+```glsl
+vec2 uv = fragCoord/iResolution.xy;
+```
+
+That’s because `iResolution.xy` stores the width and height of our output. When you divide any input coordinates by these values, they become ratios of the resolution.
+
+For example, the coordinate $(960; 540)$ on a 1920x1080 screen maps to $(0.5; 0.5)$. This makes sense since they are indeed at half of the screen.
+
+We can make it $(0; 0)$ by simply subtracting 0.5 from it:
+
+```glsl
+vec2 uv = (fragCoord/iResolution.xy) - 0.5;
+```
+
+We’ll also need to adjust the center we pass to the SDF to specify it is now $(0; 0)$:
+
+```glsl
+float d = sdCircle(uv, vec2(0), 0.3);
+```
+
+To actually get rid of the stretch, we multiply the x component of the coordinate by the aspect ratio:
+
+```
+uv.x *= iResolution.x / iResolution.y;
+```
+
+Now our shape is nice and round!
+
+![Shader output 2|center|600px|The output shader](/images/documents/graphics-programming/graphics_output_2.avif)
+
+To render a clearer one, you can simply check whether the output is positive:
+
+```glsl
+vec3 col = vec3(0.0);
+if(d > 0.0) col = vec3(1.f);
+
+// Output to screen
+fragColor = vec4(col, 1.0);
+```
+
+![Shader output 3|center|600px|The output shader](/images/documents/graphics-programming/graphics_output_3.avif)
+
+An SDF exists for basically any shape, and you can usually build them out of raw intuition.
+
+So nice, we can render 2d shapes. But how do we render geometry defined from 3d SDFs?
+
+Using the same approach would obviously fail because our screens unfortunately are 2D and can’t handle objects hiding each other.
+
+#### FOV and Implementation
+
+However, there are easy techniques that can solve this issue, such as raymarching. As its name implies, ray marching works by shooting rays from the camera.
+
+For every pixel, these rays will find what objects they intersect and we can then use that information to choose a color for the pixel.
+
+To obtain a realistic 3D field of view, you typically would launch the rays in a perspective projection. This means that, the rays go from the eye of a camera, intersect a projection plane (the screen) and travel onto the 3D scene.
+
+![Perspective projection|center|600px|Perspective projection](/images/documents/graphics-programming/perspective_projection.avif)
+
+We’ll define the camera as a 3D vector with the position $(0; 1; 0)$. This way it is 1 unit above the origin.
+
+```glsl
+vec3 camera = vec3(0, 1.0, 0);
+```
+
+For every pixel a ray will emerge from the center of the camera and go in their direction. Of course, you need to assign them a z value as well so they are launched towards the scene.
+
+We call this z value the focal length. It essentially determines the angle at which our rays will hit the projection plane and thus, it determines the field of view.
+
+The greater this angle is, the more will be visible to the camera at any position. It can be calculated by dividing half of the height of projection plane by the tangent of half of the desired FOV angle:
+
+$$
+z = \frac{h}{2\tan\left(\frac{\theta}{2}\right)}
+$$
+
+Where $h$ is the height of the projection plane and $\theta$ is the desired FOV angle. In this case the height of the projection plane is two:
+
+$$
+z = \frac{2}{2\tan\left(\frac{\theta}{2}\right)}
+$$
+
+That makes sense since our coordinate space is mapped to be from -1 to 1 on both axes. The formula can thus be simplified as:
+
+$$
+z = \frac{1}{\tan\left(\frac{\theta}{2}\right)}
+$$
+
+In case you forgot your high school trigonometry, the tangent of an angle outputs the ratio of the opposite over the adjacent sides of a right-angle triangle.
+
+In this case, the right angle triangle is formed by half of the desired FOV angle. The opposite side is thus half of the projection plane’s height, and thus by dividing it by the tangent we are essentially isolating the adjacent side which is the required distance.
+
+[ADD AN ILLUSTRATION HERE]
+
+Here’s its code implementation:
+
+```glsl
+#define FOV 100.0
+
+// ...
+
+void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+  // ...
+
+  vec3 camera = vec3(0, 1.0, 0);
+  vec3 rayDirection = normalize(vec3(uv.x, uv.y, 1.0 / tan(radians(FOV) * 0.5)));
+
+  // ...
+}
+```
+
+When working with shaders, so you can find and tweak important values easily, you usually put them into a macro like I just did for the FOV. Since the tangent function requires radians, the FOV is converted before being input.
+
+You have to normalize the ray's direction vector. This is because we only care about the direction it represents.
+
+To understand why the z value really matters to the FOV, you can conceive it as the distance of the projection plane from the camera. The farther it is, the smaller the angle between the center of the camera and the point at which they intersect with the projection plane according to the target pixel will be.
 
 <Callout type="danger">TO CONTINUE, I AM NOT DONE WRITING</Callout>
 
