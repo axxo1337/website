@@ -7,7 +7,13 @@ import PostStatusIndicator from "@/components/ui/PostStatusIndicator";
 import TableOfContents from "@/components/ui/TableOfContents";
 import JsonLd from "@/components/ui/JsonLd";
 import { getVideoJsonLd } from "@/lib/server/jsonld";
-import { contentExists, getAdjacentContent, getContentMetadata, getContentSlugs, MDXMetadata } from "@/lib/server/mdx";
+import {
+  contentExists,
+  getAdjacentContent,
+  getContentMetadata,
+  getContentSlugs,
+  MDXMetadata,
+} from "@/lib/server/mdx";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -103,7 +109,11 @@ export default async function VideoPage({ params }: Props) {
       <JsonLd schema={getVideoJsonLd({ ...metadata, slug })} />
       <PostStatusIndicator status={metadata.status} />
       <div>
-        <YouTubeVideo className="mt-8 md:mt-14" id={metadata.youtubeId} thumbnailPath={metadata.thumbnailPath} />
+        <YouTubeVideo
+          className="mt-8 md:mt-14"
+          id={metadata.youtubeId}
+          thumbnailPath={metadata.thumbnailPath}
+        />
       </div>
       <Section subtitle="What's this video about?" title="Overview">
         <div>
