@@ -1,6 +1,12 @@
 import Main from "@/components/layout/Main";
 import Section from "@/components/layout/Section";
 import Image from "next/image";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sign in",
+  robots: { index: false, follow: false },
+};
 
 export default function Login() {
   return (

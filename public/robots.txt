@@ -63,4 +63,12 @@ Disallow: /
 User-agent: PerplexityBot
 Disallow: /
 
+User-agent: *
+Disallow: /login
+Disallow: /admin
+Disallow: /panel
+Disallow: /dashboard
+Disallow: /wp-admin
+Disallow: /phpmyadmin
+
 Sitemap: https://axxowastaken.me/sitemap.xml
