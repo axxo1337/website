@@ -1,0 +1,38 @@
+/admin            /login  302
+/admin/*          /login  302
+/administrator    /login  302
+/administrator/*  /login  302
+/cpanel           /login  302
+/panel            /login  302
+/manager/*        /login  302
+
+/wp-admin         /login  302
+/wp-admin/*       /login  302
+/wp-login.php     /login  302
+/wp-content/*     /login  302
+/wp-includes/*    /login  302
+/wordpress        /login  302
+/wordpress/*      /login  302
+/xmlrpc.php       /login  302
+
+/joomla/*         /login  302
+/drupal/*         /login  302
+/user/login       /login  302
+/magento/*        /login  302
+
+/phpmyadmin       /login  302
+/phpmyadmin/*     /login  302
+/pma/*            /login  302
+/mysql/*          /login  302
+/adminer.php      /login  302
+/telescope/*      /login  302
+/swagger/*        /login  302
+
+/.env             /login  302
+/.git/*           /login  302
+/.aws/*           /login  302
+/.ssh/*           /login  302
+/config.php       /login  302
+/config.json      /login  302
+/backup/*         /login  302
+/db.sql           /login  302
